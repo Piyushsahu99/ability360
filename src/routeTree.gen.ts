@@ -16,6 +16,7 @@ import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardIndustryRouteImport } from './routes/_authenticated/dashboard.industry'
+import { Route as AuthenticatedDashboardInstitutionRouteImport } from './routes/_authenticated/dashboard.institution'
 import { Route as AuthenticatedDashboardStudentRouteImport } from './routes/_authenticated/dashboard.student'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,6 +55,12 @@ const AuthenticatedDashboardIndustryRoute =
     path: '/dashboard/industry',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDashboardInstitutionRoute =
+  AuthenticatedDashboardInstitutionRouteImport.update({
+    id: '/dashboard/institution',
+    path: '/dashboard/institution',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardStudentRoute =
   AuthenticatedDashboardStudentRouteImport.update({
     id: '/dashboard/student',
@@ -67,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
+  '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
@@ -76,6 +84,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
+  '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -87,6 +96,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
+  '/_authenticated/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/_authenticated/dashboard/student': typeof AuthenticatedDashboardStudentRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/dashboard/industry'
+    | '/dashboard/institution'
     | '/dashboard/student'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/dashboard/industry'
+    | '/dashboard/institution'
     | '/dashboard/student'
     | '/dashboard'
   id:
@@ -117,6 +129,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/_authenticated/dashboard/industry'
+    | '/_authenticated/dashboard/institution'
     | '/_authenticated/dashboard/student'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
@@ -180,6 +193,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndustryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/dashboard/institution': {
+      id: '/_authenticated/dashboard/institution'
+      path: '/dashboard/institution'
+      fullPath: '/dashboard/institution'
+      preLoaderRoute: typeof AuthenticatedDashboardInstitutionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard/student': {
       id: '/_authenticated/dashboard/student'
       path: '/dashboard/student'
@@ -192,12 +212,15 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
+  AuthenticatedDashboardInstitutionRoute: typeof AuthenticatedDashboardInstitutionRoute
   AuthenticatedDashboardStudentRoute: typeof AuthenticatedDashboardStudentRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardIndustryRoute: AuthenticatedDashboardIndustryRoute,
+  AuthenticatedDashboardInstitutionRoute:
+    AuthenticatedDashboardInstitutionRoute,
   AuthenticatedDashboardStudentRoute: AuthenticatedDashboardStudentRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
