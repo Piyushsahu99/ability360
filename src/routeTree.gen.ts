@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardIndustryRouteImport } from './routes/_authenticated/dashboard.industry'
 import { Route as AuthenticatedDashboardInstitutionRouteImport } from './routes/_authenticated/dashboard.institution'
 import { Route as AuthenticatedDashboardStudentRouteImport } from './routes/_authenticated/dashboard.student'
@@ -49,6 +50,12 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDashboardAdminRoute =
+  AuthenticatedDashboardAdminRouteImport.update({
+    id: '/dashboard/admin',
+    path: '/dashboard/admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardIndustryRoute =
   AuthenticatedDashboardIndustryRouteImport.update({
     id: '/dashboard/industry',
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
@@ -83,6 +91,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
@@ -95,6 +104,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/_authenticated/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/_authenticated/dashboard/student': typeof AuthenticatedDashboardStudentRoute
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/dashboard/admin'
     | '/dashboard/industry'
     | '/dashboard/institution'
     | '/dashboard/student'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/dashboard/admin'
     | '/dashboard/industry'
     | '/dashboard/institution'
     | '/dashboard/student'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/industry'
     | '/_authenticated/dashboard/institution'
     | '/_authenticated/dashboard/student'
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/dashboard/admin': {
+      id: '/_authenticated/dashboard/admin'
+      path: '/dashboard/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof AuthenticatedDashboardAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard/industry': {
       id: '/_authenticated/dashboard/industry'
       path: '/dashboard/industry'
@@ -211,6 +231,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
   AuthenticatedDashboardInstitutionRoute: typeof AuthenticatedDashboardInstitutionRoute
   AuthenticatedDashboardStudentRoute: typeof AuthenticatedDashboardStudentRoute
@@ -218,6 +239,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardIndustryRoute: AuthenticatedDashboardIndustryRoute,
   AuthenticatedDashboardInstitutionRoute:
     AuthenticatedDashboardInstitutionRoute,
