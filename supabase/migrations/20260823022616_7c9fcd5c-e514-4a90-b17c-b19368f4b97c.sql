@@ -1,0 +1,1 @@
+ALTER TABLE public.student_profiles ADD COLUMN institution_other text;

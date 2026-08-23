@@ -14,6 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      accessibility_preferences: {
+        Row: {
+          accessible_venue: boolean
+          captions: boolean
+          created_at: string
+          flexible_schedule: boolean
+          high_contrast: boolean
+          id: string
+          keyboard_navigation: boolean
+          other_accommodation: string | null
+          reduced_motion: boolean
+          remote_participation: boolean
+          screen_reader: boolean
+          updated_at: string
+        }
+        Insert: {
+          accessible_venue?: boolean
+          captions?: boolean
+          created_at?: string
+          flexible_schedule?: boolean
+          high_contrast?: boolean
+          id: string
+          keyboard_navigation?: boolean
+          other_accommodation?: string | null
+          reduced_motion?: boolean
+          remote_participation?: boolean
+          screen_reader?: boolean
+          updated_at?: string
+        }
+        Update: {
+          accessible_venue?: boolean
+          captions?: boolean
+          created_at?: string
+          flexible_schedule?: boolean
+          high_contrast?: boolean
+          id?: string
+          keyboard_navigation?: boolean
+          other_accommodation?: string | null
+          reduced_motion?: boolean
+          remote_participation?: boolean
+          screen_reader?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accessibility_preferences_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       institutions: {
         Row: {
           city: string | null
@@ -154,6 +207,160 @@ export type Database = {
           },
         ]
       }
+      skills: {
+        Row: {
+          category: Database["public"]["Enums"]["skill_category"]
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["skill_category"]
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["skill_category"]
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      student_interests: {
+        Row: {
+          created_at: string
+          id: string
+          interest: string
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interest: string
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interest?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_interests_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_profiles: {
+        Row: {
+          academic_score: number | null
+          academic_score_type: string
+          career_goal: string | null
+          created_at: string
+          degree: string | null
+          id: string
+          institution_other: string | null
+          onboarding_completed_at: string | null
+          onboarding_step: number
+          preferred_industries: string[]
+          preferred_location: string | null
+          preferred_work_mode: Database["public"]["Enums"]["work_mode"] | null
+          semester: number | null
+          updated_at: string
+        }
+        Insert: {
+          academic_score?: number | null
+          academic_score_type?: string
+          career_goal?: string | null
+          created_at?: string
+          degree?: string | null
+          id: string
+          institution_other?: string | null
+          onboarding_completed_at?: string | null
+          onboarding_step?: number
+          preferred_industries?: string[]
+          preferred_location?: string | null
+          preferred_work_mode?: Database["public"]["Enums"]["work_mode"] | null
+          semester?: number | null
+          updated_at?: string
+        }
+        Update: {
+          academic_score?: number | null
+          academic_score_type?: string
+          career_goal?: string | null
+          created_at?: string
+          degree?: string | null
+          id?: string
+          institution_other?: string | null
+          onboarding_completed_at?: string | null
+          onboarding_step?: number
+          preferred_industries?: string[]
+          preferred_location?: string | null
+          preferred_work_mode?: Database["public"]["Enums"]["work_mode"] | null
+          semester?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_skills: {
+        Row: {
+          created_at: string
+          id: string
+          level: number
+          skill_id: string
+          student_id: string
+          updated_at: string
+          verification_status: Database["public"]["Enums"]["skill_verification"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          level?: number
+          skill_id: string
+          student_id: string
+          updated_at?: string
+          verification_status?: Database["public"]["Enums"]["skill_verification"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          level?: number
+          skill_id?: string
+          student_id?: string
+          updated_at?: string
+          verification_status?: Database["public"]["Enums"]["skill_verification"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_skills_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -208,6 +415,12 @@ export type Database = {
         | "organizer"
       institution_type: "college" | "university" | "polytechnic" | "other"
       opportunity_type: "internship" | "job" | "project" | "training"
+      skill_category: "technical" | "soft" | "aptitude" | "domain"
+      skill_verification:
+        | "self_declared"
+        | "assessment_verified"
+        | "faculty_verified"
+        | "industry_verified"
       work_mode: "onsite" | "remote" | "hybrid"
     }
     CompositeTypes: {
@@ -348,6 +561,13 @@ export const Constants = {
       ],
       institution_type: ["college", "university", "polytechnic", "other"],
       opportunity_type: ["internship", "job", "project", "training"],
+      skill_category: ["technical", "soft", "aptitude", "domain"],
+      skill_verification: [
+        "self_declared",
+        "assessment_verified",
+        "faculty_verified",
+        "industry_verified",
+      ],
       work_mode: ["onsite", "remote", "hybrid"],
     },
   },
