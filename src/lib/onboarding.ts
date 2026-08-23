@@ -195,6 +195,7 @@ export async function saveAcademicStep(userId: string, values: AcademicStepValue
       semester: values.semester,
       academic_score: values.academicScore,
       academic_score_type: values.academicScoreType,
+      institution_other: institutionId ? null : values.institutionOther?.trim() || null,
       onboarding_step: 1,
     },
     { onConflict: "id" },
