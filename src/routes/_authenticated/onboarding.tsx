@@ -325,7 +325,7 @@ function AcademicStep({
           render={({ field }) => (
             <FormItem>
               <FormLabel>College</FormLabel>
-              <Select value={field.value} onValueChange={field.onChange}>
+              <Select value={field.value ?? ""} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="min-h-11">
                     <SelectValue placeholder="Select your college" />
