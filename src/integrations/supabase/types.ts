@@ -265,6 +265,7 @@ export type Database = {
           created_at: string
           degree: string | null
           id: string
+          institution_other: string | null
           onboarding_completed_at: string | null
           onboarding_step: number
           preferred_industries: string[]
@@ -280,6 +281,7 @@ export type Database = {
           created_at?: string
           degree?: string | null
           id: string
+          institution_other?: string | null
           onboarding_completed_at?: string | null
           onboarding_step?: number
           preferred_industries?: string[]
@@ -295,6 +297,7 @@ export type Database = {
           created_at?: string
           degree?: string | null
           id?: string
+          institution_other?: string | null
           onboarding_completed_at?: string | null
           onboarding_step?: number
           preferred_industries?: string[]
