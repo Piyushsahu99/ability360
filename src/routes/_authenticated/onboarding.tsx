@@ -644,9 +644,14 @@ function SkillsStep({
             })}
           </div>
           {industries.length > 0 && (
-            <p className="text-xs text-muted-foreground">
-              Selected: {industries.map((item) => <Badge key={item} variant="secondary" className="ml-1">{item}</Badge>)}
-            </p>
+            <div className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
+              Selected:{" "}
+              {industries.map((item) => (
+                <Badge key={item} variant="secondary">
+                  {item}
+                </Badge>
+              ))}
+            </div>
           )}
         </fieldset>
       </form>
