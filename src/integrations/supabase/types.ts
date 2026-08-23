@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      institutions: {
+        Row: {
+          city: string | null
+          code: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_verified: boolean
+          name: string
+          state: string | null
+          type: Database["public"]["Enums"]["institution_type"]
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_verified?: boolean
+          name: string
+          state?: string | null
+          type?: Database["public"]["Enums"]["institution_type"]
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_verified?: boolean
+          name?: string
+          state?: string | null
+          type?: Database["public"]["Enums"]["institution_type"]
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       opportunities: {
         Row: {
           created_at: string
@@ -69,28 +111,48 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          department: string | null
           full_name: string
           headline: string | null
           id: string
+          institution_id: string | null
+          phone: string | null
           updated_at: string
+          year_of_study: number | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          department?: string | null
           full_name?: string
           headline?: string | null
           id: string
+          institution_id?: string | null
+          phone?: string | null
           updated_at?: string
+          year_of_study?: number | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          department?: string | null
           full_name?: string
           headline?: string | null
           id?: string
+          institution_id?: string | null
+          phone?: string | null
           updated_at?: string
+          year_of_study?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_institution_id_fkey"
+            columns: ["institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -118,6 +180,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      has_any_role: {
+        Args: {
+          _roles: Database["public"]["Enums"]["app_role"][]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -125,6 +194,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      user_institution: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
       app_role:
@@ -136,6 +206,7 @@ export type Database = {
         | "gov_admin"
         | "mentor"
         | "organizer"
+      institution_type: "college" | "university" | "polytechnic" | "other"
       opportunity_type: "internship" | "job" | "project" | "training"
       work_mode: "onsite" | "remote" | "hybrid"
     }
@@ -275,6 +346,7 @@ export const Constants = {
         "mentor",
         "organizer",
       ],
+      institution_type: ["college", "university", "polytechnic", "other"],
       opportunity_type: ["internship", "job", "project", "training"],
       work_mode: ["onsite", "remote", "hybrid"],
     },
