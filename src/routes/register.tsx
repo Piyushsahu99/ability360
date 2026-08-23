@@ -85,7 +85,8 @@ function RegisterPage() {
     const me = await queryClient.fetchQuery(meQueryOptions);
     setSubmitting(false);
     toast.success("Account created");
-    navigate({ to: me ? dashboardPathByRole[me.role] : dashboardPathByRole[values.role] });
+    const role = me?.role ?? values.role;
+    navigate({ to: role === "student" ? "/onboarding" : dashboardPathByRole[role] });
   }
 
   return (

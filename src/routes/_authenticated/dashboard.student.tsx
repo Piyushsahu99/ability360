@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -16,10 +16,21 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
 import { useMe } from "@/lib/auth";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
+  beforeLoad: async ({ context }) => {
+    const userId = (context as { user?: { id: string } }).user?.id;
+    if (!userId) return;
+    const { data } = await supabase
+      .from("student_profiles")
+      .select("onboarding_completed_at")
+      .eq("id", userId)
+      .maybeSingle();
+    if (!data?.onboarding_completed_at) throw redirect({ to: "/onboarding" });
+  },
   head: () => ({
     meta: [
       { title: "Student dashboard — ABILITY360" },
