@@ -15,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { dashboardPathByRole, initials, roleLabels, useMe, type AppRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-export type NavItem = { label: string; icon: LucideIcon; active?: boolean };
+export type NavItem = { label: string; icon: LucideIcon; active?: boolean; to?: string };
 
 type Props = {
   role: AppRole;
@@ -42,21 +42,33 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
 
   const sidebar = (
     <nav aria-label="Dashboard sections" className="flex flex-col gap-1">
-      {nav.map((item) => (
-        <span
-          key={item.label}
-          className={cn(
-            "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium",
-            item.active
-              ? "bg-primary-soft text-primary"
-              : "text-muted-foreground",
-          )}
-          aria-current={item.active ? "page" : undefined}
-        >
-          <item.icon className="size-4 shrink-0" aria-hidden="true" />
-          {item.label}
-        </span>
-      ))}
+      {nav.map((item) => {
+        const className = cn(
+          "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+          item.active ? "bg-primary-soft text-primary" : "text-muted-foreground",
+          item.to && !item.active && "hover:bg-secondary hover:text-foreground",
+        );
+        const content = (
+          <>
+            <item.icon className="size-4 shrink-0" aria-hidden="true" />
+            {item.label}
+          </>
+        );
+        return item.to ? (
+          <Link
+            key={item.label}
+            to={item.to}
+            className={className}
+            aria-current={item.active ? "page" : undefined}
+          >
+            {content}
+          </Link>
+        ) : (
+          <span key={item.label} className={className} aria-current={item.active ? "page" : undefined}>
+            {content}
+          </span>
+        );
+      })}
     </nav>
   );
 

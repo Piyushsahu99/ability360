@@ -67,6 +67,80 @@ export type Database = {
           },
         ]
       }
+      assessment_attempts: {
+        Row: {
+          category: Database["public"]["Enums"]["skill_category"]
+          correct_count: number
+          created_at: string
+          id: string
+          level: number
+          score: number
+          student_id: string
+          total_questions: number
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["skill_category"]
+          correct_count: number
+          created_at?: string
+          id?: string
+          level?: number
+          score: number
+          student_id: string
+          total_questions: number
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["skill_category"]
+          correct_count?: number
+          created_at?: string
+          id?: string
+          level?: number
+          score?: number
+          student_id?: string
+          total_questions?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_attempts_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessment_questions: {
+        Row: {
+          category: Database["public"]["Enums"]["skill_category"]
+          correct_index: number
+          created_at: string
+          id: string
+          is_active: boolean
+          options: string[]
+          prompt: string
+          topic: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["skill_category"]
+          correct_index: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          options: string[]
+          prompt: string
+          topic?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["skill_category"]
+          correct_index?: number
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          options?: string[]
+          prompt?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       institutions: {
         Row: {
           city: string | null
@@ -228,6 +302,97 @@ export type Database = {
         }
         Relationships: []
       }
+      student_achievements: {
+        Row: {
+          achieved_on: string | null
+          category: string
+          created_at: string
+          description: string
+          id: string
+          issuer: string | null
+          student_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          achieved_on?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          issuer?: string | null
+          student_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          achieved_on?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          issuer?: string | null
+          student_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_achievements_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_experiences: {
+        Row: {
+          created_at: string
+          description: string
+          end_date: string | null
+          id: string
+          kind: string
+          organisation: string
+          role: string
+          start_date: string | null
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          end_date?: string | null
+          id?: string
+          kind?: string
+          organisation: string
+          role: string
+          start_date?: string | null
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          end_date?: string | null
+          id?: string
+          kind?: string
+          organisation?: string
+          role?: string
+          start_date?: string | null
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_experiences_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_interests: {
         Row: {
           created_at: string
@@ -311,6 +476,56 @@ export type Database = {
             foreignKeyName: "student_profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_projects: {
+        Row: {
+          completed_on: string | null
+          created_at: string
+          description: string
+          id: string
+          link: string | null
+          role: string | null
+          started_on: string | null
+          student_id: string
+          technologies: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          completed_on?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          link?: string | null
+          role?: string | null
+          started_on?: string | null
+          student_id: string
+          technologies?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          completed_on?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          link?: string | null
+          role?: string | null
+          started_on?: string | null
+          student_id?: string
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_projects_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },

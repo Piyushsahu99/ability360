@@ -41,12 +41,12 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
 });
 
 const nav = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
-  { label: "My profile", icon: UserRound },
-  { label: "Skills", icon: Target },
+  { label: "Overview", icon: LayoutDashboard, active: true, to: "/dashboard/student" },
+  { label: "Student DNA", icon: UserRound, to: "/dna" },
+  { label: "Skills", icon: Target, to: "/assessment" },
   { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
 const skills = [
@@ -106,9 +106,17 @@ function StudentDashboard() {
                 ))}
               </ul>
             )}
-            <Button asChild variant="outline" className="mt-4 min-h-11">
-              <Link to="/opportunities">Browse all opportunities</Link>
-            </Button>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button asChild variant="outline" className="min-h-11">
+                <Link to="/opportunities">Browse all opportunities</Link>
+              </Button>
+              <Button asChild variant="outline" className="min-h-11">
+                <Link to="/dna">Open Student DNA</Link>
+              </Button>
+              <Button asChild className="min-h-11">
+                <Link to="/assessment">Take a skill assessment</Link>
+              </Button>
+            </div>
           </PanelCard>
         </div>
 
