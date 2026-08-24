@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
@@ -44,6 +45,11 @@ const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDnaRoute = AuthenticatedDnaRouteImport.update({
+  id: '/dna',
+  path: '/dna',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/dna'
     | '/onboarding'
     | '/dashboard/admin'
     | '/dashboard/industry'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/dna'
     | '/onboarding'
     | '/dashboard/admin'
     | '/dashboard/industry'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/_authenticated/dna'
     | '/_authenticated/onboarding'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/industry'
@@ -204,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dna': {
+      id: '/_authenticated/dna'
+      path: '/dna'
+      fullPath: '/dna'
+      preLoaderRoute: typeof AuthenticatedDnaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/onboarding': {
       id: '/_authenticated/onboarding'
       path: '/onboarding'
@@ -250,6 +269,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
@@ -259,6 +279,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardIndustryRoute: AuthenticatedDashboardIndustryRoute,
