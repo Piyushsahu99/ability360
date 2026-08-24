@@ -52,6 +52,7 @@ import {
   projectSchema,
   verificationLabels,
   type AchievementValues,
+  type DnaData,
   type ExperienceValues,
   type ProjectValues,
 } from "@/lib/dna";
