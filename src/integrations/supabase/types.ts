@@ -141,6 +141,75 @@ export type Database = {
         }
         Relationships: []
       }
+      career_roles: {
+        Row: {
+          branch: string
+          category: string
+          certifications: string[]
+          course: string
+          created_at: string
+          demand: string
+          experienced_label: string
+          experienced_max_lpa: number
+          experienced_min_lpa: number
+          fresher_max_lpa: number
+          fresher_min_lpa: number
+          growth_path: string
+          id: string
+          is_active: boolean
+          responsibilities: string[]
+          skills: string[]
+          slug: string
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          branch: string
+          category?: string
+          certifications?: string[]
+          course: string
+          created_at?: string
+          demand?: string
+          experienced_label?: string
+          experienced_max_lpa?: number
+          experienced_min_lpa?: number
+          fresher_max_lpa?: number
+          fresher_min_lpa?: number
+          growth_path?: string
+          id?: string
+          is_active?: boolean
+          responsibilities?: string[]
+          skills?: string[]
+          slug: string
+          summary?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          branch?: string
+          category?: string
+          certifications?: string[]
+          course?: string
+          created_at?: string
+          demand?: string
+          experienced_label?: string
+          experienced_max_lpa?: number
+          experienced_min_lpa?: number
+          fresher_max_lpa?: number
+          fresher_min_lpa?: number
+          growth_path?: string
+          id?: string
+          is_active?: boolean
+          responsibilities?: string[]
+          skills?: string[]
+          slug?: string
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       institutions: {
         Row: {
           city: string | null
@@ -437,6 +506,8 @@ export type Database = {
           preferred_location: string | null
           preferred_work_mode: Database["public"]["Enums"]["work_mode"] | null
           semester: number | null
+          target_role_id: string | null
+          target_role_selected_at: string | null
           updated_at: string
         }
         Insert: {
@@ -453,6 +524,8 @@ export type Database = {
           preferred_location?: string | null
           preferred_work_mode?: Database["public"]["Enums"]["work_mode"] | null
           semester?: number | null
+          target_role_id?: string | null
+          target_role_selected_at?: string | null
           updated_at?: string
         }
         Update: {
@@ -469,6 +542,8 @@ export type Database = {
           preferred_location?: string | null
           preferred_work_mode?: Database["public"]["Enums"]["work_mode"] | null
           semester?: number | null
+          target_role_id?: string | null
+          target_role_selected_at?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -477,6 +552,13 @@ export type Database = {
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_profiles_target_role_id_fkey"
+            columns: ["target_role_id"]
+            isOneToOne: false
+            referencedRelation: "career_roles"
             referencedColumns: ["id"]
           },
         ]
