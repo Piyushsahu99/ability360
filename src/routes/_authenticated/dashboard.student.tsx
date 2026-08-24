@@ -106,9 +106,17 @@ function StudentDashboard() {
                 ))}
               </ul>
             )}
-            <Button asChild variant="outline" className="mt-4 min-h-11">
-              <Link to="/opportunities">Browse all opportunities</Link>
-            </Button>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button asChild variant="outline" className="min-h-11">
+                <Link to="/opportunities">Browse all opportunities</Link>
+              </Button>
+              <Button asChild variant="outline" className="min-h-11">
+                <Link to="/dna">Open Student DNA</Link>
+              </Button>
+              <Button asChild className="min-h-11">
+                <Link to="/assessment">Take a skill assessment</Link>
+              </Button>
+            </div>
           </PanelCard>
         </div>
 
