@@ -55,12 +55,12 @@ export const Route = createFileRoute("/_authenticated/assessment")({
 });
 
 const nav = [
-  { label: "Overview", icon: LayoutDashboard },
-  { label: "Student DNA", icon: Dna },
-  { label: "Skills", icon: Target, active: true },
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
+  { label: "Student DNA", icon: Dna, to: "/dna" },
+  { label: "Skills", icon: Target, active: true, to: "/assessment" },
   { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
 type Result = Awaited<ReturnType<typeof submitAssessment>>;
