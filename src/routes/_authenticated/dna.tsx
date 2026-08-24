@@ -79,12 +79,12 @@ export const Route = createFileRoute("/_authenticated/dna")({
 });
 
 const nav = [
-  { label: "Overview", icon: LayoutDashboard },
-  { label: "Student DNA", icon: Dna, active: true },
-  { label: "Skills", icon: Target },
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
+  { label: "Student DNA", icon: Dna, active: true, to: "/dna" },
+  { label: "Skills", icon: Target, to: "/assessment" },
   { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
 function StudentDnaPage() {
