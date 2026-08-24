@@ -327,7 +327,7 @@ function Field({ label, value }: { label: string; value: string }) {
   );
 }
 
-function SkillsPanel({ dna }: { dna: NonNullable<ReturnType<typeof dnaStrength> extends never ? never : any> }) {
+function SkillsPanel({ dna }: { dna: DnaData }) {
   const { strengths, developing } = dnaStrength(dna);
   return (
     <div className="grid gap-6 lg:grid-cols-2">
