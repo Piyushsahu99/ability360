@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
@@ -45,6 +46,11 @@ const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
+  id: '/assessment',
+  path: '/assessment',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDnaRoute = AuthenticatedDnaRouteImport.update({
   id: '/dna',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/assessment'
     | '/dna'
     | '/onboarding'
     | '/dashboard/admin'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/assessment'
     | '/dna'
     | '/onboarding'
     | '/dashboard/admin'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
     | '/_authenticated/dashboard/admin'
@@ -216,6 +228,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/assessment': {
+      id: '/_authenticated/assessment'
+      path: '/assessment'
+      fullPath: '/assessment'
+      preLoaderRoute: typeof AuthenticatedAssessmentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dna': {
       id: '/_authenticated/dna'
       path: '/dna'
@@ -269,6 +288,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
@@ -279,6 +299,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
