@@ -15,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { dashboardPathByRole, initials, roleLabels, useMe, type AppRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
-export type NavItem = { label: string; icon: LucideIcon; active?: boolean };
+export type NavItem = { label: string; icon: LucideIcon; active?: boolean; to?: string };
 
 type Props = {
   role: AppRole;
