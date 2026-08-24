@@ -599,30 +599,7 @@ export type Database = {
       }
     }
     Views: {
-      assessment_questions_public: {
-        Row: {
-          category: Database["public"]["Enums"]["skill_category"] | null
-          id: string | null
-          options: string[] | null
-          prompt: string | null
-          topic: string | null
-        }
-        Insert: {
-          category?: Database["public"]["Enums"]["skill_category"] | null
-          id?: string | null
-          options?: string[] | null
-          prompt?: string | null
-          topic?: string | null
-        }
-        Update: {
-          category?: Database["public"]["Enums"]["skill_category"] | null
-          id?: string | null
-          options?: string[] | null
-          prompt?: string | null
-          topic?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       has_any_role: {
