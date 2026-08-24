@@ -41,12 +41,12 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
 });
 
 const nav = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
-  { label: "My profile", icon: UserRound },
-  { label: "Skills", icon: Target },
+  { label: "Overview", icon: LayoutDashboard, active: true, to: "/dashboard/student" },
+  { label: "Student DNA", icon: UserRound, to: "/dna" },
+  { label: "Skills", icon: Target, to: "/assessment" },
   { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
 const skills = [
