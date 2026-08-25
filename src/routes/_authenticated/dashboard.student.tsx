@@ -59,6 +59,11 @@ const skills = [
 function StudentDashboard() {
   const { data: me } = useMe();
   const { data: opportunities, isPending } = useQuery(opportunitiesQueryOptions);
+  const { data: target } = useQuery(targetRoleQueryOptions);
+  const { data: roles } = useQuery(careerRolesQueryOptions);
+  const targetRole = target?.target_role_id
+    ? (roles ?? []).find((role) => role.id === target.target_role_id)
+    : undefined;
   const recommended = (opportunities ?? []).slice(0, 3);
 
   return (
