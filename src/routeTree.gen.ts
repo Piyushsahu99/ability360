@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as RolesRouteImport } from './routes/roles'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
@@ -45,6 +46,11 @@ const OpportunitiesRoute = OpportunitiesRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RolesRoute = RolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/roles': typeof RolesRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/roles': typeof RolesRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
+  '/roles': typeof RolesRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/roles'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/roles'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/opportunities'
     | '/register'
+    | '/roles'
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
+  RolesRoute: typeof RolesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -226,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roles': {
+      id: '/roles'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof RolesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/assessment': {
@@ -319,6 +339,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
+  RolesRoute: RolesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
