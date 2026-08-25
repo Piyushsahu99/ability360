@@ -122,6 +122,30 @@ function StudentDashboard() {
         </div>
 
         <div className="space-y-6">
+          <PanelCard title="Target role" description="Your roadmap is tuned to this role.">
+            {targetRole ? (
+              <div className="space-y-2">
+                <p className="text-sm font-medium">{targetRole.title}</p>
+                <p className="text-xs text-muted-foreground">
+                  {targetRole.course} · {targetRole.branch}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Fresher {formatLpa(targetRole.fresher_min_lpa, targetRole.fresher_max_lpa)}
+                </p>
+                <Button asChild variant="outline" className="mt-2 min-h-11">
+                  <Link to="/roles">Change target role</Link>
+                </Button>
+              </div>
+            ) : (
+              <>
+                <EmptyState message="You haven't chosen a target role yet." />
+                <Button asChild className="mt-3 min-h-11">
+                  <Link to="/roles">Explore roles &amp; responsibilities</Link>
+                </Button>
+              </>
+            )}
+          </PanelCard>
+
           <PanelCard title="Skill progress" description="Updated as you complete work.">
             <ul className="space-y-4">
               {skills.map((skill) => (
