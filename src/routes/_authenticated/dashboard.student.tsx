@@ -18,6 +18,7 @@ import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { useMe } from "@/lib/auth";
+import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
