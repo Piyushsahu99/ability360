@@ -18,6 +18,7 @@ import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { useMe } from "@/lib/auth";
+import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
 const nav = [
   { label: "Overview", icon: LayoutDashboard, active: true, to: "/dashboard/student" },
   { label: "Student DNA", icon: UserRound, to: "/dna" },
+  { label: "Career roles", icon: Compass, to: "/roles" },
   { label: "Skills", icon: Target, to: "/assessment" },
   { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase },
@@ -58,6 +60,11 @@ const skills = [
 function StudentDashboard() {
   const { data: me } = useMe();
   const { data: opportunities, isPending } = useQuery(opportunitiesQueryOptions);
+  const { data: target } = useQuery(targetRoleQueryOptions);
+  const { data: roles } = useQuery(careerRolesQueryOptions);
+  const targetRole = target?.target_role_id
+    ? (roles ?? []).find((role) => role.id === target.target_role_id)
+    : undefined;
   const recommended = (opportunities ?? []).slice(0, 3);
 
   return (
@@ -121,6 +128,30 @@ function StudentDashboard() {
         </div>
 
         <div className="space-y-6">
+          <PanelCard title="Target role" description="Your roadmap is tuned to this role.">
+            {targetRole ? (
+              <div className="space-y-2">
+                <p className="text-sm font-medium">{targetRole.title}</p>
+                <p className="text-xs text-muted-foreground">
+                  {targetRole.course} · {targetRole.branch}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Fresher {formatLpa(targetRole.fresher_min_lpa, targetRole.fresher_max_lpa)}
+                </p>
+                <Button asChild variant="outline" className="mt-2 min-h-11">
+                  <Link to="/roles">Change target role</Link>
+                </Button>
+              </div>
+            ) : (
+              <>
+                <EmptyState message="You haven't chosen a target role yet." />
+                <Button asChild className="mt-3 min-h-11">
+                  <Link to="/roles">Explore roles &amp; responsibilities</Link>
+                </Button>
+              </>
+            )}
+          </PanelCard>
+
           <PanelCard title="Skill progress" description="Updated as you complete work.">
             <ul className="space-y-4">
               {skills.map((skill) => (

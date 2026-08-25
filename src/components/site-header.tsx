@@ -11,6 +11,7 @@ import { Logo } from "@/components/logo";
 
 const navLinks = [
   { to: "/", label: "Home" },
+  { to: "/roles", label: "Roles" },
   { to: "/opportunities", label: "Opportunities" },
 ] as const;
 
