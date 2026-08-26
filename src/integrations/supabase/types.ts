@@ -254,10 +254,13 @@ export type Database = {
       }
       opportunities: {
         Row: {
+          accessibility_features: string[]
+          accessibility_note: string | null
           created_at: string
           deadline: string | null
           description: string
           id: string
+          is_inclusive_employer: boolean
           is_published: boolean
           location: string
           mode: Database["public"]["Enums"]["work_mode"]
@@ -270,10 +273,13 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          accessibility_features?: string[]
+          accessibility_note?: string | null
           created_at?: string
           deadline?: string | null
           description?: string
           id?: string
+          is_inclusive_employer?: boolean
           is_published?: boolean
           location?: string
           mode?: Database["public"]["Enums"]["work_mode"]
@@ -286,10 +292,13 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          accessibility_features?: string[]
+          accessibility_note?: string | null
           created_at?: string
           deadline?: string | null
           description?: string
           id?: string
+          is_inclusive_employer?: boolean
           is_published?: boolean
           location?: string
           mode?: Database["public"]["Enums"]["work_mode"]

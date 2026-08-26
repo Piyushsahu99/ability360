@@ -146,3 +146,63 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Accessibility display settings (Divyangjan support)                 */
+/* ------------------------------------------------------------------ */
+
+html.a11y-text-large {
+  font-size: 112.5%;
+}
+
+html.a11y-text-xlarge {
+  font-size: 125%;
+}
+
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+html.a11y-dyslexic body {
+  font-family: Verdana, Tahoma, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.03em;
+  word-spacing: 0.12em;
+  line-height: 1.75;
+}
+
+html.a11y-underline-links a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html.a11y-high-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.12 0 0);
+  --surface: oklch(1 0 0);
+  --surface-foreground: oklch(0.12 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.25 0.13 275);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.12 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.3 0 0);
+  --accent: oklch(0.93 0 0);
+  --accent-foreground: oklch(0.12 0 0);
+  --border: oklch(0.3 0 0);
+  --input: oklch(0.3 0 0);
+  --ring: oklch(0.2 0.15 275);
+}
+
+html.a11y-high-contrast :focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
