@@ -1,15 +1,6 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  BookOpen,
-  Briefcase,
-  CalendarClock,
-  Compass,
-  GraduationCap,
-  LayoutDashboard,
-  Target,
-  UserRound,
-} from "lucide-react";
+import { Briefcase, CalendarClock, GraduationCap, Target, UserRound } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
