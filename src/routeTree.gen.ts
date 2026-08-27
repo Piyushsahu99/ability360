@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
+import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authenticated/accessibility'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
@@ -53,6 +54,12 @@ const RolesRoute = RolesRouteImport.update({
   path: '/roles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAccessibilityRoute =
+  AuthenticatedAccessibilityRouteImport.update({
+    id: '/accessibility',
+    path: '/accessibility',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
   id: '/assessment',
   path: '/assessment',
@@ -105,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -120,6 +128,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -137,6 +146,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/_authenticated/accessibility': typeof AuthenticatedAccessibilityRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/accessibility'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/accessibility'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -185,6 +197,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/_authenticated/accessibility'
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
@@ -248,6 +261,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RolesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/accessibility': {
+      id: '/_authenticated/accessibility'
+      path: '/accessibility'
+      fullPath: '/accessibility'
+      preLoaderRoute: typeof AuthenticatedAccessibilityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/assessment': {
       id: '/_authenticated/assessment'
       path: '/assessment'
@@ -308,6 +328,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccessibilityRoute: typeof AuthenticatedAccessibilityRoute
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
@@ -319,6 +340,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccessibilityRoute: AuthenticatedAccessibilityRoute,
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
