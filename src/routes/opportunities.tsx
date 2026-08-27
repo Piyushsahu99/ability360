@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, MapPin, Search, Wallet } from "lucide-react";
+import { Accessibility, BadgeCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { SiteFooter } from "@/components/site-footer";
@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -48,6 +49,7 @@ function OpportunitiesPage() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("all");
   const [mode, setMode] = useState("all");
+  const [inclusiveOnly, setInclusiveOnly] = useState(false);
 
   const results = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -60,9 +62,10 @@ function OpportunitiesPage() {
         item.tags.some((tag) => tag.toLowerCase().includes(term));
       const matchesType = type === "all" || item.type === type;
       const matchesMode = mode === "all" || item.mode === mode;
-      return matchesTerm && matchesType && matchesMode;
+      const matchesInclusive = !inclusiveOnly || item.is_inclusive_employer;
+      return matchesTerm && matchesType && matchesMode && matchesInclusive;
     });
-  }, [data, search, type, mode]);
+  }, [data, search, type, mode, inclusiveOnly]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -135,6 +138,19 @@ function OpportunitiesPage() {
             </div>
           </div>
 
+          <div className="mt-3 flex items-start justify-between gap-3 rounded-xl border border-border bg-card p-4">
+            <div>
+              <Label htmlFor="filter-inclusive" className="flex items-center gap-2 text-sm">
+                <Accessibility className="size-4 text-primary" aria-hidden="true" />
+                Inclusive employers only
+              </Label>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Roles that publish their accommodations for Divyangjan candidates.
+              </p>
+            </div>
+            <Switch id="filter-inclusive" checked={inclusiveOnly} onCheckedChange={setInclusiveOnly} />
+          </div>
+
           <p className="mt-4 text-sm text-muted-foreground" aria-live="polite">
             {isPending ? "Loading opportunities…" : `${results.length} opportunit${results.length === 1 ? "y" : "ies"}`}
           </p>
@@ -166,6 +182,12 @@ function OpportunitiesPage() {
                         {opportunityTypeLabels[item.type]}
                       </Badge>
                       <Badge variant="outline">{workModeLabels[item.mode]}</Badge>
+                      {item.is_inclusive_employer && (
+                        <Badge variant="outline" className="gap-1 border-teal/50 text-teal">
+                          <BadgeCheck className="size-3.5" aria-hidden="true" />
+                          Inclusive employer
+                        </Badge>
+                      )}
                     </div>
                     <CardTitle className="mt-2 text-lg">{item.title}</CardTitle>
                     <CardDescription className="font-medium text-foreground">
@@ -183,6 +205,23 @@ function OpportunitiesPage() {
                         </li>
                       ))}
                     </ul>
+                    {item.accessibility_features.length > 0 && (
+                      <div>
+                        <p className="text-xs font-medium">Accommodations offered</p>
+                        <ul className="mt-1.5 flex flex-wrap gap-1.5">
+                          {item.accessibility_features.map((feature) => (
+                            <li key={feature}>
+                              <Badge variant="outline" className="font-normal">
+                                {feature}
+                              </Badge>
+                            </li>
+                          ))}
+                        </ul>
+                        {item.accessibility_note && (
+                          <p className="mt-1.5 text-xs text-muted-foreground">{item.accessibility_note}</p>
+                        )}
+                      </div>
+                    )}
                     <dl className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
                       <div className="flex items-center gap-1.5">
                         <MapPin className="size-4 shrink-0" aria-hidden="true" />
