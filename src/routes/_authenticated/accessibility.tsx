@@ -29,7 +29,7 @@ import {
   type AccessibilityPrefs,
 } from "@/lib/accessibility";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
-import { accessibilityNav } from "@/lib/nav";
+import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/accessibility")({
   head: () => ({
@@ -47,7 +47,7 @@ export const Route = createFileRoute("/_authenticated/accessibility")({
       },
     ],
   }),
-  component: AccessibilityHub;
+  component: AccessibilityHub,
 });
 
 function AccessibilityHub() {
@@ -77,7 +77,7 @@ function AccessibilityHub() {
       role="student"
       title="Accessibility & Divyangjan support"
       subtitle="Tell us how the platform should adapt, and find employers who are ready for you."
-      nav={accessibilityNav}
+      nav={studentNav("/accessibility")}
     >
       <div className="rounded-xl border border-border bg-card p-5">
         <p className="flex items-start gap-3 text-sm text-muted-foreground">

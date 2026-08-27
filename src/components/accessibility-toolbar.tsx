@@ -45,7 +45,7 @@ export function AccessibilityToolbar() {
 
   function step(direction: 1 | -1) {
     const index = scales.indexOf(settings.textScale);
-    const next = scales[Math.min(scales.length - 1, Math.max(0, index + direction))];
+    const next = scales[Math.min(scales.length - 1, Math.max(0, index + direction))] ?? "normal";
     update({ textScale: next });
   }
 
