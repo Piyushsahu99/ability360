@@ -18,6 +18,7 @@ import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { useMe } from "@/lib/auth";
+import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
 
@@ -41,15 +42,6 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
   component: StudentDashboard,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, active: true, to: "/dashboard/student" },
-  { label: "Student DNA", icon: UserRound, to: "/dna" },
-  { label: "Career roles", icon: Compass, to: "/roles" },
-  { label: "Skills", icon: Target, to: "/assessment" },
-  { label: "Learning", icon: BookOpen },
-  { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass, to: "/opportunities" },
-];
 
 const skills = [
   { name: "Programming fundamentals", value: 72 },
@@ -72,7 +64,7 @@ function StudentDashboard() {
       role="student"
       title={`Welcome${me?.fullName ? `, ${me.fullName.split(" ")[0]}` : ""}`}
       subtitle="Your semester-by-semester path from learning to first career."
-      nav={nav}
+      nav={studentNav("/dashboard/student")}
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Profile completeness" value="45%" hint="Add projects to reach 70%" icon={UserRound} />
