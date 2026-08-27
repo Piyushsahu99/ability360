@@ -29,7 +29,7 @@ import {
   type AccessibilityPrefs,
 } from "@/lib/accessibility";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
-import { accessibilityNav } from "@/lib/nav";
+import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/accessibility")({
   head: () => ({
