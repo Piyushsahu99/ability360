@@ -19,6 +19,7 @@ import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authen
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardIndustryRouteImport } from './routes/_authenticated/dashboard.industry'
@@ -75,6 +76,11 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/roadmap': typeof AuthenticatedRoadmapRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/_authenticated/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/assessment'
     | '/dna'
     | '/onboarding'
+    | '/roadmap'
     | '/dashboard/admin'
     | '/dashboard/industry'
     | '/dashboard/institution'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/assessment'
     | '/dna'
     | '/onboarding'
+    | '/roadmap'
     | '/dashboard/admin'
     | '/dashboard/industry'
     | '/dashboard/institution'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
+    | '/_authenticated/roadmap'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/industry'
     | '/_authenticated/dashboard/institution'
@@ -289,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/roadmap': {
+      id: '/_authenticated/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
@@ -332,6 +351,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
   AuthenticatedDashboardInstitutionRoute: typeof AuthenticatedDashboardInstitutionRoute
@@ -344,6 +364,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardIndustryRoute: AuthenticatedDashboardIndustryRoute,
   AuthenticatedDashboardInstitutionRoute:
