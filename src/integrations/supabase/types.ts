@@ -359,6 +359,45 @@ export type Database = {
           },
         ]
       }
+      roadmap_progress: {
+        Row: {
+          completed_at: string
+          id: string
+          role_id: string | null
+          student_id: string
+          task_key: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          role_id?: string | null
+          student_id: string
+          task_key: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          role_id?: string | null
+          student_id?: string
+          task_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roadmap_progress_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "career_roles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roadmap_progress_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       skills: {
         Row: {
           category: Database["public"]["Enums"]["skill_category"]
