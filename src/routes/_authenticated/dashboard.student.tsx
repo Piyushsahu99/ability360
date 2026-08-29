@@ -1,6 +1,6 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Briefcase, CalendarClock, CheckCircle2, Circle, GraduationCap, Target, UserRound } from "lucide-react";
+import { Accessibility, ArrowRight, BadgeCheck, Briefcase, CalendarClock, CheckCircle2, Circle, ExternalLink, GraduationCap, HeartHandshake, Target, UserRound } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import { accessibilityPrefsQueryOptions, prefFields, supportResources } from "@/lib/accessibility";
 import { useMe } from "@/lib/auth";
 import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
