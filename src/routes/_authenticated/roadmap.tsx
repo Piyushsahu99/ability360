@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
   missingSkills,
-  normalise,
   roadmapQueryOptions,
   roadmapWeeks,
   readinessScore,
