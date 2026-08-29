@@ -1,6 +1,6 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Briefcase, CalendarClock, CheckCircle2, Circle, GraduationCap, Target, UserRound } from "lucide-react";
+import { Accessibility, ArrowRight, BadgeCheck, Briefcase, CalendarClock, CheckCircle2, Circle, ExternalLink, GraduationCap, HeartHandshake, Target, UserRound } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import { accessibilityPrefsQueryOptions, prefFields, supportResources } from "@/lib/accessibility";
 import { useMe } from "@/lib/auth";
 import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
@@ -40,6 +41,7 @@ function StudentDashboard() {
   const { data: target } = useQuery(targetRoleQueryOptions);
   const { data: roles } = useQuery(careerRolesQueryOptions);
   const { data: roadmap } = useQuery(roadmapQueryOptions);
+  const { data: a11yPrefs } = useQuery(accessibilityPrefsQueryOptions);
   const targetRole = target?.target_role_id
     ? (roles ?? []).find((role) => role.id === target.target_role_id)
     : undefined;
@@ -51,6 +53,15 @@ function StudentDashboard() {
   const thisWeek = roadmapWeeks[0].items;
   const skillsTracked = roadmap?.skills.length ?? 0;
   const verified = (roadmap?.skills ?? []).filter((skill) => skill.verification_status !== "self_declared").length;
+
+  /* Divyangjan hub tailoring */
+  const activeAccommodations = a11yPrefs ? prefFields.filter((field) => a11yPrefs[field.key]).length : 0;
+  const inclusiveOpportunities = (opportunities ?? []).filter((item) => item.is_inclusive_employer);
+  const tailoredOpportunities = a11yPrefs?.remote_participation
+    ? inclusiveOpportunities.filter((item) => item.mode === "remote")
+    : inclusiveOpportunities;
+  const shownInclusive = tailoredOpportunities.slice(0, 3);
+  const shownResources = supportResources.slice(0, 3);
 
   return (
     <DashboardShell
@@ -114,6 +125,84 @@ function StudentDashboard() {
             </Button>
           </>
         )}
+      </PanelCard>
+
+      <PanelCard
+        title="Divyangjan resources hub"
+        description={
+          activeAccommodations > 0
+            ? `Tailored to your ${activeAccommodations} saved accommodation${activeAccommodations === 1 ? "" : "s"} — private to you.`
+            : "Schemes, rights and inclusive employers for specially abled students."
+        }
+      >
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <p className="flex items-center gap-2 text-sm font-medium">
+              <HeartHandshake className="size-4 text-primary" aria-hidden="true" />
+              Schemes &amp; rights for you
+            </p>
+            <ul className="mt-3 space-y-3">
+              {shownResources.map((resource) => (
+                <li key={resource.title}>
+                  <p className="text-sm font-medium">{resource.title}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{resource.body}</p>
+                  {resource.href && (
+                    <a
+                      className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-primary underline underline-offset-4"
+                      href={resource.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      {resource.action}
+                      <ExternalLink className="size-3" aria-hidden="true" />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="flex items-center gap-2 text-sm font-medium">
+              <BadgeCheck className="size-4 text-primary" aria-hidden="true" />
+              {a11yPrefs?.remote_participation
+                ? "Remote inclusive roles for you"
+                : "Inclusive employers hiring now"}
+            </p>
+            {shownInclusive.length === 0 ? (
+              <EmptyState message="No matching inclusive roles right now — check back soon." />
+            ) : (
+              <ul className="mt-3 space-y-2">
+                {shownInclusive.map((item) => (
+                  <li key={item.id} className="rounded-md border border-border p-3">
+                    <p className="text-sm font-medium">{item.title}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {item.organisation} · {item.location} · Apply by {formatDeadline(item.deadline)}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button asChild className="min-h-11">
+            <Link to="/accessibility">
+              <Accessibility aria-hidden="true" />
+              Open the accessibility hub
+            </Link>
+          </Button>
+          {activeAccommodations === 0 && (
+            <Button asChild variant="outline" className="min-h-11">
+              <Link to="/accessibility">Set my accommodations</Link>
+            </Button>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Helpline for persons with disabilities: 1800-11-1265
+          </p>
+        </div>
       </PanelCard>
 
       <div className="grid gap-6 lg:grid-cols-3">
