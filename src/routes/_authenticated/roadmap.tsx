@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowRight, BookOpen, CheckCircle2, Circle, Compass, Dna, LayoutDashboard, Target, Trophy } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, Circle, Target, Trophy } from "lucide-react";
 import { toast } from "sonner";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { studentNav } from "@/lib/nav";
 import {
   missingSkills,
   roadmapQueryOptions,
@@ -29,14 +30,7 @@ export const Route = createFileRoute("/_authenticated/roadmap")({
   component: RoadmapPage,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
-  { label: "Student DNA", icon: Dna, to: "/dna" },
-  { label: "Career roles", icon: Compass, to: "/roles" },
-  { label: "My roadmap", icon: Target, active: true, to: "/roadmap" },
-  { label: "Skills", icon: Trophy, to: "/assessment" },
-  { label: "Opportunities", icon: BookOpen, to: "/opportunities" },
-];
+const nav = studentNav("/roadmap");
 
 function RoadmapPage() {
   const { data, isPending } = useQuery(roadmapQueryOptions);
