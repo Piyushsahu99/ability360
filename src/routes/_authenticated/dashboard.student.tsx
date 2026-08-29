@@ -187,22 +187,26 @@ function StudentDashboard() {
             )}
           </PanelCard>
 
-          <PanelCard title="Skill progress" description="Updated as you complete work.">
-            <ul className="space-y-4">
-              {skills.map((skill) => (
-                <li key={skill.name}>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>{skill.name}</span>
-                    <span className="text-muted-foreground">{skill.value}%</span>
-                  </div>
-                  <Progress
-                    value={skill.value}
-                    className="mt-2"
-                    aria-label={`${skill.name} progress`}
-                  />
-                </li>
-              ))}
-            </ul>
+          <PanelCard title="Skill progress" description="Your saved skills and their confidence level.">
+            {(roadmap?.skills.length ?? 0) === 0 ? (
+              <EmptyState message="No skills saved yet — add them in your Student DNA." />
+            ) : (
+              <ul className="space-y-4">
+                {(roadmap?.skills ?? []).slice(0, 5).map((skill, index) => (
+                  <li key={`${skill.skills?.name ?? "skill"}-${index}`}>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>{skill.skills?.name ?? "Skill"}</span>
+                      <span className="text-muted-foreground">{skill.level * 20}%</span>
+                    </div>
+                    <Progress
+                      value={skill.level * 20}
+                      className="mt-2"
+                      aria-label={`${skill.skills?.name ?? "Skill"} progress`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </PanelCard>
 
           <PanelCard title="Upcoming deadlines" description="Nothing tracked yet.">
