@@ -41,6 +41,7 @@ function StudentDashboard() {
   const { data: target } = useQuery(targetRoleQueryOptions);
   const { data: roles } = useQuery(careerRolesQueryOptions);
   const { data: roadmap } = useQuery(roadmapQueryOptions);
+  const { data: a11yPrefs } = useQuery(accessibilityPrefsQueryOptions);
   const targetRole = target?.target_role_id
     ? (roles ?? []).find((role) => role.id === target.target_role_id)
     : undefined;
@@ -52,6 +53,15 @@ function StudentDashboard() {
   const thisWeek = roadmapWeeks[0].items;
   const skillsTracked = roadmap?.skills.length ?? 0;
   const verified = (roadmap?.skills ?? []).filter((skill) => skill.verification_status !== "self_declared").length;
+
+  /* Divyangjan hub tailoring */
+  const activeAccommodations = a11yPrefs ? prefFields.filter((field) => a11yPrefs[field.key]).length : 0;
+  const inclusiveOpportunities = (opportunities ?? []).filter((item) => item.is_inclusive_employer);
+  const tailoredOpportunities = a11yPrefs?.remote_participation
+    ? inclusiveOpportunities.filter((item) => item.mode === "remote")
+    : inclusiveOpportunities;
+  const shownInclusive = tailoredOpportunities.slice(0, 3);
+  const shownResources = supportResources.slice(0, 3);
 
   return (
     <DashboardShell
