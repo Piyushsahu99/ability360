@@ -1,6 +1,6 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Briefcase, CalendarClock, GraduationCap, Target, UserRound } from "lucide-react";
+import { ArrowRight, Briefcase, CalendarClock, CheckCircle2, Circle, GraduationCap, Target, UserRound } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,7 @@ import { useMe } from "@/lib/auth";
 import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
+import { missingSkills, readinessScore, roadmapQueryOptions, roadmapWeeks } from "@/lib/roadmap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
   beforeLoad: async ({ context }) => {
@@ -33,22 +34,23 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
   component: StudentDashboard,
 });
 
-
-const skills = [
-  { name: "Programming fundamentals", value: 72 },
-  { name: "Communication", value: 58 },
-  { name: "Domain projects", value: 40 },
-];
-
 function StudentDashboard() {
   const { data: me } = useMe();
   const { data: opportunities, isPending } = useQuery(opportunitiesQueryOptions);
   const { data: target } = useQuery(targetRoleQueryOptions);
   const { data: roles } = useQuery(careerRolesQueryOptions);
+  const { data: roadmap } = useQuery(roadmapQueryOptions);
   const targetRole = target?.target_role_id
     ? (roles ?? []).find((role) => role.id === target.target_role_id)
     : undefined;
   const recommended = (opportunities ?? []).slice(0, 3);
+
+  const readiness = roadmap ? readinessScore(roadmap.role, roadmap.skills) : 0;
+  const gaps = roadmap ? missingSkills(roadmap.role, roadmap.skills) : [];
+  const doneKeys = new Set((roadmap?.progress ?? []).map((item) => item.task_key));
+  const thisWeek = roadmapWeeks[0].items;
+  const skillsTracked = roadmap?.skills.length ?? 0;
+  const verified = (roadmap?.skills ?? []).filter((skill) => skill.verification_status !== "self_declared").length;
 
   return (
     <DashboardShell
@@ -58,11 +60,61 @@ function StudentDashboard() {
       nav={studentNav("/dashboard/student")}
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Profile completeness" value="45%" hint="Add projects to reach 70%" icon={UserRound} />
-        <StatCard label="Skills tracked" value="8" hint="3 verified by faculty" icon={Target} />
+        <StatCard
+          label="Career readiness"
+          value={targetRole ? `${readiness}%` : "—"}
+          hint={targetRole ? `Towards ${targetRole.title}` : "Choose a target role to unlock"}
+          icon={GraduationCap}
+        />
+        <StatCard
+          label="Skills tracked"
+          value={String(skillsTracked)}
+          hint={`${verified} verified by assessment`}
+          icon={Target}
+        />
+        <StatCard
+          label="Priority skill gaps"
+          value={String(gaps.length)}
+          hint={gaps[0] ? `Start with ${gaps[0]}` : "Nothing outstanding"}
+          icon={UserRound}
+        />
         <StatCard label="Applications" value="0" hint="Nothing submitted yet" icon={Briefcase} />
-        <StatCard label="Career readiness" value="Level 2" hint="Develop stage" icon={GraduationCap} />
       </div>
+
+      <PanelCard title="What should I do this week?" description="Three small steps that build real evidence.">
+        {targetRole ? (
+          <>
+            <Progress value={readiness} className="mb-4" aria-label={`Career readiness ${readiness}%`} />
+            <ul className="space-y-2">
+              {thisWeek.map((item) => (
+                <li key={item.key} className="flex items-start gap-3 rounded-md border border-border p-3">
+                  {doneKeys.has(item.key) ? (
+                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" aria-hidden="true" />
+                  ) : (
+                    <Circle className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
+                  )}
+                  <span className="min-w-0">
+                    <span className="block text-sm font-medium">{item.title}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">{item.detail}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Button asChild className="mt-4 min-h-11">
+              <Link to="/roadmap">
+                Open my graduation roadmap <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+          </>
+        ) : (
+          <>
+            <EmptyState message="Pick a target role and your weekly plan appears here." />
+            <Button asChild className="mt-4 min-h-11">
+              <Link to="/roles">Choose a target role</Link>
+            </Button>
+          </>
+        )}
+      </PanelCard>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
