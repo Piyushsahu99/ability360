@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * ABILITY360 design system.
- * Navy primary, off-white surfaces, teal + amber accents.
+ * ABILITY360 design system — "Royal Purple Dusk".
+ * Near-black violet surfaces, violet primary, pink accent.
  * All colors in oklch, exposed to Tailwind via @theme inline.
  */
 
@@ -18,8 +18,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bebas Neue", "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
@@ -66,48 +66,48 @@
 
 :root,
 .dark {
-  --radius: 0.375rem;
-  --background: oklch(0.13 0.023 285);
-  --foreground: oklch(0.93 0.012 285);
-  --surface: oklch(0.18 0.038 285);
-  --surface-foreground: oklch(0.95 0.01 285);
-  --card: oklch(0.18 0.038 285);
-  --card-foreground: oklch(0.95 0.01 285);
-  --popover: oklch(0.18 0.038 285);
-  --popover-foreground: oklch(0.95 0.01 285);
-  --primary: oklch(0.53 0.226 277);
-  --primary-foreground: oklch(0.99 0.005 285);
-  --primary-soft: oklch(0.27 0.079 280);
-  --secondary: oklch(0.24 0.06 283);
-  --secondary-foreground: oklch(0.95 0.01 285);
-  --muted: oklch(0.22 0.05 283);
-  --muted-foreground: oklch(0.72 0.032 275);
-  --accent: oklch(0.27 0.079 280);
-  --accent-foreground: oklch(0.9 0.05 285);
-  --teal: oklch(0.68 0.16 277);
-  --teal-foreground: oklch(0.14 0.03 285);
+  --radius: 0.75rem;
+  --background: oklch(0.145 0.045 302);
+  --foreground: oklch(0.95 0.015 300);
+  --surface: oklch(0.2 0.075 300);
+  --surface-foreground: oklch(0.96 0.012 300);
+  --card: oklch(0.2 0.075 300);
+  --card-foreground: oklch(0.96 0.012 300);
+  --popover: oklch(0.2 0.075 300);
+  --popover-foreground: oklch(0.96 0.012 300);
+  --primary: oklch(0.51 0.23 287);
+  --primary-foreground: oklch(0.99 0.005 300);
+  --primary-soft: oklch(0.28 0.09 292);
+  --secondary: oklch(0.25 0.06 300);
+  --secondary-foreground: oklch(0.95 0.012 300);
+  --muted: oklch(0.24 0.055 300);
+  --muted-foreground: oklch(0.7 0.03 295);
+  --accent: oklch(0.28 0.09 292);
+  --accent-foreground: oklch(0.92 0.05 300);
+  --teal: oklch(0.72 0.19 350);
+  --teal-foreground: oklch(0.16 0.04 350);
   --amber: oklch(0.78 0.13 78);
   --amber-foreground: oklch(0.18 0.04 60);
   --success: oklch(0.72 0.13 158);
   --success-foreground: oklch(0.16 0.03 158);
   --destructive: oklch(0.62 0.2 22);
   --destructive-foreground: oklch(0.98 0.01 20);
-  --border: oklch(0.29 0.09 278);
-  --input: oklch(0.32 0.09 278);
-  --ring: oklch(0.62 0.2 277);
-  --chart-1: oklch(0.53 0.226 277);
-  --chart-2: oklch(0.68 0.16 277);
+  --border: oklch(0.3 0.06 300);
+  --input: oklch(0.33 0.06 300);
+  --ring: oklch(0.72 0.19 350);
+  --chart-1: oklch(0.51 0.23 287);
+  --chart-2: oklch(0.72 0.19 350);
   --chart-3: oklch(0.78 0.13 78);
   --chart-4: oklch(0.72 0.13 158);
-  --chart-5: oklch(0.72 0.032 275);
-  --sidebar: oklch(0.15 0.03 285);
-  --sidebar-foreground: oklch(0.93 0.012 285);
-  --sidebar-primary: oklch(0.53 0.226 277);
-  --sidebar-primary-foreground: oklch(0.99 0.005 285);
-  --sidebar-accent: oklch(0.24 0.06 283);
-  --sidebar-accent-foreground: oklch(0.95 0.01 285);
-  --sidebar-border: oklch(0.29 0.09 278);
-  --sidebar-ring: oklch(0.62 0.2 277);
+  --chart-5: oklch(0.7 0.03 295);
+  --sidebar: oklch(0.165 0.055 302);
+  --sidebar-foreground: oklch(0.95 0.015 300);
+  --sidebar-primary: oklch(0.51 0.23 287);
+  --sidebar-primary-foreground: oklch(0.99 0.005 300);
+  --sidebar-accent: oklch(0.25 0.06 300);
+  --sidebar-accent-foreground: oklch(0.95 0.012 300);
+  --sidebar-border: oklch(0.3 0.06 300);
+  --sidebar-ring: oklch(0.72 0.19 350);
 }
 
 @layer base {
@@ -127,7 +127,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.015em;
+    letter-spacing: 0.02em;
   }
 
   :focus-visible {

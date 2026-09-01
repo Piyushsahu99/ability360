@@ -4,7 +4,7 @@ import {
   Building2,
   Compass,
   GraduationCap,
-  LineChart,
+  Lightbulb,
   School,
   ShieldCheck,
   Users,
@@ -37,66 +37,38 @@ export const Route = createFileRoute("/")({
 });
 
 const pillars = [
-  {
-    index: "01",
-    icon: GraduationCap,
-    title: "Students",
-    body: "One career profile that grows every semester — skills, projects and readiness.",
-  },
-  {
-    index: "02",
-    icon: School,
-    title: "Colleges",
-    body: "Cohort-level placement readiness and outcomes, without spreadsheets.",
-  },
-  {
-    index: "03",
-    icon: Users,
-    title: "Faculty",
-    body: "Mentor with context: track progress, endorse skills, guide project work.",
-  },
-  {
-    index: "04",
-    icon: Building2,
-    title: "Industry",
-    body: "Reach verified campus talent and shortlist against evidence, not resumes.",
-  },
-  {
-    index: "05",
-    icon: Compass,
-    title: "Opportunities",
-    body: "Internships, jobs, training and research projects in one live feed.",
-  },
+  { icon: GraduationCap, title: "Students", note: "Future leaders" },
+  { icon: School, title: "Colleges", note: "Resource hubs" },
+  { icon: Users, title: "Faculty", note: "Mentorship" },
+  { icon: Building2, title: "Industry", note: "Career links" },
+  { icon: Compass, title: "Opportunities", note: "Endless growth" },
 ];
 
 const journey = [
   {
-    step: "Semester 1–2",
+    step: "01",
     title: "Discover",
     body: "Build a profile, map interests and start skill baselines.",
+    accent: "primary" as const,
   },
   {
-    step: "Semester 3–4",
+    step: "02",
     title: "Develop",
     body: "Take on projects, training and faculty-guided work.",
+    accent: "teal" as const,
   },
   {
-    step: "Semester 5–6",
+    step: "03",
     title: "Demonstrate",
     body: "Convert learning into internships and verified evidence.",
+    accent: "primary" as const,
   },
   {
-    step: "Semester 7–8",
+    step: "04",
     title: "Deploy",
     body: "Move into placement-ready shortlists and first roles.",
+    accent: "teal" as const,
   },
-];
-
-const workspaces = [
-  { icon: GraduationCap, label: "Student", note: "Readiness, skills, applications" },
-  { icon: Building2, label: "Industry", note: "Roles, pipeline, talent pool" },
-  { icon: School, label: "Institution", note: "Cohorts, outcomes, faculty" },
-  { icon: LineChart, label: "Admin", note: "Platform health and verification" },
 ];
 
 function LandingPage() {
@@ -105,151 +77,180 @@ function LandingPage() {
       <SiteHeader />
 
       <main>
-        <div className="mx-auto w-full max-w-7xl space-y-24 px-4 py-16 sm:px-6 md:space-y-32 md:py-24">
-          {/* Hero */}
-          <section className="grid grid-cols-1 items-end gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <h1 className="font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tighter text-foreground sm:text-7xl lg:text-8xl">
-                From first
-                <br />
-                <span className="text-primary">semester</span>
-                <br />
-                to first career
-              </h1>
-              <p className="mt-8 max-w-xl text-lg font-medium text-muted-foreground sm:text-xl">
-                The Academia–Industry Career OS. ABILITY360 gives every student a personalised path — and
-                gives colleges, faculty and employers one shared place to support it.
+        {/* Split-screen hero */}
+        <section className="flex min-h-[calc(100vh-4rem)] flex-col lg:flex-row">
+          {/* Left: message */}
+          <div className="relative flex w-full flex-col justify-center overflow-hidden px-6 py-20 sm:px-10 lg:w-1/2 lg:px-20 lg:py-0">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-20 top-1/4 size-64 rounded-full bg-primary/20 blur-[100px]"
+            />
+            <h1 className="relative z-10 font-display text-7xl uppercase leading-[0.9] tracking-wide text-foreground sm:text-8xl lg:text-9xl">
+              <span className="block">From first</span>
+              <span className="block text-teal">semester</span>
+              <span className="inline-block border-b-4 border-foreground">To first career</span>
+            </h1>
+            <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              The Academia–Industry Career OS for Indian college students. An inclusive ecosystem
+              that empowers every student to build their professional legacy.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-6">
+              <Button asChild size="lg" className="min-h-14 rounded-xl px-8 text-base font-bold">
+                <Link to="/register">
+                  Launch workspace
+                  <ArrowRight aria-hidden="true" />
+                </Link>
+              </Button>
+              <p className="flex items-center gap-2 text-sm font-semibold text-teal">
+                <span className="size-2 animate-pulse rounded-full bg-teal" aria-hidden="true" />
+                WCAG AA inclusive design
               </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Button asChild size="lg" className="min-h-12 px-8 font-bold">
-                  <Link to="/register">
-                    Get started free
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="min-h-12 px-8 font-bold">
-                  <Link to="/opportunities">Explore opportunities</Link>
-                </Button>
+            </div>
+          </div>
+
+          {/* Right: product preview */}
+          <div className="relative flex w-full items-center justify-center overflow-hidden bg-surface p-6 sm:p-10 lg:w-1/2 lg:p-12">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-20 -top-20 size-96 rounded-full bg-primary/20 blur-[120px]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-20 -right-20 size-96 rounded-full bg-teal/20 blur-[120px]"
+            />
+            <div className="relative w-full max-w-xl rounded-3xl border border-border bg-background p-6 shadow-2xl">
+              <div
+                aria-hidden="true"
+                className="mb-6 flex h-8 items-center gap-2 rounded-t-xl bg-secondary/60 px-4"
+              >
+                <span className="size-3 rounded-full bg-destructive/50" />
+                <span className="size-3 rounded-full bg-amber/50" />
+                <span className="size-3 rounded-full bg-success/50" />
               </div>
-              <p className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
-                <ShieldCheck className="size-4" aria-hidden="true" />
-                Accessibility-first, role-based and privacy respecting.
-              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="h-32 rounded-xl border border-border bg-gradient-to-br from-primary/20 to-transparent p-4">
+                  <div className="mb-3 h-2 w-1/2 rounded-full bg-foreground/20" />
+                  <div className="h-12 w-full rounded-lg bg-secondary/60" />
+                </div>
+                <div className="h-32 rounded-xl border border-border bg-card p-4">
+                  <div className="mb-3 h-2 w-1/3 rounded-full bg-teal/40" />
+                  <div className="space-y-2">
+                    <div className="h-2 w-full rounded-full bg-secondary/60" />
+                    <div className="h-2 w-4/5 rounded-full bg-secondary/60" />
+                  </div>
+                </div>
+                <div className="col-span-2 flex h-48 items-center justify-center rounded-xl border border-border bg-secondary/40">
+                  <div className="text-center">
+                    <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-primary shadow-lg shadow-primary/50">
+                      <Lightbulb className="size-8 text-primary-foreground" aria-hidden="true" />
+                    </div>
+                    <p className="font-display text-xl uppercase tracking-widest text-foreground">
+                      Semester phase: Develop
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
 
-            <div className="border-l border-border pb-4 pl-8 lg:col-span-4">
-              <span className="font-display text-sm font-bold uppercase tracking-widest text-primary">
-                Status: Online
-              </span>
-              <h2 className="mt-4 font-display text-2xl font-semibold text-foreground">
-                Unified ecosystem
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Bridging the gap between academic learning and industry expectations.
-              </p>
-            </div>
-          </section>
-
-          {/* Pillars */}
-          <section aria-labelledby="pillars-heading">
+        {/* Ecosystem pillars */}
+        <section aria-labelledby="pillars-heading" className="px-6 py-24 sm:px-10">
+          <div className="mx-auto max-w-7xl">
             <h2 id="pillars-heading" className="sr-only">
               Five sides of the same career journey
             </h2>
-            <div className="grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3 lg:grid-cols-5">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-5">
               {pillars.map((pillar) => (
-                <div key={pillar.title} className="bg-background p-8 transition-colors hover:bg-surface">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase text-primary">{pillar.index}</span>
-                    <pillar.icon className="size-4 text-muted-foreground" aria-hidden="true" />
-                  </div>
-                  <h3 className="mb-2 mt-4 font-display text-xl text-foreground">{pillar.title}</h3>
-                  <p className="text-sm text-muted-foreground">{pillar.body}</p>
+                <div
+                  key={pillar.title}
+                  className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-teal/50"
+                >
+                  <pillar.icon className="mb-3 size-5 text-primary" aria-hidden="true" />
+                  <h3 className="mb-1 font-display text-2xl uppercase tracking-wider text-foreground">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                    {pillar.note}
+                  </p>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Journey */}
-          <section className="space-y-12" aria-labelledby="journey-heading">
-            <div className="flex flex-col justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-end">
-              <h2 id="journey-heading" className="font-display text-4xl font-bold text-foreground">
-                The journey
-              </h2>
-              <p className="max-w-xs text-sm italic text-muted-foreground sm:text-right">
-                A structured, semester-by-semester approach to professional readiness.
-              </p>
-            </div>
-            <ol className="grid grid-cols-1 gap-8 md:grid-cols-4">
-              {journey.map((phase, index) => (
-                <li key={phase.title} className="space-y-4">
-                  <div className={index === 0 ? "h-1 w-full bg-primary" : "h-1 w-full bg-border"} />
-                  <span className="font-display text-xs font-semibold uppercase tracking-widest text-primary">
+        {/* Semester journey */}
+        <section
+          aria-labelledby="journey-heading"
+          className="border-y border-border bg-surface px-6 py-20 sm:px-10"
+        >
+          <div className="mx-auto max-w-7xl">
+            <h2
+              id="journey-heading"
+              className="mb-10 font-display text-5xl uppercase tracking-wider text-foreground"
+            >
+              The 4-phase journey
+            </h2>
+            <ol className="grid grid-cols-1 gap-4 md:grid-cols-4">
+              {journey.map((phase) => (
+                <li
+                  key={phase.title}
+                  className={
+                    phase.accent === "primary"
+                      ? "rounded-3xl border-l-4 border-primary bg-background p-8"
+                      : "rounded-3xl border-l-4 border-teal bg-background p-8"
+                  }
+                >
+                  <span
+                    className={
+                      phase.accent === "primary"
+                        ? "font-display text-4xl text-primary"
+                        : "font-display text-4xl text-teal"
+                    }
+                  >
                     {phase.step}
                   </span>
-                  <h3 className="font-display text-xl font-bold uppercase text-foreground">
-                    {phase.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{phase.body}</p>
+                  <h3 className="mt-2 text-xl font-bold text-foreground">{phase.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{phase.body}</p>
                 </li>
               ))}
             </ol>
-          </section>
+          </div>
+        </section>
 
-          {/* Workspaces */}
-          <section
-            className="relative overflow-hidden rounded-lg border border-border bg-surface p-8 sm:p-12"
-            aria-labelledby="workspaces-heading"
+        {/* Closing CTA */}
+        <section className="px-6 py-24 text-center sm:px-10" aria-labelledby="cta-heading">
+          <h2
+            id="cta-heading"
+            className="font-display text-5xl uppercase tracking-wider text-foreground sm:text-6xl"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute right-0 top-0 size-64 bg-primary opacity-10 blur-[120px]"
-            />
-            <div className="flex flex-col items-start gap-12 lg:flex-row">
-              <div className="w-full lg:w-1/3">
-                <h2
-                  id="workspaces-heading"
-                  className="mb-8 font-display text-3xl font-bold text-foreground"
-                >
-                  Workspaces
-                </h2>
-                <ul className="flex flex-col gap-4">
-                  {workspaces.map((item, index) => (
-                    <li
-                      key={item.label}
-                      className={
-                        index === 0
-                          ? "flex items-center gap-3 rounded-md bg-primary px-6 py-4 text-primary-foreground"
-                          : "flex items-center gap-3 rounded-md border border-border px-6 py-4 text-muted-foreground"
-                      }
-                    >
-                      <item.icon className="size-4 shrink-0" aria-hidden="true" />
-                      <span>
-                        <span className="block text-sm font-bold">{item.label}</span>
-                        <span className="block text-xs opacity-80">{item.note}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-full items-center justify-center rounded-lg border border-border bg-background p-8 lg:w-2/3 lg:aspect-video">
-                <div className="text-center">
-                  <div className="mx-auto mb-6 h-1 w-16 bg-primary" />
-                  <p className="font-display text-lg text-foreground">One profile, four workspaces</p>
-                  <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-                    Sign in and ABILITY360 opens the workspace that matches your role — student, industry,
-                    institution or admin.
-                  </p>
-                  <Button asChild className="mt-6 min-h-11 font-bold">
-                    <Link to="/register">
-                      Create your account
-                      <ArrowRight aria-hidden="true" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+            One profile, <span className="text-primary">four workspaces</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
+            Sign in and ABILITY360 opens the workspace that matches your role — student, industry,
+            institution or admin.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Button asChild size="lg" className="min-h-14 rounded-xl px-8 text-base font-bold">
+              <Link to="/register">
+                Create your account
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="min-h-14 rounded-xl px-8 text-base font-bold"
+            >
+              <Link to="/roles">Explore career roles</Link>
+            </Button>
+          </div>
+          <p className="mt-8 flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
+            <ShieldCheck className="size-4" aria-hidden="true" />
+            Accessibility-first · Inclusive of Divyangjan · WCAG 2.1 AA
+          </p>
+        </section>
       </main>
 
       <SiteFooter />
