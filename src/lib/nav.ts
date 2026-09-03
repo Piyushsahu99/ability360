@@ -19,7 +19,7 @@ const studentItems: NavItem[] = [
   { label: "Skills", icon: Target, to: "/assessment" },
   { label: "Accessibility", icon: Accessibility, to: "/accessibility" },
   { label: "Learning", icon: BookOpen },
-  { label: "Applications", icon: Briefcase },
+  { label: "Applications", icon: Briefcase, to: "/applications" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
