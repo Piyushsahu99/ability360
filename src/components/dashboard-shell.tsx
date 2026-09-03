@@ -159,14 +159,14 @@ export function StatCard({
   label: string;
   value: string;
   hint: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
 }) {
   return (
     <Card>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
           <CardDescription>{label}</CardDescription>
-          <Icon className="size-4 text-teal" aria-hidden="true" />
+          {Icon ? <Icon className="size-4 text-teal" aria-hidden="true" /> : null}
         </div>
         <CardTitle className="text-2xl">{value}</CardTitle>
       </CardHeader>
@@ -180,27 +180,48 @@ export function StatCard({
 export function PanelCard({
   title,
   description,
+  action,
   children,
 }: {
   title: string;
   description: string;
+  action?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <CardTitle className="text-base">{title}</CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+          {action}
+        </div>
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
   );
 }
 
-export function EmptyState({ message }: { message: string }) {
+export function EmptyState({
+  message,
+  title,
+  description,
+  action,
+}: {
+  message?: string;
+  title?: string;
+  description?: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="rounded-lg border border-dashed border-border bg-surface p-6 text-center text-sm text-muted-foreground">
+      {title ? <p className="font-medium text-foreground">{title}</p> : null}
+      {description ? <p className="mt-1">{description}</p> : null}
       {message}
+      {action ? <div className="mt-3">{action}</div> : null}
     </div>
   );
 }
+
