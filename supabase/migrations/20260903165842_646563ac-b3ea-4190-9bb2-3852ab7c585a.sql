@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.log_application_status() FROM PUBLIC, anon, authenticated;

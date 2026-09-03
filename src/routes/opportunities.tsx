@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { Accessibility, BadgeCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Accessibility, BadgeCheck, Bookmark, BookmarkCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,12 +20,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { applicationsQueryOptions, saveOpportunity, statusLabels } from "@/lib/applications";
+import { useSession } from "@/lib/auth";
 import {
   formatDeadline,
   opportunitiesQueryOptions,
   opportunityTypeLabels,
   workModeLabels,
+  type Opportunity,
 } from "@/lib/opportunities";
+
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -239,8 +245,10 @@ function OpportunitiesPage() {
                         <dd>{formatDeadline(item.deadline)}</dd>
                       </div>
                     </dl>
+                    <SaveAction opportunity={item} />
                   </CardContent>
                 </Card>
+
               ))}
           </div>
 
@@ -257,5 +265,59 @@ function OpportunitiesPage() {
 
       <SiteFooter />
     </div>
+  );
+}
+
+function SaveAction({ opportunity }: { opportunity: Opportunity }) {
+  const { data: session } = useSession();
+  const queryClient = useQueryClient();
+  const { data: applications } = useQuery({
+    ...applicationsQueryOptions,
+    enabled: Boolean(session),
+  });
+
+  const existing = (applications ?? []).find((item) => item.opportunity_id === opportunity.id);
+
+  const saveMutation = useMutation({
+    mutationFn: () => saveOpportunity(opportunity),
+    onSuccess: () => {
+      toast.success("Saved to your applications");
+      void queryClient.invalidateQueries({ queryKey: ["student", "applications"] });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  if (!session) {
+    return (
+      <Button asChild variant="outline" size="sm" className="w-full">
+        <Link to="/login">Sign in to save and apply</Link>
+      </Button>
+    );
+  }
+
+  if (existing) {
+    return (
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className="gap-1 border-teal/50 text-teal">
+          <BookmarkCheck className="size-3.5" aria-hidden="true" />
+          {statusLabels[existing.status]}
+        </Badge>
+        <Button asChild variant="outline" size="sm">
+          <Link to="/applications">Manage application</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <Button
+      size="sm"
+      className="w-full"
+      onClick={() => saveMutation.mutate()}
+      disabled={saveMutation.isPending}
+    >
+      <Bookmark className="size-4" aria-hidden="true" />
+      Save &amp; track
+    </Button>
   );
 }

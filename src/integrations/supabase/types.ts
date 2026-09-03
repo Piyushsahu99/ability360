@@ -67,6 +67,92 @@ export type Database = {
           },
         ]
       }
+      application_documents: {
+        Row: {
+          application_id: string
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["application_document_kind"]
+          link: string | null
+          name: string
+          storage_path: string | null
+          student_id: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["application_document_kind"]
+          link?: string | null
+          name: string
+          storage_path?: string | null
+          student_id: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["application_document_kind"]
+          link?: string | null
+          name?: string
+          storage_path?: string | null
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_documents_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "opportunity_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "application_documents_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      application_events: {
+        Row: {
+          application_id: string
+          changed_by: string | null
+          created_at: string
+          from_status: Database["public"]["Enums"]["application_status"] | null
+          id: string
+          note: string
+          to_status: Database["public"]["Enums"]["application_status"]
+        }
+        Insert: {
+          application_id: string
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["application_status"] | null
+          id?: string
+          note?: string
+          to_status: Database["public"]["Enums"]["application_status"]
+        }
+        Update: {
+          application_id?: string
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["application_status"] | null
+          id?: string
+          note?: string
+          to_status?: Database["public"]["Enums"]["application_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_events_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "opportunity_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       assessment_attempts: {
         Row: {
           category: Database["public"]["Enums"]["skill_category"]
@@ -311,6 +397,60 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      opportunity_applications: {
+        Row: {
+          applied_at: string | null
+          created_at: string
+          deadline: string | null
+          id: string
+          note: string
+          opportunity_id: string
+          status: Database["public"]["Enums"]["application_status"]
+          status_changed_at: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          applied_at?: string | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          note?: string
+          opportunity_id: string
+          status?: Database["public"]["Enums"]["application_status"]
+          status_changed_at?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          applied_at?: string | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          note?: string
+          opportunity_id?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          status_changed_at?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunity_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "opportunity_applications_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -758,6 +898,22 @@ export type Database = {
         | "gov_admin"
         | "mentor"
         | "organizer"
+      application_document_kind:
+        | "resume"
+        | "cover_letter"
+        | "certificate"
+        | "portfolio"
+        | "transcript"
+        | "other"
+      application_status:
+        | "saved"
+        | "preparing"
+        | "applied"
+        | "shortlisted"
+        | "interview"
+        | "selected"
+        | "rejected"
+        | "completed"
       institution_type: "college" | "university" | "polytechnic" | "other"
       opportunity_type: "internship" | "job" | "project" | "training"
       skill_category: "technical" | "soft" | "aptitude" | "domain"
@@ -782,12 +938,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -811,11 +967,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -836,11 +992,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -861,11 +1017,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -878,11 +1034,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -903,6 +1059,24 @@ export const Constants = {
         "gov_admin",
         "mentor",
         "organizer",
+      ],
+      application_document_kind: [
+        "resume",
+        "cover_letter",
+        "certificate",
+        "portfolio",
+        "transcript",
+        "other",
+      ],
+      application_status: [
+        "saved",
+        "preparing",
+        "applied",
+        "shortlisted",
+        "interview",
+        "selected",
+        "rejected",
+        "completed",
       ],
       institution_type: ["college", "university", "polytechnic", "other"],
       opportunity_type: ["internship", "job", "project", "training"],
