@@ -245,8 +245,10 @@ function OpportunitiesPage() {
                         <dd>{formatDeadline(item.deadline)}</dd>
                       </div>
                     </dl>
+                    <SaveAction opportunity={item} />
                   </CardContent>
                 </Card>
+
               ))}
           </div>
 
