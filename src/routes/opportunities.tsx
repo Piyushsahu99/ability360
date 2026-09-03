@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { Accessibility, BadgeCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Accessibility, BadgeCheck, Bookmark, BookmarkCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,12 +20,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { applicationsQueryOptions, saveOpportunity, statusLabels } from "@/lib/applications";
+import { useSession } from "@/lib/auth";
 import {
   formatDeadline,
   opportunitiesQueryOptions,
   opportunityTypeLabels,
   workModeLabels,
+  type Opportunity,
 } from "@/lib/opportunities";
+
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
