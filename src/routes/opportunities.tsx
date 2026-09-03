@@ -267,3 +267,57 @@ function OpportunitiesPage() {
     </div>
   );
 }
+
+function SaveAction({ opportunity }: { opportunity: Opportunity }) {
+  const { data: session } = useSession();
+  const queryClient = useQueryClient();
+  const { data: applications } = useQuery({
+    ...applicationsQueryOptions,
+    enabled: Boolean(session),
+  });
+
+  const existing = (applications ?? []).find((item) => item.opportunity_id === opportunity.id);
+
+  const saveMutation = useMutation({
+    mutationFn: () => saveOpportunity(opportunity),
+    onSuccess: () => {
+      toast.success("Saved to your applications");
+      void queryClient.invalidateQueries({ queryKey: ["student", "applications"] });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  if (!session) {
+    return (
+      <Button asChild variant="outline" size="sm" className="w-full">
+        <Link to="/login">Sign in to save and apply</Link>
+      </Button>
+    );
+  }
+
+  if (existing) {
+    return (
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className="gap-1 border-teal/50 text-teal">
+          <BookmarkCheck className="size-3.5" aria-hidden="true" />
+          {statusLabels[existing.status]}
+        </Badge>
+        <Button asChild variant="outline" size="sm">
+          <Link to="/applications">Manage application</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <Button
+      size="sm"
+      className="w-full"
+      onClick={() => saveMutation.mutate()}
+      disabled={saveMutation.isPending}
+    >
+      <Bookmark className="size-4" aria-hidden="true" />
+      Save &amp; track
+    </Button>
+  );
+}
