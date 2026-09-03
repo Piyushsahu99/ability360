@@ -16,6 +16,7 @@ import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authenticated/accessibility'
+import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
@@ -59,6 +60,12 @@ const AuthenticatedAccessibilityRoute =
   AuthenticatedAccessibilityRouteImport.update({
     id: '/accessibility',
     path: '/accessibility',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedApplicationsRoute =
+  AuthenticatedApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -136,6 +144,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -155,6 +164,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/_authenticated/accessibility': typeof AuthenticatedAccessibilityRoute
+  '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/roles'
     | '/accessibility'
+    | '/applications'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/roles'
     | '/accessibility'
+    | '/applications'
     | '/assessment'
     | '/dna'
     | '/onboarding'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/roles'
     | '/_authenticated/accessibility'
+    | '/_authenticated/applications'
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
@@ -280,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccessibilityRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/applications': {
+      id: '/_authenticated/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof AuthenticatedApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/assessment': {
       id: '/_authenticated/assessment'
       path: '/assessment'
@@ -348,6 +368,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccessibilityRoute: typeof AuthenticatedAccessibilityRoute
+  AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
@@ -361,6 +382,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccessibilityRoute: AuthenticatedAccessibilityRoute,
+  AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
