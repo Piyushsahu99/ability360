@@ -408,6 +408,27 @@ function ApplicationDetail({ application }: { application: ApplicationWithOpport
             </div>
           </dl>
 
+          {(application.interview_at || application.employer_feedback) && (
+            <div className="rounded-lg border border-border bg-surface p-3">
+              <p className="text-sm font-medium">From the employer</p>
+              {application.interview_at && (
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Interview scheduled for {new Date(application.interview_at).toLocaleString()}
+                </p>
+              )}
+              {application.employer_rating && (
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Rating: {application.employer_rating}/5
+                </p>
+              )}
+              {application.employer_feedback && (
+                <p className="mt-1 text-sm">{application.employer_feedback}</p>
+              )}
+            </div>
+          )}
+
+
+
           <div>
             <Label htmlFor="application-note">Your notes</Label>
             <Textarea
