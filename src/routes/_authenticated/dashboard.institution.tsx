@@ -1,15 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Building2,
   GraduationCap,
   LayoutDashboard,
   LineChart,
   School,
+  TrendingUp,
   Users,
 } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useQuery } from "@tanstack/react-query";
+import { skillDemandQueryOptions, skillGaps, topSkills } from "@/lib/demand";
 import { useMe } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/dashboard/institution")({
@@ -23,7 +28,8 @@ export const Route = createFileRoute("/_authenticated/dashboard/institution")({
 });
 
 const nav = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/institution", active: true },
+  { label: "Skill demand", icon: TrendingUp, to: "/institution/skill-demand" },
   { label: "Cohorts", icon: Users },
   { label: "Students", icon: GraduationCap },
   { label: "Faculty", icon: School },
@@ -40,6 +46,10 @@ const readiness = [
 
 function InstitutionDashboard() {
   const { data: me } = useMe();
+  const { data: demand } = useQuery(skillDemandQueryOptions);
+  const rows = demand ?? [];
+  const top = topSkills(rows, 5);
+  const gaps = skillGaps(rows, 4);
 
   return (
     <DashboardShell
@@ -73,6 +83,37 @@ function InstitutionDashboard() {
         </div>
 
         <div className="space-y-6">
+          <PanelCard
+            title="Industry skill demand"
+            description="Aggregated employer requirements — no employer details."
+            action={
+              <Button asChild variant="outline" size="sm">
+                <Link to="/institution/skill-demand">Open intelligence</Link>
+              </Button>
+            }
+          >
+            {top.length === 0 ? (
+              <EmptyState message="Demand data appears once employers publish opportunities." />
+            ) : (
+              <ul className="space-y-2">
+                {top.map((row) => (
+                  <li
+                    key={row.skill_id}
+                    className="flex items-center justify-between gap-2 rounded-lg border border-border p-3 text-sm"
+                  >
+                    <span className="font-medium">{row.skill_name}</span>
+                    <Badge variant="secondary">{row.demand_count} openings</Badge>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {gaps.length > 0 ? (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Top cohort gaps: {gaps.map((row) => row.skill_name).join(", ")}
+              </p>
+            ) : null}
+          </PanelCard>
+
           <PanelCard title="Faculty activity" description="Mentoring and endorsements this month.">
             <EmptyState message="No faculty activity recorded yet." />
           </PanelCard>
