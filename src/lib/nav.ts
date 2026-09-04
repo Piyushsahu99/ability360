@@ -6,7 +6,10 @@ import {
   ClipboardList,
   Users,
   Compass,
+  GraduationCap,
   LayoutDashboard,
+  LineChart,
+  TrendingUp,
   Route as RouteIcon,
   Target,
   UserRound,
@@ -40,4 +43,17 @@ const employerItems: NavItem[] = [
 
 export function employerNav(activePath: string): NavItem[] {
   return employerItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
+const institutionItems: NavItem[] = [
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/institution" },
+  { label: "Students", icon: GraduationCap, to: "/institution/students" },
+  { label: "Cohorts", icon: Users, to: "/institution/cohorts" },
+  { label: "Outcomes", icon: LineChart, to: "/institution/outcomes" },
+  { label: "Industry partners", icon: Building2, to: "/institution/partners" },
+  { label: "Skill demand", icon: TrendingUp, to: "/institution/skill-demand" },
+];
+
+export function institutionNav(activePath: string): NavItem[] {
+  return institutionItems.map((item) => ({ ...item, active: item.to === activePath }));
 }
