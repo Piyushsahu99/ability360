@@ -1,15 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Building2,
-  GraduationCap,
-  LayoutDashboard,
-  LineChart,
-  School,
-  ShieldCheck,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Building2, GraduationCap, LineChart, ShieldCheck, TrendingUp } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +17,7 @@ import {
   topSkills,
 } from "@/lib/demand";
 import { opportunityTypeLabels } from "@/lib/opportunities";
+import { institutionNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/institution/skill-demand")({
   head: () => ({
@@ -48,15 +40,6 @@ export const Route = createFileRoute("/_authenticated/institution/skill-demand")
   component: SkillDemandPage,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/institution" },
-  { label: "Skill demand", icon: TrendingUp, to: "/institution/skill-demand", active: true },
-  { label: "Cohorts", icon: Users },
-  { label: "Students", icon: GraduationCap },
-  { label: "Faculty", icon: School },
-  { label: "Employers", icon: Building2 },
-  { label: "Outcomes", icon: LineChart },
-];
 
 function SkillDemandPage() {
   const { data: skills, isLoading } = useQuery(skillDemandQueryOptions);
@@ -74,7 +57,7 @@ function SkillDemandPage() {
       role="institution"
       title="Industry skill demand intelligence"
       subtitle="Aggregated employer requirements across every published opportunity."
-      nav={nav}
+      nav={institutionNav("/institution/skill-demand")}
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard

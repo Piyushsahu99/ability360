@@ -29,7 +29,11 @@ import { Route as AuthenticatedDashboardStudentRouteImport } from './routes/_aut
 import { Route as AuthenticatedEmployerApplicantsRouteImport } from './routes/_authenticated/employer.applicants'
 import { Route as AuthenticatedEmployerCompanyRouteImport } from './routes/_authenticated/employer.company'
 import { Route as AuthenticatedEmployerOpportunitiesRouteImport } from './routes/_authenticated/employer.opportunities'
+import { Route as AuthenticatedInstitutionCohortsRouteImport } from './routes/_authenticated/institution.cohorts'
+import { Route as AuthenticatedInstitutionOutcomesRouteImport } from './routes/_authenticated/institution.outcomes'
+import { Route as AuthenticatedInstitutionPartnersRouteImport } from './routes/_authenticated/institution.partners'
 import { Route as AuthenticatedInstitutionSkillDemandRouteImport } from './routes/_authenticated/institution.skill-demand'
+import { Route as AuthenticatedInstitutionStudentsRouteImport } from './routes/_authenticated/institution.students'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -140,10 +144,34 @@ const AuthenticatedEmployerOpportunitiesRoute =
     path: '/employer/opportunities',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedInstitutionCohortsRoute =
+  AuthenticatedInstitutionCohortsRouteImport.update({
+    id: '/institution/cohorts',
+    path: '/institution/cohorts',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInstitutionOutcomesRoute =
+  AuthenticatedInstitutionOutcomesRouteImport.update({
+    id: '/institution/outcomes',
+    path: '/institution/outcomes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInstitutionPartnersRoute =
+  AuthenticatedInstitutionPartnersRouteImport.update({
+    id: '/institution/partners',
+    path: '/institution/partners',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInstitutionSkillDemandRoute =
   AuthenticatedInstitutionSkillDemandRouteImport.update({
     id: '/institution/skill-demand',
     path: '/institution/skill-demand',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedInstitutionStudentsRoute =
+  AuthenticatedInstitutionStudentsRouteImport.update({
+    id: '/institution/students',
+    path: '/institution/students',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -166,7 +194,11 @@ export interface FileRoutesByFullPath {
   '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/employer/opportunities': typeof AuthenticatedEmployerOpportunitiesRoute
+  '/institution/cohorts': typeof AuthenticatedInstitutionCohortsRoute
+  '/institution/outcomes': typeof AuthenticatedInstitutionOutcomesRoute
+  '/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
+  '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -188,7 +220,11 @@ export interface FileRoutesByTo {
   '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/employer/opportunities': typeof AuthenticatedEmployerOpportunitiesRoute
+  '/institution/cohorts': typeof AuthenticatedInstitutionCohortsRoute
+  '/institution/outcomes': typeof AuthenticatedInstitutionOutcomesRoute
+  '/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
+  '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -212,7 +248,11 @@ export interface FileRoutesById {
   '/_authenticated/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/_authenticated/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/_authenticated/employer/opportunities': typeof AuthenticatedEmployerOpportunitiesRoute
+  '/_authenticated/institution/cohorts': typeof AuthenticatedInstitutionCohortsRoute
+  '/_authenticated/institution/outcomes': typeof AuthenticatedInstitutionOutcomesRoute
+  '/_authenticated/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/_authenticated/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
+  '/_authenticated/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -236,7 +276,11 @@ export interface FileRouteTypes {
     | '/employer/applicants'
     | '/employer/company'
     | '/employer/opportunities'
+    | '/institution/cohorts'
+    | '/institution/outcomes'
+    | '/institution/partners'
     | '/institution/skill-demand'
+    | '/institution/students'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -258,7 +302,11 @@ export interface FileRouteTypes {
     | '/employer/applicants'
     | '/employer/company'
     | '/employer/opportunities'
+    | '/institution/cohorts'
+    | '/institution/outcomes'
+    | '/institution/partners'
     | '/institution/skill-demand'
+    | '/institution/students'
     | '/dashboard'
   id:
     | '__root__'
@@ -281,7 +329,11 @@ export interface FileRouteTypes {
     | '/_authenticated/employer/applicants'
     | '/_authenticated/employer/company'
     | '/_authenticated/employer/opportunities'
+    | '/_authenticated/institution/cohorts'
+    | '/_authenticated/institution/outcomes'
+    | '/_authenticated/institution/partners'
     | '/_authenticated/institution/skill-demand'
+    | '/_authenticated/institution/students'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -436,11 +488,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerOpportunitiesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/institution/cohorts': {
+      id: '/_authenticated/institution/cohorts'
+      path: '/institution/cohorts'
+      fullPath: '/institution/cohorts'
+      preLoaderRoute: typeof AuthenticatedInstitutionCohortsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/institution/outcomes': {
+      id: '/_authenticated/institution/outcomes'
+      path: '/institution/outcomes'
+      fullPath: '/institution/outcomes'
+      preLoaderRoute: typeof AuthenticatedInstitutionOutcomesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/institution/partners': {
+      id: '/_authenticated/institution/partners'
+      path: '/institution/partners'
+      fullPath: '/institution/partners'
+      preLoaderRoute: typeof AuthenticatedInstitutionPartnersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/institution/skill-demand': {
       id: '/_authenticated/institution/skill-demand'
       path: '/institution/skill-demand'
       fullPath: '/institution/skill-demand'
       preLoaderRoute: typeof AuthenticatedInstitutionSkillDemandRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/institution/students': {
+      id: '/_authenticated/institution/students'
+      path: '/institution/students'
+      fullPath: '/institution/students'
+      preLoaderRoute: typeof AuthenticatedInstitutionStudentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -460,7 +540,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedEmployerApplicantsRoute: typeof AuthenticatedEmployerApplicantsRoute
   AuthenticatedEmployerCompanyRoute: typeof AuthenticatedEmployerCompanyRoute
   AuthenticatedEmployerOpportunitiesRoute: typeof AuthenticatedEmployerOpportunitiesRoute
+  AuthenticatedInstitutionCohortsRoute: typeof AuthenticatedInstitutionCohortsRoute
+  AuthenticatedInstitutionOutcomesRoute: typeof AuthenticatedInstitutionOutcomesRoute
+  AuthenticatedInstitutionPartnersRoute: typeof AuthenticatedInstitutionPartnersRoute
   AuthenticatedInstitutionSkillDemandRoute: typeof AuthenticatedInstitutionSkillDemandRoute
+  AuthenticatedInstitutionStudentsRoute: typeof AuthenticatedInstitutionStudentsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
@@ -480,8 +564,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEmployerCompanyRoute: AuthenticatedEmployerCompanyRoute,
   AuthenticatedEmployerOpportunitiesRoute:
     AuthenticatedEmployerOpportunitiesRoute,
+  AuthenticatedInstitutionCohortsRoute: AuthenticatedInstitutionCohortsRoute,
+  AuthenticatedInstitutionOutcomesRoute: AuthenticatedInstitutionOutcomesRoute,
+  AuthenticatedInstitutionPartnersRoute: AuthenticatedInstitutionPartnersRoute,
   AuthenticatedInstitutionSkillDemandRoute:
     AuthenticatedInstitutionSkillDemandRoute,
+  AuthenticatedInstitutionStudentsRoute: AuthenticatedInstitutionStudentsRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
