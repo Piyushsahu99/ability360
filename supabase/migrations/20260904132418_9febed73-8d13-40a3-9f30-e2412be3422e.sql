@@ -1,0 +1,1 @@
+GRANT EXECUTE ON FUNCTION private.is_applicant_of(uuid, uuid) TO authenticated;
