@@ -517,6 +517,42 @@ export type Database = {
           },
         ]
       }
+      opportunity_skills: {
+        Row: {
+          created_at: string
+          id: string
+          opportunity_id: string
+          skill_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          opportunity_id: string
+          skill_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          opportunity_id?: string
+          skill_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunity_skills_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "opportunity_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -954,6 +990,29 @@ export type Database = {
       is_applicant_of: {
         Args: { _poster: string; _student: string }
         Returns: boolean
+      }
+      role_demand_overview: {
+        Args: never
+        Returns: {
+          demand_count: number
+          employer_count: number
+          inclusive_share: number
+          opportunity_type: Database["public"]["Enums"]["opportunity_type"]
+          remote_share: number
+          role_title: string
+        }[]
+      }
+      skill_demand_overview: {
+        Args: never
+        Returns: {
+          category: Database["public"]["Enums"]["skill_category"]
+          demand_count: number
+          prior_count: number
+          recent_count: number
+          skill_id: string
+          skill_name: string
+          student_supply: number
+        }[]
       }
       user_institution: { Args: { _user_id: string }; Returns: string }
     }
