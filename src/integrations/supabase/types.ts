@@ -987,6 +987,44 @@ export type Database = {
         }
         Returns: boolean
       }
+      institution_directory: {
+        Args: never
+        Returns: {
+          academic_score: number
+          applications_active: number
+          applications_total: number
+          career_goal: string
+          degree: string
+          department: string
+          full_name: string
+          internships: number
+          interviews: number
+          onboarding_completed: boolean
+          placements: number
+          readiness: number
+          roadmap_completed: number
+          semester: number
+          skills_total: number
+          skills_verified: number
+          student_id: string
+          target_role_branch: string
+          target_role_course: string
+          target_role_title: string
+          year_of_study: number
+        }[]
+      }
+      institution_partnerships: {
+        Args: never
+        Returns: {
+          applications: number
+          inclusive: boolean
+          interviews: number
+          offers: number
+          opportunity_count: number
+          organisation: string
+          shortlisted: number
+        }[]
+      }
       is_applicant_of: {
         Args: { _poster: string; _student: string }
         Returns: boolean
