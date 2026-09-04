@@ -296,6 +296,62 @@ export type Database = {
         }
         Relationships: []
       }
+      company_profiles: {
+        Row: {
+          about: string
+          accessibility_commitment: string | null
+          company_name: string
+          company_size: string | null
+          created_at: string
+          headquarters: string | null
+          hiring_contact_email: string | null
+          id: string
+          industry: string | null
+          is_inclusive_employer: boolean
+          logo_url: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          about?: string
+          accessibility_commitment?: string | null
+          company_name: string
+          company_size?: string | null
+          created_at?: string
+          headquarters?: string | null
+          hiring_contact_email?: string | null
+          id: string
+          industry?: string | null
+          is_inclusive_employer?: boolean
+          logo_url?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          about?: string
+          accessibility_commitment?: string | null
+          company_name?: string
+          company_size?: string | null
+          created_at?: string
+          headquarters?: string | null
+          hiring_contact_email?: string | null
+          id?: string
+          industry?: string | null
+          is_inclusive_employer?: boolean
+          logo_url?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       institutions: {
         Row: {
           city: string | null
@@ -403,7 +459,10 @@ export type Database = {
           applied_at: string | null
           created_at: string
           deadline: string | null
+          employer_feedback: string | null
+          employer_rating: number | null
           id: string
+          interview_at: string | null
           note: string
           opportunity_id: string
           status: Database["public"]["Enums"]["application_status"]
@@ -415,7 +474,10 @@ export type Database = {
           applied_at?: string | null
           created_at?: string
           deadline?: string | null
+          employer_feedback?: string | null
+          employer_rating?: number | null
           id?: string
+          interview_at?: string | null
           note?: string
           opportunity_id: string
           status?: Database["public"]["Enums"]["application_status"]
@@ -427,7 +489,10 @@ export type Database = {
           applied_at?: string | null
           created_at?: string
           deadline?: string | null
+          employer_feedback?: string | null
+          employer_rating?: number | null
           id?: string
+          interview_at?: string | null
           note?: string
           opportunity_id?: string
           status?: Database["public"]["Enums"]["application_status"]
@@ -886,6 +951,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_applicant_of: {
+        Args: { _poster: string; _student: string }
+        Returns: boolean
+      }
       user_institution: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
@@ -915,7 +984,14 @@ export type Database = {
         | "rejected"
         | "completed"
       institution_type: "college" | "university" | "polytechnic" | "other"
-      opportunity_type: "internship" | "job" | "project" | "training"
+      opportunity_type:
+        | "internship"
+        | "job"
+        | "project"
+        | "training"
+        | "apprenticeship"
+        | "challenge"
+        | "mentorship"
       skill_category: "technical" | "soft" | "aptitude" | "domain"
       skill_verification:
         | "self_declared"
@@ -1079,7 +1155,15 @@ export const Constants = {
         "completed",
       ],
       institution_type: ["college", "university", "polytechnic", "other"],
-      opportunity_type: ["internship", "job", "project", "training"],
+      opportunity_type: [
+        "internship",
+        "job",
+        "project",
+        "training",
+        "apprenticeship",
+        "challenge",
+        "mentorship",
+      ],
       skill_category: ["technical", "soft", "aptitude", "domain"],
       skill_verification: [
         "self_declared",
