@@ -130,7 +130,7 @@ function SkillDemandPage() {
                       </span>
                     </div>
                     <Progress
-                      value={Math.round((row.demand_count / top[0].demand_count) * 100)}
+                      value={Math.round((row.demand_count / (top[0]?.demand_count || 1)) * 100)}
                       className="mt-2"
                       aria-label={`${row.skill_name} demand share`}
                     />
