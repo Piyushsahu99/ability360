@@ -2,6 +2,9 @@ import {
   Accessibility,
   BookOpen,
   Briefcase,
+  Building2,
+  ClipboardList,
+  Users,
   Compass,
   LayoutDashboard,
   Route as RouteIcon,
@@ -25,4 +28,16 @@ const studentItems: NavItem[] = [
 
 export function studentNav(activePath: string): NavItem[] {
   return studentItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
+const employerItems: NavItem[] = [
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/industry" },
+  { label: "Company profile", icon: Building2, to: "/employer/company" },
+  { label: "Opportunities", icon: ClipboardList, to: "/employer/opportunities" },
+  { label: "Applicants", icon: Users, to: "/employer/applicants" },
+  { label: "Browse talent pool", icon: Compass, to: "/opportunities" },
+];
+
+export function employerNav(activePath: string): NavItem[] {
+  return employerItems.map((item) => ({ ...item, active: item.to === activePath }));
 }
