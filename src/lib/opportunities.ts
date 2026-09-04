@@ -12,6 +12,9 @@ export const opportunityTypeLabels: Record<OpportunityType, string> = {
   job: "Job",
   project: "Project",
   training: "Training",
+  apprenticeship: "Apprenticeship",
+  challenge: "Challenge",
+  mentorship: "Mentorship",
 };
 
 export const workModeLabels: Record<WorkMode, string> = {
