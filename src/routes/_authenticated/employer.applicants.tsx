@@ -20,6 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { documentKindLabels, documentUrl, statusLabels } from "@/lib/applications";
 import {
   applicantDocumentsQueryOptions,
+  applicantPassportQueryOptions,
   employerApplicantsQueryOptions,
   employerStages,
   pipelineStages,
@@ -371,5 +372,112 @@ function CandidatePanel({ applicant }: { applicant: ApplicantRow }) {
         </div>
       </PanelCard>
     </div>
+  );
+}
+
+function PassportPanel({ studentId }: { studentId: string }) {
+  const { data, isPending } = useQuery(applicantPassportQueryOptions(studentId));
+
+  if (isPending) {
+    return (
+      <PanelCard title="Ability Passport" description="Skills, projects and verified outcomes.">
+        <p className="text-sm text-muted-foreground">Loading candidate evidence…</p>
+      </PanelCard>
+    );
+  }
+
+  const passport = data ?? { skills: [], projects: [], achievements: [], experiences: [] };
+  const empty =
+    passport.skills.length === 0 &&
+    passport.projects.length === 0 &&
+    passport.achievements.length === 0 &&
+    passport.experiences.length === 0;
+
+  return (
+    <PanelCard
+      title="Ability Passport"
+      description="Skills, projects, achievements and experience this candidate has built."
+    >
+      {empty ? (
+        <EmptyState description="This candidate has not added passport evidence yet." />
+      ) : (
+        <div className="space-y-5 text-sm">
+          {passport.skills.length > 0 && (
+            <div>
+              <h3 className="mb-2 font-medium">Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {passport.skills.map((skill) => (
+                  <Badge
+                    key={skill.id}
+                    variant={skill.verification_status === "self_declared" ? "outline" : "secondary"}
+                  >
+                    {skill.name} · L{skill.level}
+                    {skill.verification_status !== "self_declared" ? " · verified" : ""}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {passport.projects.length > 0 && (
+            <div>
+              <h3 className="mb-2 font-medium">Projects</h3>
+              <ul className="space-y-2">
+                {passport.projects.map((project) => (
+                  <li key={project.id} className="rounded-lg border border-border p-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-medium">{project.title}</span>
+                      {project.verified_at && <Badge variant="secondary">Faculty verified</Badge>}
+                    </div>
+                    <p className="mt-1 text-muted-foreground">{project.description}</p>
+                    {(project.technologies ?? []).length > 0 && (
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {(project.technologies ?? []).join(", ")}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {passport.achievements.length > 0 && (
+            <div>
+              <h3 className="mb-2 font-medium">Achievements</h3>
+              <ul className="space-y-2">
+                {passport.achievements.map((achievement) => (
+                  <li key={achievement.id} className="rounded-lg border border-border p-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-medium">{achievement.title}</span>
+                      {achievement.verified_at && <Badge variant="secondary">Verified</Badge>}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {achievement.issuer || "—"}
+                      {achievement.achieved_on
+                        ? ` · ${new Date(achievement.achieved_on).toLocaleDateString()}`
+                        : ""}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {passport.experiences.length > 0 && (
+            <div>
+              <h3 className="mb-2 font-medium">Experience</h3>
+              <ul className="space-y-2">
+                {passport.experiences.map((experience) => (
+                  <li key={experience.id} className="rounded-lg border border-border p-3">
+                    <span className="font-medium">{experience.role}</span>
+                    <p className="text-xs text-muted-foreground">{experience.organisation}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </PanelCard>
   );
 }
