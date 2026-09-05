@@ -107,7 +107,16 @@ function StudentDashboard() {
           hint={gaps[0] ? `Start with ${gaps[0]}` : "Nothing outstanding"}
           icon={UserRound}
         />
-        <StatCard label="Applications" value="0" hint="Nothing submitted yet" icon={Briefcase} />
+        <StatCard
+          label="Applications"
+          value={String(allApplications.length)}
+          hint={
+            allApplications.length === 0
+              ? "Nothing saved yet"
+              : `${liveApplications.length} in progress · ${closedApplications.length} closed`
+          }
+          icon={Briefcase}
+        />
       </div>
 
       <PanelCard title="What should I do this week?" description="Three small steps that build real evidence.">
