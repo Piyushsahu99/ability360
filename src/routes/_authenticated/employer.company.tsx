@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { DashboardShell, PanelCard } from "@/components/dashboard-shell";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,10 +16,15 @@ import {
   companyProfileCompleteness,
   companyProfileQueryOptions,
   companyProfileSchema,
+  requestCompanyVerification,
   saveCompanyProfile,
+  verificationHints,
+  verificationLabels,
+  verificationStatusOf,
   type CompanyProfileValues,
 } from "@/lib/employer";
 import { employerNav } from "@/lib/nav";
+
 
 export const Route = createFileRoute("/_authenticated/employer/company")({
   head: () => ({
@@ -86,6 +92,17 @@ function CompanyProfilePage() {
     onError: (error: Error) => toast.error(error.message),
   });
 
+  const verifyMutation = useMutation({
+    mutationFn: requestCompanyVerification,
+    onSuccess: () => {
+      toast.success("Verification requested");
+      void queryClient.invalidateQueries({ queryKey: ["employer", "company-profile"] });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+
+
   function set<K extends keyof CompanyProfileValues>(key: K, value: CompanyProfileValues[K]) {
     setValues((current) => ({ ...current, [key]: value }));
   }
@@ -104,6 +121,7 @@ function CompanyProfilePage() {
   }
 
   const completeness = companyProfileCompleteness(profile ?? null);
+  const verification = verificationStatusOf(profile ?? null);
 
   return (
     <DashboardShell
@@ -115,10 +133,32 @@ function CompanyProfilePage() {
       <PanelCard
         title="Profile strength"
         description="Complete profiles get more qualified applications."
+        action={
+          <Badge variant={verification === "verified" ? "default" : "secondary"}>
+            {verificationLabels[verification]}
+          </Badge>
+        }
       >
         <Progress value={completeness} aria-label="Company profile completeness" />
         <p className="mt-2 text-sm text-muted-foreground">{completeness}% complete</p>
+        <p className="mt-4 text-sm text-muted-foreground">{verificationHints[verification]}</p>
+        {profile && verification !== "verified" && verification !== "pending" && (
+          <Button
+            className="mt-4"
+            variant="outline"
+            disabled={verifyMutation.isPending || completeness < 60}
+            onClick={() => verifyMutation.mutate()}
+          >
+            Request verification
+          </Button>
+        )}
+        {profile && completeness < 60 && verification === "unverified" && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            Fill in at least 60% of your profile to request verification.
+          </p>
+        )}
       </PanelCard>
+
 
       <PanelCard title="Organisation details" description="Basic identity and hiring contact.">
         <form className="grid gap-4 sm:grid-cols-2" onSubmit={submit}>

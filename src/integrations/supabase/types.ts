@@ -310,6 +310,10 @@ export type Database = {
           is_inclusive_employer: boolean
           logo_url: string | null
           updated_at: string
+          verification_note: string | null
+          verification_requested_at: string | null
+          verification_status: string
+          verified_at: string | null
           website: string | null
         }
         Insert: {
@@ -325,6 +329,10 @@ export type Database = {
           is_inclusive_employer?: boolean
           logo_url?: string | null
           updated_at?: string
+          verification_note?: string | null
+          verification_requested_at?: string | null
+          verification_status?: string
+          verified_at?: string | null
           website?: string | null
         }
         Update: {
@@ -340,6 +348,10 @@ export type Database = {
           is_inclusive_employer?: boolean
           logo_url?: string | null
           updated_at?: string
+          verification_note?: string | null
+          verification_requested_at?: string | null
+          verification_status?: string
+          verified_at?: string | null
           website?: string | null
         }
         Relationships: [
