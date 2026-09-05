@@ -224,7 +224,12 @@ function StudentDnaPage() {
                   <li key={project.id} className="rounded-lg border border-border p-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-sm font-medium">{project.title}</p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="text-sm font-medium">{project.title}</p>
+                          {project.verified_at ? (
+                            <Badge variant="secondary">Faculty verified</Badge>
+                          ) : null}
+                        </div>
                         {project.role && <p className="text-xs text-muted-foreground">{project.role}</p>}
                       </div>
                       <Button
