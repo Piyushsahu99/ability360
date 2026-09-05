@@ -352,6 +352,145 @@ export type Database = {
           },
         ]
       }
+      faculty_assignments: {
+        Row: {
+          cohort_label: string | null
+          created_at: string
+          created_by: string | null
+          faculty_id: string
+          id: string
+          student_id: string
+        }
+        Insert: {
+          cohort_label?: string | null
+          created_at?: string
+          created_by?: string | null
+          faculty_id: string
+          id?: string
+          student_id: string
+        }
+        Update: {
+          cohort_label?: string | null
+          created_at?: string
+          created_by?: string | null
+          faculty_id?: string
+          id?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faculty_assignments_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faculty_assignments_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      faculty_feedback: {
+        Row: {
+          body: string
+          created_at: string
+          faculty_id: string
+          id: string
+          student_id: string
+          subject_kind: string
+          subject_label: string | null
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          faculty_id: string
+          id?: string
+          student_id: string
+          subject_kind?: string
+          subject_label?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          faculty_id?: string
+          id?: string
+          student_id?: string
+          subject_kind?: string
+          subject_label?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faculty_feedback_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faculty_feedback_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      faculty_recommendations: {
+        Row: {
+          created_at: string
+          faculty_id: string
+          id: string
+          note: string
+          opportunity_id: string
+          student_id: string
+        }
+        Insert: {
+          created_at?: string
+          faculty_id: string
+          id?: string
+          note?: string
+          opportunity_id: string
+          student_id: string
+        }
+        Update: {
+          created_at?: string
+          faculty_id?: string
+          id?: string
+          note?: string
+          opportunity_id?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "faculty_recommendations_faculty_id_fkey"
+            columns: ["faculty_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faculty_recommendations_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "faculty_recommendations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       institutions: {
         Row: {
           city: string | null
@@ -865,6 +1004,8 @@ export type Database = {
           technologies: string[]
           title: string
           updated_at: string
+          verified_at: string | null
+          verified_by: string | null
         }
         Insert: {
           completed_on?: string | null
@@ -878,6 +1019,8 @@ export type Database = {
           technologies?: string[]
           title: string
           updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Update: {
           completed_on?: string | null
@@ -891,11 +1034,20 @@ export type Database = {
           technologies?: string[]
           title?: string
           updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "student_projects_student_id_fkey"
             columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_projects_verified_by_fkey"
+            columns: ["verified_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -973,6 +1125,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      faculty_directory: {
+        Args: never
+        Returns: {
+          academic_score: number
+          applications_active: number
+          applications_total: number
+          assigned: boolean
+          career_goal: string
+          cohort_label: string
+          degree: string
+          department: string
+          full_name: string
+          internships: number
+          interviews: number
+          onboarding_completed: boolean
+          placements: number
+          readiness: number
+          roadmap_completed: number
+          semester: number
+          skills_total: number
+          skills_verified: number
+          student_id: string
+          target_role_branch: string
+          target_role_course: string
+          target_role_title: string
+          year_of_study: number
+        }[]
+      }
       has_any_role: {
         Args: {
           _roles: Database["public"]["Enums"]["app_role"][]
@@ -1027,6 +1207,10 @@ export type Database = {
       }
       is_applicant_of: {
         Args: { _poster: string; _student: string }
+        Returns: boolean
+      }
+      is_faculty_of: {
+        Args: { _faculty: string; _student: string }
         Returns: boolean
       }
       role_demand_overview: {
