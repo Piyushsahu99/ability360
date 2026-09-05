@@ -311,3 +311,89 @@ export const pipelineStages: ApplicationStatus[] = [
   "interview",
   "selected",
 ];
+
+/* ---------------- Company verification ---------------- */
+
+export type VerificationStatus = "unverified" | "pending" | "verified" | "rejected";
+
+export const verificationLabels: Record<VerificationStatus, string> = {
+  unverified: "Not verified",
+  pending: "Verification in review",
+  verified: "Verified employer",
+  rejected: "Verification declined",
+};
+
+export const verificationHints: Record<VerificationStatus, string> = {
+  unverified:
+    "Complete your company profile and request verification so students can trust your postings.",
+  pending: "Our team is reviewing your details. You can keep posting while this is in review.",
+  verified: "Your company is verified. Students see a verified badge on every opportunity.",
+  rejected: "We could not verify these details. Update your profile and request a review again.",
+};
+
+export function verificationStatusOf(profile: CompanyProfile | null): VerificationStatus {
+  const value = (profile?.verification_status ?? "unverified") as VerificationStatus;
+  return (["unverified", "pending", "verified", "rejected"] as const).includes(value)
+    ? value
+    : "unverified";
+}
+
+export async function requestCompanyVerification() {
+  const id = await requireUserId();
+  const { error } = await supabase
+    .from("company_profiles")
+    .update({ verification_status: "pending", verification_requested_at: new Date().toISOString() })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+/* ---------------- Applicant passport ---------------- */
+
+export type ApplicantPassport = {
+  skills: { id: string; level: number; verification_status: string; name: string }[];
+  projects: Database["public"]["Tables"]["student_projects"]["Row"][];
+  achievements: Database["public"]["Tables"]["student_achievements"]["Row"][];
+  experiences: Database["public"]["Tables"]["student_experiences"]["Row"][];
+};
+
+export function applicantPassportQueryOptions(studentId: string) {
+  return queryOptions({
+    queryKey: ["employer", "applicant-passport", studentId],
+    queryFn: async (): Promise<ApplicantPassport> => {
+      const [skills, projects, achievements, experiences] = await Promise.all([
+        supabase
+          .from("student_skills")
+          .select("id, level, verification_status, skills(name)")
+          .eq("student_id", studentId),
+        supabase
+          .from("student_projects")
+          .select("*")
+          .eq("student_id", studentId)
+          .order("created_at", { ascending: false }),
+        supabase
+          .from("student_achievements")
+          .select("*")
+          .eq("student_id", studentId)
+          .order("achieved_on", { ascending: false, nullsFirst: false }),
+        supabase
+          .from("student_experiences")
+          .select("*")
+          .eq("student_id", studentId)
+          .order("created_at", { ascending: false }),
+      ]);
+
+      return {
+        skills: (skills.data ?? []).map((row) => ({
+          id: row.id,
+          level: row.level,
+          verification_status: row.verification_status,
+          name: (row as unknown as { skills: { name: string } | null }).skills?.name ?? "Skill",
+        })),
+        projects: projects.data ?? [],
+        achievements: achievements.data ?? [],
+        experiences: experiences.data ?? [],
+      };
+    },
+    staleTime: 30_000,
+  });
+}
