@@ -267,6 +267,10 @@ function CandidatePanel({ applicant }: { applicant: ApplicantRow }) {
         </dl>
       </PanelCard>
 
+      <PassportPanel studentId={applicant.student_id} />
+
+
+
       <PanelCard title="Move through the pipeline" description="Shortlist, interview, select or close.">
         <div className="flex flex-wrap gap-2">
           {employerStages.map((status) => (
