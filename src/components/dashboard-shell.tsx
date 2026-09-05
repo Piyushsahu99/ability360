@@ -163,7 +163,8 @@ export function StatCard({
   icon?: LucideIcon;
 }) {
   return (
-    <Card>
+    <Card className="rounded-3xl">
+
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
           <CardDescription>{label}</CardDescription>
@@ -190,7 +191,7 @@ export function PanelCard({
   children: ReactNode;
 }) {
   return (
-    <Card>
+    <Card className="rounded-3xl">
       <CardHeader>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -217,7 +218,7 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-dashed border-border bg-surface p-6 text-center text-sm text-muted-foreground">
+    <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted-foreground">
       {title ? <p className="font-medium text-foreground">{title}</p> : null}
       {description ? <p className="mt-1">{description}</p> : null}
       {message}
