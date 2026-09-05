@@ -13,6 +13,13 @@ import { useMe } from "@/lib/auth";
 import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
+import {
+  activeStatuses,
+  applicationsQueryOptions,
+  closedStatuses,
+  daysUntil,
+  statusLabels,
+} from "@/lib/applications";
 import { missingSkills, readinessScore, roadmapQueryOptions, roadmapWeeks } from "@/lib/roadmap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
