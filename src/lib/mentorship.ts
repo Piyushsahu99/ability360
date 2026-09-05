@@ -311,9 +311,10 @@ export async function scheduleSession(input: {
 }
 
 export async function setSessionStatus(id: string, status: SessionStatus, summary?: string) {
-  const patch: Record<string, unknown> = { status };
-  if (summary !== undefined) patch["summary"] = summary;
-  const { error } = await supabase.from("mentorship_sessions").update(patch).eq("id", id);
+  const { error } = await supabase
+    .from("mentorship_sessions")
+    .update(summary === undefined ? { status } : { status, summary })
+    .eq("id", id);
   if (error) throw error;
 }
 
