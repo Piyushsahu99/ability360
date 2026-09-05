@@ -63,8 +63,8 @@ export function institutionNav(activePath: string): NavItem[] {
 const facultyItems: NavItem[] = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard/faculty" },
   { label: "My students", icon: GraduationCap, to: "/faculty/students" },
-  { label: "Verifications", icon: BadgeCheck, to: "/faculty/students" },
-  { label: "Feedback", icon: MessageSquare, to: "/faculty/students" },
+  { label: "Verifications", icon: BadgeCheck },
+  { label: "Feedback", icon: MessageSquare },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 
