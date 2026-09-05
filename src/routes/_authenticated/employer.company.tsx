@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { DashboardShell, PanelCard } from "@/components/dashboard-shell";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,10 +16,15 @@ import {
   companyProfileCompleteness,
   companyProfileQueryOptions,
   companyProfileSchema,
+  requestCompanyVerification,
   saveCompanyProfile,
+  verificationHints,
+  verificationLabels,
+  verificationStatusOf,
   type CompanyProfileValues,
 } from "@/lib/employer";
 import { employerNav } from "@/lib/nav";
+
 
 export const Route = createFileRoute("/_authenticated/employer/company")({
   head: () => ({
