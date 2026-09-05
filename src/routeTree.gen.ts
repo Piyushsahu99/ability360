@@ -21,6 +21,7 @@ import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authentic
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
+import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardFacultyRouteImport } from './routes/_authenticated/dashboard.faculty'
@@ -97,6 +98,11 @@ const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
   id: '/roadmap',
   path: '/roadmap',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const CompetitionsIndexRoute = CompetitionsIndexRouteImport.update({
+  id: '/competitions/',
+  path: '/competitions/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions/': typeof CompetitionsIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -229,6 +236,7 @@ export interface FileRoutesByTo {
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions': typeof CompetitionsIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -259,6 +267,7 @@ export interface FileRoutesById {
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions/': typeof CompetitionsIndexRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -289,6 +298,7 @@ export interface FileRouteTypes {
     | '/dna'
     | '/onboarding'
     | '/roadmap'
+    | '/competitions/'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/dna'
     | '/onboarding'
     | '/roadmap'
+    | '/competitions'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
     | '/_authenticated/roadmap'
+    | '/competitions/'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/faculty'
     | '/_authenticated/dashboard/industry'
@@ -370,6 +382,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
+  CompetitionsIndexRoute: typeof CompetitionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -457,6 +470,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/roadmap'
       preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/competitions/': {
+      id: '/competitions/'
+      path: '/competitions'
+      fullPath: '/competitions/'
+      preLoaderRoute: typeof CompetitionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
@@ -627,6 +647,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
+  CompetitionsIndexRoute: CompetitionsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

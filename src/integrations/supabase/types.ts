@@ -352,6 +352,469 @@ export type Database = {
           },
         ]
       }
+      competition_awards: {
+        Row: {
+          award_label: string
+          certificate_code: string
+          competition_id: string
+          created_at: string
+          id: string
+          issued_at: string
+          issued_by: string | null
+          rank_position: number
+          score: number | null
+          student_id: string
+          team_id: string | null
+        }
+        Insert: {
+          award_label?: string
+          certificate_code?: string
+          competition_id: string
+          created_at?: string
+          id?: string
+          issued_at?: string
+          issued_by?: string | null
+          rank_position?: number
+          score?: number | null
+          student_id: string
+          team_id?: string | null
+        }
+        Update: {
+          award_label?: string
+          certificate_code?: string
+          competition_id?: string
+          created_at?: string
+          id?: string
+          issued_at?: string
+          issued_by?: string | null
+          rank_position?: number
+          score?: number | null
+          student_id?: string
+          team_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_awards_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_awards_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_awards_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "competition_teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_judges: {
+        Row: {
+          competition_id: string
+          created_at: string
+          id: string
+          invited_by: string | null
+          judge_id: string
+        }
+        Insert: {
+          competition_id: string
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          judge_id: string
+        }
+        Update: {
+          competition_id?: string
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          judge_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_judges_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_judges_judge_id_fkey"
+            columns: ["judge_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_registrations: {
+        Row: {
+          accommodation_note: string | null
+          competition_id: string
+          created_at: string
+          id: string
+          motivation: string
+          status: Database["public"]["Enums"]["competition_registration_status"]
+          student_id: string
+          team_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          accommodation_note?: string | null
+          competition_id: string
+          created_at?: string
+          id?: string
+          motivation?: string
+          status?: Database["public"]["Enums"]["competition_registration_status"]
+          student_id: string
+          team_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accommodation_note?: string | null
+          competition_id?: string
+          created_at?: string
+          id?: string
+          motivation?: string
+          status?: Database["public"]["Enums"]["competition_registration_status"]
+          student_id?: string
+          team_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_registrations_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_registrations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_registrations_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "competition_teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_scores: {
+        Row: {
+          competition_id: string
+          created_at: string
+          id: string
+          impact: number
+          innovation: number
+          judge_id: string
+          note: string
+          presentation: number
+          submission_id: string
+          technical: number
+          updated_at: string
+        }
+        Insert: {
+          competition_id: string
+          created_at?: string
+          id?: string
+          impact?: number
+          innovation?: number
+          judge_id: string
+          note?: string
+          presentation?: number
+          submission_id: string
+          technical?: number
+          updated_at?: string
+        }
+        Update: {
+          competition_id?: string
+          created_at?: string
+          id?: string
+          impact?: number
+          innovation?: number
+          judge_id?: string
+          note?: string
+          presentation?: number
+          submission_id?: string
+          technical?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_scores_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_scores_judge_id_fkey"
+            columns: ["judge_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_scores_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "competition_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_submissions: {
+        Row: {
+          competition_id: string
+          created_at: string
+          demo_link: string | null
+          id: string
+          notes: string
+          repo_link: string | null
+          student_id: string
+          submitted_at: string
+          summary: string
+          team_id: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          competition_id: string
+          created_at?: string
+          demo_link?: string | null
+          id?: string
+          notes?: string
+          repo_link?: string | null
+          student_id: string
+          submitted_at?: string
+          summary?: string
+          team_id?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          competition_id?: string
+          created_at?: string
+          demo_link?: string | null
+          id?: string
+          notes?: string
+          repo_link?: string | null
+          student_id?: string
+          submitted_at?: string
+          summary?: string
+          team_id?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_submissions_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_submissions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_submissions_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "competition_teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_team_members: {
+        Row: {
+          created_at: string
+          id: string
+          role_label: string
+          student_id: string
+          team_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role_label?: string
+          student_id: string
+          team_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role_label?: string
+          student_id?: string
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_team_members_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "competition_teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competition_teams: {
+        Row: {
+          competition_id: string
+          created_at: string
+          id: string
+          invite_code: string
+          leader_id: string
+          looking_for_members: boolean
+          name: string
+          pitch: string
+          updated_at: string
+        }
+        Insert: {
+          competition_id: string
+          created_at?: string
+          id?: string
+          invite_code?: string
+          leader_id: string
+          looking_for_members?: boolean
+          name: string
+          pitch?: string
+          updated_at?: string
+        }
+        Update: {
+          competition_id?: string
+          created_at?: string
+          id?: string
+          invite_code?: string
+          leader_id?: string
+          looking_for_members?: boolean
+          name?: string
+          pitch?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competition_teams_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competition_teams_leader_id_fkey"
+            columns: ["leader_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      competitions: {
+        Row: {
+          accessibility_note: string | null
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string
+          ends_on: string | null
+          id: string
+          is_inclusive: boolean
+          is_published: boolean
+          location: string
+          mode: Database["public"]["Enums"]["work_mode"]
+          organisation: string
+          prize_details: string
+          registration_deadline: string | null
+          rules: string
+          skills: string[]
+          starts_on: string | null
+          status: Database["public"]["Enums"]["competition_status"]
+          submission_deadline: string | null
+          summary: string
+          team_max: number
+          team_min: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          accessibility_note?: string | null
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          ends_on?: string | null
+          id?: string
+          is_inclusive?: boolean
+          is_published?: boolean
+          location?: string
+          mode?: Database["public"]["Enums"]["work_mode"]
+          organisation: string
+          prize_details?: string
+          registration_deadline?: string | null
+          rules?: string
+          skills?: string[]
+          starts_on?: string | null
+          status?: Database["public"]["Enums"]["competition_status"]
+          submission_deadline?: string | null
+          summary?: string
+          team_max?: number
+          team_min?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          accessibility_note?: string | null
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          ends_on?: string | null
+          id?: string
+          is_inclusive?: boolean
+          is_published?: boolean
+          location?: string
+          mode?: Database["public"]["Enums"]["work_mode"]
+          organisation?: string
+          prize_details?: string
+          registration_deadline?: string | null
+          rules?: string
+          skills?: string[]
+          starts_on?: string | null
+          status?: Database["public"]["Enums"]["competition_status"]
+          submission_deadline?: string | null
+          summary?: string
+          team_max?: number
+          team_min?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faculty_assignments: {
         Row: {
           cohort_label: string | null
@@ -532,6 +995,243 @@ export type Database = {
           website?: string | null
         }
         Relationships: []
+      }
+      mentor_profiles: {
+        Row: {
+          accepts_requests: boolean
+          availability: string
+          bio: string
+          created_at: string
+          designation: string | null
+          expertise: string[]
+          headline: string
+          id: string
+          industries: string[]
+          is_verified: boolean
+          languages: string[]
+          max_active_mentees: number
+          organisation: string | null
+          session_mode: Database["public"]["Enums"]["work_mode"]
+          supports_accessibility: boolean
+          updated_at: string
+          years_experience: number
+        }
+        Insert: {
+          accepts_requests?: boolean
+          availability?: string
+          bio?: string
+          created_at?: string
+          designation?: string | null
+          expertise?: string[]
+          headline?: string
+          id: string
+          industries?: string[]
+          is_verified?: boolean
+          languages?: string[]
+          max_active_mentees?: number
+          organisation?: string | null
+          session_mode?: Database["public"]["Enums"]["work_mode"]
+          supports_accessibility?: boolean
+          updated_at?: string
+          years_experience?: number
+        }
+        Update: {
+          accepts_requests?: boolean
+          availability?: string
+          bio?: string
+          created_at?: string
+          designation?: string | null
+          expertise?: string[]
+          headline?: string
+          id?: string
+          industries?: string[]
+          is_verified?: boolean
+          languages?: string[]
+          max_active_mentees?: number
+          organisation?: string | null
+          session_mode?: Database["public"]["Enums"]["work_mode"]
+          supports_accessibility?: boolean
+          updated_at?: string
+          years_experience?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_feedback: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          id: string
+          rating: number
+          session_id: string
+        }
+        Insert: {
+          author_id: string
+          body?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          session_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          rating?: number
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_feedback_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_feedback_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "mentorship_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_requests: {
+        Row: {
+          created_at: string
+          focus_skills: string[]
+          goal: string
+          id: string
+          mentor_id: string
+          message: string
+          response_note: string
+          status: Database["public"]["Enums"]["mentorship_request_status"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          focus_skills?: string[]
+          goal?: string
+          id?: string
+          mentor_id: string
+          message?: string
+          response_note?: string
+          status?: Database["public"]["Enums"]["mentorship_request_status"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          focus_skills?: string[]
+          goal?: string
+          id?: string
+          mentor_id?: string
+          message?: string
+          response_note?: string
+          status?: Database["public"]["Enums"]["mentorship_request_status"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_requests_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_requests_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentorship_sessions: {
+        Row: {
+          agenda: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          meeting_link: string | null
+          mentor_id: string
+          mode: Database["public"]["Enums"]["work_mode"]
+          request_id: string | null
+          scheduled_at: string
+          status: Database["public"]["Enums"]["mentorship_session_status"]
+          student_id: string
+          summary: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          agenda?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          meeting_link?: string | null
+          mentor_id: string
+          mode?: Database["public"]["Enums"]["work_mode"]
+          request_id?: string | null
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["mentorship_session_status"]
+          student_id: string
+          summary?: string
+          topic?: string
+          updated_at?: string
+        }
+        Update: {
+          agenda?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          meeting_link?: string | null
+          mentor_id?: string
+          mode?: Database["public"]["Enums"]["work_mode"]
+          request_id?: string | null
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["mentorship_session_status"]
+          student_id?: string
+          summary?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentorship_sessions_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_sessions_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "mentorship_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mentorship_sessions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       opportunities: {
         Row: {
@@ -803,6 +1503,8 @@ export type Database = {
         Row: {
           achieved_on: string | null
           category: string
+          certificate_code: string | null
+          competition_id: string | null
           created_at: string
           description: string
           id: string
@@ -810,10 +1512,14 @@ export type Database = {
           student_id: string
           title: string
           updated_at: string
+          verified_at: string | null
+          verified_by: string | null
         }
         Insert: {
           achieved_on?: string | null
           category?: string
+          certificate_code?: string | null
+          competition_id?: string | null
           created_at?: string
           description?: string
           id?: string
@@ -821,10 +1527,14 @@ export type Database = {
           student_id: string
           title: string
           updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Update: {
           achieved_on?: string | null
           category?: string
+          certificate_code?: string | null
+          competition_id?: string | null
           created_at?: string
           description?: string
           id?: string
@@ -832,11 +1542,27 @@ export type Database = {
           student_id?: string
           title?: string
           updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Relationships: [
           {
+            foreignKeyName: "student_achievements_competition_id_fkey"
+            columns: ["competition_id"]
+            isOneToOne: false
+            referencedRelation: "competitions"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "student_achievements_student_id_fkey"
             columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_achievements_verified_by_fkey"
+            columns: ["verified_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -1125,6 +1851,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      competition_leaderboard: {
+        Args: { _competition: string }
+        Returns: {
+          avg_score: number
+          judge_count: number
+          rank_position: number
+          student_id: string
+          student_name: string
+          submission_id: string
+          team_id: string
+          team_name: string
+          title: string
+        }[]
+      }
       faculty_directory: {
         Args: never
         Returns: {
@@ -1209,8 +1949,28 @@ export type Database = {
         Args: { _poster: string; _student: string }
         Returns: boolean
       }
+      is_competition_judge: {
+        Args: { _competition: string; _user: string }
+        Returns: boolean
+      }
+      is_competition_owner: {
+        Args: { _competition: string; _user: string }
+        Returns: boolean
+      }
       is_faculty_of: {
         Args: { _faculty: string; _student: string }
+        Returns: boolean
+      }
+      is_session_participant: {
+        Args: { _session: string; _user: string }
+        Returns: boolean
+      }
+      is_team_leader: {
+        Args: { _team: string; _user: string }
+        Returns: boolean
+      }
+      is_team_member: {
+        Args: { _team: string; _user: string }
         Returns: boolean
       }
       role_demand_overview: {
@@ -1264,7 +2024,15 @@ export type Database = {
         | "selected"
         | "rejected"
         | "completed"
+      competition_registration_status: "registered" | "submitted" | "withdrawn"
+      competition_status: "draft" | "open" | "judging" | "completed"
       institution_type: "college" | "university" | "polytechnic" | "other"
+      mentorship_request_status:
+        | "pending"
+        | "accepted"
+        | "declined"
+        | "completed"
+      mentorship_session_status: "scheduled" | "completed" | "cancelled"
       opportunity_type:
         | "internship"
         | "job"
@@ -1435,7 +2203,16 @@ export const Constants = {
         "rejected",
         "completed",
       ],
+      competition_registration_status: ["registered", "submitted", "withdrawn"],
+      competition_status: ["draft", "open", "judging", "completed"],
       institution_type: ["college", "university", "polytechnic", "other"],
+      mentorship_request_status: [
+        "pending",
+        "accepted",
+        "declined",
+        "completed",
+      ],
+      mentorship_session_status: ["scheduled", "completed", "cancelled"],
       opportunity_type: [
         "internship",
         "job",
