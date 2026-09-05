@@ -325,11 +325,35 @@ function StudentDashboard() {
             )}
           </PanelCard>
 
-          <PanelCard title="Upcoming deadlines" description="Nothing tracked yet.">
-            <EmptyState message="Save an opportunity to see its deadline here." />
+          <PanelCard
+            title="Upcoming deadlines"
+            description={
+              upcoming.length === 0
+                ? "Nothing due from your saved list."
+                : `${upcoming.length} deadline${upcoming.length === 1 ? "" : "s"} ahead.`
+            }
+          >
+            {upcoming.length === 0 ? (
+              <EmptyState message="Save an opportunity to see its deadline here." />
+            ) : (
+              <ul className="space-y-3">
+                {upcoming.map(({ item, days }) => (
+                  <li key={item.id} className="rounded-md border border-border p-3">
+                    <p className="text-sm font-medium">{item.opportunities?.title ?? "Opportunity"}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {statusLabels[item.status]} ·{" "}
+                      {days === 0 ? "Closes today" : `${days} day${days === 1 ? "" : "s"} left`}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Button asChild variant="outline" className="mt-4 min-h-11">
+              <Link to="/applications">Open my applications</Link>
+            </Button>
             <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
               <CalendarClock className="size-3.5" aria-hidden="true" />
-              Deadlines sync automatically once you apply.
+              Deadlines sync automatically once you save or apply.
             </p>
           </PanelCard>
         </div>
