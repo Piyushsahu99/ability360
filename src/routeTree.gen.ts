@@ -22,6 +22,7 @@ import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dn
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
+import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardFacultyRouteImport } from './routes/_authenticated/dashboard.faculty'
@@ -104,6 +105,12 @@ const CompetitionsIndexRoute = CompetitionsIndexRouteImport.update({
   path: '/competitions/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompetitionsCompetitionIdRoute =
+  CompetitionsCompetitionIdRouteImport.update({
+    id: '/competitions/$competitionId',
+    path: '/competitions/$competitionId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -207,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
@@ -236,6 +244,7 @@ export interface FileRoutesByTo {
   '/dna': typeof AuthenticatedDnaRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/competitions': typeof CompetitionsIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
@@ -267,6 +276,7 @@ export interface FileRoutesById {
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
+  '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/dna'
     | '/onboarding'
     | '/roadmap'
+    | '/competitions/$competitionId'
     | '/competitions/'
     | '/dashboard/admin'
     | '/dashboard/faculty'
@@ -327,6 +338,7 @@ export interface FileRouteTypes {
     | '/dna'
     | '/onboarding'
     | '/roadmap'
+    | '/competitions/$competitionId'
     | '/competitions'
     | '/dashboard/admin'
     | '/dashboard/faculty'
@@ -357,6 +369,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dna'
     | '/_authenticated/onboarding'
     | '/_authenticated/roadmap'
+    | '/competitions/$competitionId'
     | '/competitions/'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/faculty'
@@ -382,6 +395,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
+  CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
 }
 
@@ -476,6 +490,13 @@ declare module '@tanstack/react-router' {
       path: '/competitions'
       fullPath: '/competitions/'
       preLoaderRoute: typeof CompetitionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/competitions/$competitionId': {
+      id: '/competitions/$competitionId'
+      path: '/competitions/$competitionId'
+      fullPath: '/competitions/$competitionId'
+      preLoaderRoute: typeof CompetitionsCompetitionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
@@ -647,6 +668,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
+  CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,
 }
 export const routeTree = rootRouteImport
