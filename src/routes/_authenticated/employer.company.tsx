@@ -92,6 +92,17 @@ function CompanyProfilePage() {
     onError: (error: Error) => toast.error(error.message),
   });
 
+  const verifyMutation = useMutation({
+    mutationFn: requestCompanyVerification,
+    onSuccess: () => {
+      toast.success("Verification requested");
+      void queryClient.invalidateQueries({ queryKey: ["employer", "company-profile"] });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+
+
   function set<K extends keyof CompanyProfileValues>(key: K, value: CompanyProfileValues[K]) {
     setValues((current) => ({ ...current, [key]: value }));
   }
