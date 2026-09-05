@@ -19,6 +19,7 @@ import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authen
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
+import { Route as AuthenticatedJudgingRouteImport } from './routes/_authenticated/judging'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
@@ -89,6 +90,11 @@ const AuthenticatedAssessmentRoute = AuthenticatedAssessmentRouteImport.update({
 const AuthenticatedDnaRoute = AuthenticatedDnaRouteImport.update({
   id: '/dna',
   path: '/dna',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedJudgingRoute = AuthenticatedJudgingRouteImport.update({
+  id: '/judging',
+  path: '/judging',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
@@ -219,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
+  '/judging': typeof AuthenticatedJudgingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
@@ -250,6 +257,7 @@ export interface FileRoutesByTo {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
+  '/judging': typeof AuthenticatedJudgingRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
@@ -283,6 +291,7 @@ export interface FileRoutesById {
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
+  '/_authenticated/judging': typeof AuthenticatedJudgingRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/applications'
     | '/assessment'
     | '/dna'
+    | '/judging'
     | '/onboarding'
     | '/roadmap'
     | '/competitions/$competitionId'
@@ -347,6 +357,7 @@ export interface FileRouteTypes {
     | '/applications'
     | '/assessment'
     | '/dna'
+    | '/judging'
     | '/onboarding'
     | '/roadmap'
     | '/competitions/$competitionId'
@@ -379,6 +390,7 @@ export interface FileRouteTypes {
     | '/_authenticated/applications'
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
+    | '/_authenticated/judging'
     | '/_authenticated/onboarding'
     | '/_authenticated/roadmap'
     | '/competitions/$competitionId'
@@ -482,6 +494,13 @@ declare module '@tanstack/react-router' {
       path: '/dna'
       fullPath: '/dna'
       preLoaderRoute: typeof AuthenticatedDnaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/judging': {
+      id: '/_authenticated/judging'
+      path: '/judging'
+      fullPath: '/judging'
+      preLoaderRoute: typeof AuthenticatedJudgingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/onboarding': {
@@ -632,6 +651,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
+  AuthenticatedJudgingRoute: typeof AuthenticatedJudgingRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
@@ -657,6 +677,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
+  AuthenticatedJudgingRoute: AuthenticatedJudgingRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
