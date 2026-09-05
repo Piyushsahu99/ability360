@@ -104,6 +104,7 @@ function CompanyProfilePage() {
   }
 
   const completeness = companyProfileCompleteness(profile ?? null);
+  const verification = verificationStatusOf(profile ?? null);
 
   return (
     <DashboardShell
@@ -115,10 +116,32 @@ function CompanyProfilePage() {
       <PanelCard
         title="Profile strength"
         description="Complete profiles get more qualified applications."
+        action={
+          <Badge variant={verification === "verified" ? "default" : "secondary"}>
+            {verificationLabels[verification]}
+          </Badge>
+        }
       >
         <Progress value={completeness} aria-label="Company profile completeness" />
         <p className="mt-2 text-sm text-muted-foreground">{completeness}% complete</p>
+        <p className="mt-4 text-sm text-muted-foreground">{verificationHints[verification]}</p>
+        {profile && verification !== "verified" && verification !== "pending" && (
+          <Button
+            className="mt-4"
+            variant="outline"
+            disabled={verifyMutation.isPending || completeness < 60}
+            onClick={() => verifyMutation.mutate()}
+          >
+            Request verification
+          </Button>
+        )}
+        {profile && completeness < 60 && verification === "unverified" && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            Fill in at least 60% of your profile to request verification.
+          </p>
+        )}
       </PanelCard>
+
 
       <PanelCard title="Organisation details" description="Basic identity and hiring contact.">
         <form className="grid gap-4 sm:grid-cols-2" onSubmit={submit}>
