@@ -20,6 +20,7 @@ import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authent
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
 import { Route as AuthenticatedJudgingRouteImport } from './routes/_authenticated/judging'
+import { Route as AuthenticatedMentorRouteImport } from './routes/_authenticated/mentor'
 import { Route as AuthenticatedMentorshipRouteImport } from './routes/_authenticated/mentorship'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
@@ -96,6 +97,11 @@ const AuthenticatedDnaRoute = AuthenticatedDnaRouteImport.update({
 const AuthenticatedJudgingRoute = AuthenticatedJudgingRouteImport.update({
   id: '/judging',
   path: '/judging',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMentorRoute = AuthenticatedMentorRouteImport.update({
+  id: '/mentor',
+  path: '/mentor',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMentorshipRoute = AuthenticatedMentorshipRouteImport.update({
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/judging': typeof AuthenticatedJudgingRoute
+  '/mentor': typeof AuthenticatedMentorRoute
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
   '/judging': typeof AuthenticatedJudgingRoute
+  '/mentor': typeof AuthenticatedMentorRoute
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
   '/_authenticated/judging': typeof AuthenticatedJudgingRoute
+  '/_authenticated/mentor': typeof AuthenticatedMentorRoute
   '/_authenticated/mentorship': typeof AuthenticatedMentorshipRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
@@ -335,6 +344,7 @@ export interface FileRouteTypes {
     | '/assessment'
     | '/dna'
     | '/judging'
+    | '/mentor'
     | '/mentorship'
     | '/onboarding'
     | '/roadmap'
@@ -368,6 +378,7 @@ export interface FileRouteTypes {
     | '/assessment'
     | '/dna'
     | '/judging'
+    | '/mentor'
     | '/mentorship'
     | '/onboarding'
     | '/roadmap'
@@ -402,6 +413,7 @@ export interface FileRouteTypes {
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
     | '/_authenticated/judging'
+    | '/_authenticated/mentor'
     | '/_authenticated/mentorship'
     | '/_authenticated/onboarding'
     | '/_authenticated/roadmap'
@@ -513,6 +525,13 @@ declare module '@tanstack/react-router' {
       path: '/judging'
       fullPath: '/judging'
       preLoaderRoute: typeof AuthenticatedJudgingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mentor': {
+      id: '/_authenticated/mentor'
+      path: '/mentor'
+      fullPath: '/mentor'
+      preLoaderRoute: typeof AuthenticatedMentorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/mentorship': {
@@ -671,6 +690,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
   AuthenticatedJudgingRoute: typeof AuthenticatedJudgingRoute
+  AuthenticatedMentorRoute: typeof AuthenticatedMentorRoute
   AuthenticatedMentorshipRoute: typeof AuthenticatedMentorshipRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
@@ -698,6 +718,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
   AuthenticatedJudgingRoute: AuthenticatedJudgingRoute,
+  AuthenticatedMentorRoute: AuthenticatedMentorRoute,
   AuthenticatedMentorshipRoute: AuthenticatedMentorshipRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
