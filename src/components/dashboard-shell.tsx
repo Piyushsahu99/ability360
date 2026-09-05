@@ -118,14 +118,15 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-7xl gap-8 px-4 py-8 sm:px-6">
+      <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-8 sm:px-6">
         <aside className="hidden w-60 shrink-0 lg:block">
           <div className="sticky top-24">{sidebar}</div>
         </aside>
 
-        <main className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold sm:text-3xl">{title}</h1>
+        <main className="mx-auto min-w-0 max-w-3xl flex-1">
+          <h1 className="text-2xl sm:text-3xl">{title}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+
 
           {wrongRole && (
             <Card className="mt-6 border-amber/40 bg-accent">
