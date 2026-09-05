@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
 
-export const appRoles = ["student", "industry", "institution", "admin"] as const;
+export const appRoles = ["student", "industry", "institution", "faculty", "admin"] as const;
 export type AppRole = (typeof appRoles)[number];
 
 export const signUpSchema = z.object({
@@ -25,6 +25,7 @@ export const roleLabels: Record<AppRole, string> = {
   student: "Student",
   industry: "Industry",
   institution: "Institution",
+  faculty: "Faculty",
   admin: "Admin",
 };
 
@@ -32,6 +33,7 @@ export const dashboardPathByRole: Record<AppRole, string> = {
   student: "/dashboard/student",
   industry: "/dashboard/industry",
   institution: "/dashboard/institution",
+  faculty: "/dashboard/faculty",
   admin: "/dashboard/admin",
 };
 

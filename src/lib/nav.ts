@@ -6,6 +6,8 @@ import {
   ClipboardList,
   Users,
   Compass,
+  BadgeCheck,
+  MessageSquare,
   GraduationCap,
   LayoutDashboard,
   LineChart,
@@ -56,4 +58,16 @@ const institutionItems: NavItem[] = [
 
 export function institutionNav(activePath: string): NavItem[] {
   return institutionItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
+const facultyItems: NavItem[] = [
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/faculty" },
+  { label: "My students", icon: GraduationCap, to: "/faculty/students" },
+  { label: "Verifications", icon: BadgeCheck, to: "/faculty/students" },
+  { label: "Feedback", icon: MessageSquare, to: "/faculty/students" },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
+];
+
+export function facultyNav(activePath: string): NavItem[] {
+  return facultyItems.map((item) => ({ ...item, active: item.to === activePath }));
 }
