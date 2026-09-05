@@ -70,6 +70,17 @@ function StudentDashboard() {
   const shownInclusive = tailoredOpportunities.slice(0, 3);
   const shownResources = supportResources.slice(0, 3);
 
+  /* Real application pipeline */
+  const { data: applications } = useQuery(applicationsQueryOptions);
+  const allApplications = applications ?? [];
+  const liveApplications = allApplications.filter((item) => activeStatuses.includes(item.status));
+  const closedApplications = allApplications.filter((item) => closedStatuses.includes(item.status));
+  const upcoming = allApplications
+    .map((item) => ({ item, days: daysUntil(item.deadline ?? item.opportunities?.deadline ?? null) }))
+    .filter((entry) => entry.days !== null && entry.days >= 0)
+    .sort((a, b) => (a.days ?? 0) - (b.days ?? 0))
+    .slice(0, 4);
+
   return (
     <DashboardShell
       role="student"
