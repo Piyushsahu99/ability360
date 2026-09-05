@@ -38,6 +38,7 @@ import { Route as AuthenticatedInstitutionOutcomesRouteImport } from './routes/_
 import { Route as AuthenticatedInstitutionPartnersRouteImport } from './routes/_authenticated/institution.partners'
 import { Route as AuthenticatedInstitutionSkillDemandRouteImport } from './routes/_authenticated/institution.skill-demand'
 import { Route as AuthenticatedInstitutionStudentsRouteImport } from './routes/_authenticated/institution.students'
+import { Route as AuthenticatedOrganiserCompetitionsRouteImport } from './routes/_authenticated/organiser.competitions'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -201,6 +202,12 @@ const AuthenticatedInstitutionStudentsRoute =
     path: '/institution/students',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOrganiserCompetitionsRoute =
+  AuthenticatedOrganiserCompetitionsRouteImport.update({
+    id: '/organiser/competitions',
+    path: '/organiser/competitions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
+  '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -260,6 +268,7 @@ export interface FileRoutesByTo {
   '/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
+  '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -292,6 +301,7 @@ export interface FileRoutesById {
   '/_authenticated/institution/partners': typeof AuthenticatedInstitutionPartnersRoute
   '/_authenticated/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/_authenticated/institution/students': typeof AuthenticatedInstitutionStudentsRoute
+  '/_authenticated/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
     | '/institution/partners'
     | '/institution/skill-demand'
     | '/institution/students'
+    | '/organiser/competitions'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -354,6 +365,7 @@ export interface FileRouteTypes {
     | '/institution/partners'
     | '/institution/skill-demand'
     | '/institution/students'
+    | '/organiser/competitions'
     | '/dashboard'
   id:
     | '__root__'
@@ -385,6 +397,7 @@ export interface FileRouteTypes {
     | '/_authenticated/institution/partners'
     | '/_authenticated/institution/skill-demand'
     | '/_authenticated/institution/students'
+    | '/_authenticated/organiser/competitions'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -604,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInstitutionStudentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/organiser/competitions': {
+      id: '/_authenticated/organiser/competitions'
+      path: '/organiser/competitions'
+      fullPath: '/organiser/competitions'
+      preLoaderRoute: typeof AuthenticatedOrganiserCompetitionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -628,6 +648,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedInstitutionPartnersRoute: typeof AuthenticatedInstitutionPartnersRoute
   AuthenticatedInstitutionSkillDemandRoute: typeof AuthenticatedInstitutionSkillDemandRoute
   AuthenticatedInstitutionStudentsRoute: typeof AuthenticatedInstitutionStudentsRoute
+  AuthenticatedOrganiserCompetitionsRoute: typeof AuthenticatedOrganiserCompetitionsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
@@ -655,6 +676,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedInstitutionSkillDemandRoute:
     AuthenticatedInstitutionSkillDemandRoute,
   AuthenticatedInstitutionStudentsRoute: AuthenticatedInstitutionStudentsRoute,
+  AuthenticatedOrganiserCompetitionsRoute:
+    AuthenticatedOrganiserCompetitionsRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
