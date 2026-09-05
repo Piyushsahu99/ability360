@@ -1,15 +1,12 @@
 import {
   Accessibility,
-  BookOpen,
   Briefcase,
   Building2,
   ClipboardList,
   Users,
   Compass,
-  BadgeCheck,
   Gavel,
   HeartHandshake,
-  MessageSquare,
   GraduationCap,
   LayoutDashboard,
   LineChart,
@@ -32,7 +29,6 @@ const studentItems: NavItem[] = [
   { label: "Competitions", icon: Trophy, to: "/competitions" },
   { label: "Mentorship", icon: HeartHandshake, to: "/mentorship" },
   { label: "Accessibility", icon: Accessibility, to: "/accessibility" },
-  { label: "Learning", icon: BookOpen },
   { label: "Applications", icon: Briefcase, to: "/applications" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
@@ -78,8 +74,6 @@ const facultyItems: NavItem[] = [
   { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
-  { label: "Verifications", icon: BadgeCheck },
-  { label: "Feedback", icon: MessageSquare },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
 ];
 

@@ -13,6 +13,13 @@ import { useMe } from "@/lib/auth";
 import { studentNav } from "@/lib/nav";
 import { careerRolesQueryOptions, formatLpa, targetRoleQueryOptions } from "@/lib/careers";
 import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
+import {
+  activeStatuses,
+  applicationsQueryOptions,
+  closedStatuses,
+  daysUntil,
+  statusLabels,
+} from "@/lib/applications";
 import { missingSkills, readinessScore, roadmapQueryOptions, roadmapWeeks } from "@/lib/roadmap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
@@ -63,6 +70,17 @@ function StudentDashboard() {
   const shownInclusive = tailoredOpportunities.slice(0, 3);
   const shownResources = supportResources.slice(0, 3);
 
+  /* Real application pipeline */
+  const { data: applications } = useQuery(applicationsQueryOptions);
+  const allApplications = applications ?? [];
+  const liveApplications = allApplications.filter((item) => activeStatuses.includes(item.status));
+  const closedApplications = allApplications.filter((item) => closedStatuses.includes(item.status));
+  const upcoming = allApplications
+    .map((item) => ({ item, days: daysUntil(item.deadline ?? item.opportunities?.deadline ?? null) }))
+    .filter((entry) => entry.days !== null && entry.days >= 0)
+    .sort((a, b) => (a.days ?? 0) - (b.days ?? 0))
+    .slice(0, 4);
+
   return (
     <DashboardShell
       role="student"
@@ -89,7 +107,16 @@ function StudentDashboard() {
           hint={gaps[0] ? `Start with ${gaps[0]}` : "Nothing outstanding"}
           icon={UserRound}
         />
-        <StatCard label="Applications" value="0" hint="Nothing submitted yet" icon={Briefcase} />
+        <StatCard
+          label="Applications"
+          value={String(allApplications.length)}
+          hint={
+            allApplications.length === 0
+              ? "Nothing saved yet"
+              : `${liveApplications.length} in progress · ${closedApplications.length} closed`
+          }
+          icon={Briefcase}
+        />
       </div>
 
       <PanelCard title="What should I do this week?" description="Three small steps that build real evidence.">
@@ -298,11 +325,35 @@ function StudentDashboard() {
             )}
           </PanelCard>
 
-          <PanelCard title="Upcoming deadlines" description="Nothing tracked yet.">
-            <EmptyState message="Save an opportunity to see its deadline here." />
+          <PanelCard
+            title="Upcoming deadlines"
+            description={
+              upcoming.length === 0
+                ? "Nothing due from your saved list."
+                : `${upcoming.length} deadline${upcoming.length === 1 ? "" : "s"} ahead.`
+            }
+          >
+            {upcoming.length === 0 ? (
+              <EmptyState message="Save an opportunity to see its deadline here." />
+            ) : (
+              <ul className="space-y-3">
+                {upcoming.map(({ item, days }) => (
+                  <li key={item.id} className="rounded-md border border-border p-3">
+                    <p className="text-sm font-medium">{item.opportunities?.title ?? "Opportunity"}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {statusLabels[item.status]} ·{" "}
+                      {days === 0 ? "Closes today" : `${days} day${days === 1 ? "" : "s"} left`}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Button asChild variant="outline" className="mt-4 min-h-11">
+              <Link to="/applications">Open my applications</Link>
+            </Button>
             <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
               <CalendarClock className="size-3.5" aria-hidden="true" />
-              Deadlines sync automatically once you apply.
+              Deadlines sync automatically once you save or apply.
             </p>
           </PanelCard>
         </div>

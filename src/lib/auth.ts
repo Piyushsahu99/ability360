@@ -58,7 +58,11 @@ export const meQueryOptions = queryOptions({
       supabase.from("user_roles").select("role").eq("user_id", user.id),
     ]);
 
-    const role = (roles?.[0]?.role ?? "student") as AppRole;
+    /* A user can hold several roles (e.g. mentor + student). Resolve the highest
+       privileged workspace we actually have a dashboard for, never an unknown one. */
+    const held = (roles ?? []).map((row) => row.role as string);
+    const priority: AppRole[] = ["admin", "institution", "faculty", "industry", "student"];
+    const role = priority.find((candidate) => held.includes(candidate)) ?? "student";
     return {
       id: user.id,
       email: user.email ?? "",
