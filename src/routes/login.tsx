@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
@@ -106,6 +107,12 @@ function LoginPage() {
                   Sign in
                 </Button>
               </form>
+              <div className="my-4 flex items-center gap-3" aria-hidden="true">
+                <span className="h-px flex-1 bg-border" />
+                <span className="text-xs text-muted-foreground">or</span>
+                <span className="h-px flex-1 bg-border" />
+              </div>
+              <GoogleSignInButton />
             </Form>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
