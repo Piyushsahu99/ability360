@@ -302,12 +302,13 @@ function StudentDnaPage() {
                           {achievementCategoryLabels[achievement.category] ?? achievement.category}
                         </p>
                         {achievement.verified_at && (
-                          <p className="mt-1 flex flex-wrap items-center gap-2 text-xs">
+                          <div className="mt-1 flex flex-wrap items-center gap-2 text-xs">
                             <Badge className="bg-primary-soft text-primary">Verified achievement</Badge>
                             {achievement.certificate_code && (
                               <code className="rounded bg-secondary px-1.5 py-0.5">{achievement.certificate_code}</code>
                             )}
-                          </p>
+                          </div>
+
                         )}
                       </div>
                       <Button
