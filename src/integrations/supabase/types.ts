@@ -1451,6 +1451,72 @@ export type Database = {
           },
         ]
       }
+      resources: {
+        Row: {
+          audience: string[]
+          benefit: string
+          body: string
+          category: string
+          created_at: string
+          created_by: string | null
+          deadline_label: string
+          eligibility: string
+          id: string
+          image_key: string
+          is_published: boolean
+          link: string | null
+          organisation: string
+          region: string
+          slug: string
+          summary: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience?: string[]
+          benefit?: string
+          body?: string
+          category: string
+          created_at?: string
+          created_by?: string | null
+          deadline_label?: string
+          eligibility?: string
+          id?: string
+          image_key?: string
+          is_published?: boolean
+          link?: string | null
+          organisation?: string
+          region?: string
+          slug: string
+          summary?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience?: string[]
+          benefit?: string
+          body?: string
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          deadline_label?: string
+          eligibility?: string
+          id?: string
+          image_key?: string
+          is_published?: boolean
+          link?: string | null
+          organisation?: string
+          region?: string
+          slug?: string
+          summary?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       roadmap_progress: {
         Row: {
           completed_at: string

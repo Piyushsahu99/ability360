@@ -19,6 +19,7 @@ import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authen
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
 import { Route as AuthenticatedDnaRouteImport } from './routes/_authenticated/dna'
+import { Route as AuthenticatedJourneyRouteImport } from './routes/_authenticated/journey'
 import { Route as AuthenticatedJudgingRouteImport } from './routes/_authenticated/judging'
 import { Route as AuthenticatedMentorRouteImport } from './routes/_authenticated/mentor'
 import { Route as AuthenticatedMentorshipRouteImport } from './routes/_authenticated/mentorship'
@@ -26,6 +27,8 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
 import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
+import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
+import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardFacultyRouteImport } from './routes/_authenticated/dashboard.faculty'
@@ -94,6 +97,11 @@ const AuthenticatedDnaRoute = AuthenticatedDnaRouteImport.update({
   path: '/dna',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedJourneyRoute = AuthenticatedJourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedJudgingRoute = AuthenticatedJudgingRouteImport.update({
   id: '/judging',
   path: '/judging',
@@ -130,6 +138,16 @@ const CompetitionsCompetitionIdRoute =
     path: '/competitions/$competitionId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
+  id: '/resources/$slug',
+  path: '/resources/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -237,13 +255,16 @@ export interface FileRoutesByFullPath {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
+  '/journey': typeof AuthenticatedJourneyRoute
   '/judging': typeof AuthenticatedJudgingRoute
   '/mentor': typeof AuthenticatedMentorRoute
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -271,13 +292,16 @@ export interface FileRoutesByTo {
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
   '/dna': typeof AuthenticatedDnaRoute
+  '/journey': typeof AuthenticatedJourneyRoute
   '/judging': typeof AuthenticatedJudgingRoute
   '/mentor': typeof AuthenticatedMentorRoute
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions': typeof CompetitionsIndexRoute
+  '/resources': typeof ResourcesIndexRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -307,13 +331,16 @@ export interface FileRoutesById {
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
   '/_authenticated/dna': typeof AuthenticatedDnaRoute
+  '/_authenticated/journey': typeof AuthenticatedJourneyRoute
   '/_authenticated/judging': typeof AuthenticatedJudgingRoute
   '/_authenticated/mentor': typeof AuthenticatedMentorRoute
   '/_authenticated/mentorship': typeof AuthenticatedMentorshipRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -343,13 +370,16 @@ export interface FileRouteTypes {
     | '/applications'
     | '/assessment'
     | '/dna'
+    | '/journey'
     | '/judging'
     | '/mentor'
     | '/mentorship'
     | '/onboarding'
     | '/roadmap'
     | '/competitions/$competitionId'
+    | '/resources/$slug'
     | '/competitions/'
+    | '/resources/'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -377,13 +407,16 @@ export interface FileRouteTypes {
     | '/applications'
     | '/assessment'
     | '/dna'
+    | '/journey'
     | '/judging'
     | '/mentor'
     | '/mentorship'
     | '/onboarding'
     | '/roadmap'
     | '/competitions/$competitionId'
+    | '/resources/$slug'
     | '/competitions'
+    | '/resources'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -412,13 +445,16 @@ export interface FileRouteTypes {
     | '/_authenticated/applications'
     | '/_authenticated/assessment'
     | '/_authenticated/dna'
+    | '/_authenticated/journey'
     | '/_authenticated/judging'
     | '/_authenticated/mentor'
     | '/_authenticated/mentorship'
     | '/_authenticated/onboarding'
     | '/_authenticated/roadmap'
     | '/competitions/$competitionId'
+    | '/resources/$slug'
     | '/competitions/'
+    | '/resources/'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/faculty'
     | '/_authenticated/dashboard/industry'
@@ -445,7 +481,9 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
+  ResourcesSlugRoute: typeof ResourcesSlugRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
+  ResourcesIndexRoute: typeof ResourcesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -520,6 +558,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDnaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/journey': {
+      id: '/_authenticated/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof AuthenticatedJourneyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/judging': {
       id: '/_authenticated/judging'
       path: '/judging'
@@ -567,6 +612,20 @@ declare module '@tanstack/react-router' {
       path: '/competitions/$competitionId'
       fullPath: '/competitions/$competitionId'
       preLoaderRoute: typeof CompetitionsCompetitionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/': {
+      id: '/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/$slug': {
+      id: '/resources/$slug'
+      path: '/resources/$slug'
+      fullPath: '/resources/$slug'
+      preLoaderRoute: typeof ResourcesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
@@ -689,6 +748,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
   AuthenticatedDnaRoute: typeof AuthenticatedDnaRoute
+  AuthenticatedJourneyRoute: typeof AuthenticatedJourneyRoute
   AuthenticatedJudgingRoute: typeof AuthenticatedJudgingRoute
   AuthenticatedMentorRoute: typeof AuthenticatedMentorRoute
   AuthenticatedMentorshipRoute: typeof AuthenticatedMentorshipRoute
@@ -717,6 +777,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
   AuthenticatedDnaRoute: AuthenticatedDnaRoute,
+  AuthenticatedJourneyRoute: AuthenticatedJourneyRoute,
   AuthenticatedJudgingRoute: AuthenticatedJudgingRoute,
   AuthenticatedMentorRoute: AuthenticatedMentorRoute,
   AuthenticatedMentorshipRoute: AuthenticatedMentorshipRoute,
@@ -755,7 +816,9 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
+  ResourcesSlugRoute: ResourcesSlugRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,
+  ResourcesIndexRoute: ResourcesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
