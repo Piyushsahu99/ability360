@@ -9,17 +9,21 @@ export type AppRole = (typeof appRoles)[number];
 
 export const signUpSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name").max(80),
-  email: z.string().trim().email("Enter a valid email address"),
-  password: z.string().min(8, "Use at least 8 characters"),
+  email: z.string().trim().toLowerCase().email("Enter a valid email address").max(254),
+  password: z
+    .string()
+    .min(8, "Use at least 8 characters")
+    .max(72, "Passwords can be at most 72 characters"),
   role: z.enum(["student", "industry", "institution"]),
 });
 export type SignUpValues = z.infer<typeof signUpSchema>;
 
 export const signInSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address"),
-  password: z.string().min(1, "Enter your password"),
+  email: z.string().trim().toLowerCase().email("Enter a valid email address").max(254),
+  password: z.string().min(1, "Enter your password").max(72),
 });
 export type SignInValues = z.infer<typeof signInSchema>;
+
 
 export const roleLabels: Record<AppRole, string> = {
   student: "Student",
