@@ -21,15 +21,19 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { applicationsQueryOptions, saveOpportunity, statusLabels } from "@/lib/applications";
+import { citiesByState, citiesFor, formatDateIN, formatStipend, indianStates } from "@/lib/india";
 import { useSession } from "@/lib/auth";
 import {
-  formatDeadline,
   opportunitiesQueryOptions,
   opportunityTypeLabels,
   workModeLabels,
   type Opportunity,
 } from "@/lib/opportunities";
 
+
+const citiesByStateLower: Record<string, string[]> = Object.fromEntries(
+  Object.entries(citiesByState).map(([state, cities]) => [state, cities.map((city) => city.toLowerCase())]),
+);
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -56,6 +60,10 @@ function OpportunitiesPage() {
   const [type, setType] = useState("all");
   const [mode, setMode] = useState("all");
   const [inclusiveOnly, setInclusiveOnly] = useState(false);
+  const [stateFilter, setStateFilter] = useState("all");
+  const [cityFilter, setCityFilter] = useState("all");
+
+  const cityOptions = useMemo(() => citiesFor(stateFilter), [stateFilter]);
 
   const results = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -69,9 +77,15 @@ function OpportunitiesPage() {
       const matchesType = type === "all" || item.type === type;
       const matchesMode = mode === "all" || item.mode === mode;
       const matchesInclusive = !inclusiveOnly || item.is_inclusive_employer;
-      return matchesTerm && matchesType && matchesMode && matchesInclusive;
+      const location = item.location.toLowerCase();
+      const matchesState =
+        stateFilter === "all" ||
+        location.includes(stateFilter.toLowerCase()) ||
+        (citiesByStateLower[stateFilter] ?? []).some((city) => location.includes(city));
+      const matchesCity = cityFilter === "all" || location.includes(cityFilter.toLowerCase());
+      return matchesTerm && matchesType && matchesMode && matchesInclusive && matchesState && matchesCity;
     });
-  }, [data, search, type, mode, inclusiveOnly]);
+  }, [data, search, type, mode, inclusiveOnly, stateFilter, cityFilter]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -137,6 +151,47 @@ function OpportunitiesPage() {
                   {Object.entries(workModeLabels).map(([value, label]) => (
                     <SelectItem key={value} value={value}>
                       {label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="mt-3 grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="filter-state">State or union territory</Label>
+              <Select
+                value={stateFilter}
+                onValueChange={(value) => {
+                  setStateFilter(value);
+                  setCityFilter("all");
+                }}
+              >
+                <SelectTrigger id="filter-state" className="mt-1.5 w-full">
+                  <SelectValue placeholder="All states" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All states and UTs</SelectItem>
+                  {indianStates.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="filter-city">City</Label>
+              <Select value={cityFilter} onValueChange={setCityFilter}>
+                <SelectTrigger id="filter-city" className="mt-1.5 w-full">
+                  <SelectValue placeholder="All cities" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All cities</SelectItem>
+                  {cityOptions.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {value}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -237,12 +292,12 @@ function OpportunitiesPage() {
                       <div className="flex items-center gap-1.5">
                         <Wallet className="size-4 shrink-0" aria-hidden="true" />
                         <dt className="sr-only">Compensation</dt>
-                        <dd>{item.stipend ?? "Not disclosed"}</dd>
+                        <dd>{formatStipend(item.stipend)}</dd>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <CalendarDays className="size-4 shrink-0" aria-hidden="true" />
                         <dt className="sr-only">Apply by</dt>
-                        <dd>{formatDeadline(item.deadline)}</dd>
+                        <dd>{formatDateIN(item.deadline)}</dd>
                       </div>
                     </dl>
                     <SaveAction opportunity={item} />
