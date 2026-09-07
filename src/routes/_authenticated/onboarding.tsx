@@ -301,6 +301,19 @@ function AcademicStep({
   institutions: { id: string; name: string; city: string | null; state: string | null }[];
 }) {
   const institutionId = form.watch("institutionId");
+  const [collegeSearch, setCollegeSearch] = useState("");
+
+  const filteredInstitutions = useMemo(() => {
+    const term = collegeSearch.trim().toLowerCase();
+    if (!term) return institutions.slice(0, 60);
+    return institutions
+      .filter((institution) =>
+        `${institution.name} ${institution.city ?? ""} ${institution.state ?? ""}`
+          .toLowerCase()
+          .includes(term),
+      )
+      .slice(0, 60);
+  }, [institutions, collegeSearch]);
 
   return (
     <Form {...form}>
@@ -324,7 +337,14 @@ function AcademicStep({
           name="institutionId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>College</FormLabel>
+              <FormLabel>College or university</FormLabel>
+              <Input
+                className="mb-2 min-h-11"
+                placeholder="Search by college, city or state"
+                aria-label="Search colleges and universities"
+                value={collegeSearch}
+                onChange={(event) => setCollegeSearch(event.target.value)}
+              />
               <Select value={field.value ?? ""} onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="min-h-11">
@@ -332,19 +352,26 @@ function AcademicStep({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {institutions.map((institution) => (
+                  {filteredInstitutions.map((institution) => (
                     <SelectItem key={institution.id} value={institution.id}>
                       {institution.name}
                       {institution.city ? ` — ${institution.city}` : ""}
+                      {institution.state ? `, ${institution.state}` : ""}
                     </SelectItem>
                   ))}
                   <SelectItem value="other">My college isn't listed</SelectItem>
                 </SelectContent>
               </Select>
+              <FormDescription>
+                {collegeSearch.trim()
+                  ? `${filteredInstitutions.length} match${filteredInstitutions.length === 1 ? "" : "es"}`
+                  : "Type to search the full list of Indian colleges and universities."}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
 
         {institutionId === "other" && (
           <FormField
