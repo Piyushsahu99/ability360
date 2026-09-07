@@ -1,14 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Building2, GraduationCap, Loader2, School } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { EmailTakenDialog } from "@/components/email-taken-dialog";
 import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { checkEmailRegistered } from "@/lib/auth.functions";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -54,6 +58,8 @@ function RegisterPage() {
   const queryClient = useQueryClient();
   const [submitting, setSubmitting] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
+  const [takenEmail, setTakenEmail] = useState<string | null>(null);
+  const checkRegistered = useServerFn(checkEmailRegistered);
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
@@ -62,8 +68,23 @@ function RegisterPage() {
 
   async function onSubmit(values: SignUpValues) {
     setSubmitting(true);
+    const email = values.email.trim().toLowerCase();
+
+    /* The auth service intentionally returns a success-shaped response for an
+       existing address, so ask the server first and never claim a mail was sent. */
+    try {
+      const existing = await checkRegistered({ data: { email } });
+      if (existing.registered) {
+        setSubmitting(false);
+        setTakenEmail(email);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
     const { data, error } = await supabase.auth.signUp({
-      email: values.email,
+      email,
       password: values.password,
       options: {
         emailRedirectTo: window.location.origin,
@@ -73,7 +94,11 @@ function RegisterPage() {
 
     if (error) {
       setSubmitting(false);
-      toast.error(error.message);
+      toast.error(
+        error.message.toLowerCase().includes("already")
+          ? "This email is already registered. Please sign in instead."
+          : "We couldn't create your account. Please try again.",
+      );
       return;
     }
 
@@ -90,9 +115,19 @@ function RegisterPage() {
     navigate({ to: role === "student" ? "/onboarding" : dashboardPathByRole[role] });
   }
 
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
+      <EmailTakenDialog
+        open={takenEmail !== null}
+        email={takenEmail ?? ""}
+        onUseDifferentEmail={() => {
+          setTakenEmail(null);
+          form.setFocus("email");
+        }}
+      />
+
       <main className="flex flex-1 items-center justify-center bg-surface px-4 py-14">
         <Card className="w-full max-w-lg">
           <CardHeader>

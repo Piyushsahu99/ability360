@@ -25,6 +25,8 @@ import examsImage from "@/assets/res-exams.jpg";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
+import { dashboardPathByRole, useMe } from "@/lib/auth";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -103,7 +105,12 @@ const resourceHighlights = [
 ];
 
 function LandingPage() {
+  const { data: me } = useMe();
+  const signedIn = Boolean(me);
+  const dashboardPath = me ? dashboardPathByRole[me.role] : "/login";
+
   return (
+
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
 
@@ -134,11 +141,12 @@ function LandingPage() {
 
             <div className="mt-9 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
-                <Link to="/register">
-                  Start for free
+                <Link to={signedIn ? dashboardPath : "/register"}>
+                  {signedIn ? "Go to dashboard" : "Start for free"}
                   <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
+
               <Button
                 asChild
                 size="lg"
@@ -319,11 +327,12 @@ function LandingPage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
-                <Link to="/register">
-                  Create your account
+                <Link to={signedIn ? dashboardPath : "/register"}>
+                  {signedIn ? "Go to your workspace" : "Create your account"}
                   <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
+
               <Button
                 asChild
                 size="lg"
