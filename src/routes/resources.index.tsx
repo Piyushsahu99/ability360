@@ -135,7 +135,7 @@ function ResourcesPage() {
             </div>
           </div>
 
-          <ul className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
+          <ul className="mt-4 flex flex-wrap gap-2">
             {resourceCategories.map((value) => (
               <li key={value} className="shrink-0">
                 <Button
