@@ -116,10 +116,10 @@ function LandingPage() {
 
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden px-6 pb-16 pt-16 sm:px-8 sm:pt-24">
+        <section className="relative overflow-hidden px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-24">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-32 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]"
+            className="pointer-events-none absolute -top-32 left-1/2 size-[22rem] sm:size-[32rem] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]"
           />
           <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center text-center">
             <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
@@ -127,19 +127,19 @@ function LandingPage() {
               From first semester to first career
             </span>
 
-            <h1 className="text-4xl leading-[1.1] text-foreground sm:text-6xl">
+            <h1 className="text-[2rem] leading-[1.12] text-foreground sm:text-6xl">
               Your career journey,{" "}
               <span className="bg-gradient-to-r from-primary via-teal to-primary bg-clip-text text-transparent">
                 one clear path.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-lg text-base leading-relaxed sm:mt-6 sm:text-lg text-muted-foreground">
               ABILITY360 is the career operating system for Indian college students — skills,
               roles, roadmap, mentors and real opportunities in one inclusive place.
             </p>
 
-            <div className="mt-9 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
+            <div className="mt-7 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
                 <Link to={signedIn ? dashboardPath : "/register"}>
                   {signedIn ? "Go to dashboard" : "Start for free"}
@@ -169,15 +169,15 @@ function LandingPage() {
               alt="Illustration of Indian college students, including students with disabilities, walking a rising path from campus to work"
               width={1280}
               height={800}
-              className="mt-12 w-full rounded-3xl border border-border object-cover shadow-sm"
+              className="mt-8 w-full rounded-3xl border sm:mt-12 border-border object-cover shadow-sm"
             />
           </div>
         </section>
 
         {/* Journey — single column steps */}
-        <section aria-labelledby="journey-heading" className="px-6 py-12 sm:px-8">
+        <section aria-labelledby="journey-heading" className="px-5 py-10 sm:px-8 sm:py-12">
           <div className="mx-auto w-full max-w-2xl">
-            <h2 id="journey-heading" className="text-center text-2xl sm:text-3xl">
+            <h2 id="journey-heading" className="text-center text-xl sm:text-3xl">
               Six steps, start to placed
             </h2>
             <p className="mx-auto mt-3 max-w-md text-center text-muted-foreground">
@@ -188,13 +188,13 @@ function LandingPage() {
               {journey.map((step, index) => (
                 <li
                   key={step.title}
-                  className="group flex items-start gap-5 rounded-3xl border border-border bg-card p-6 text-left transition-colors hover:bg-accent"
+                  className="group flex items-start gap-4 rounded-3xl border border-border bg-card p-5 text-left sm:gap-5 sm:p-6 transition-colors hover:bg-accent"
                 >
                   <span
                     className={
                       step.tone === "primary"
-                        ? "flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary transition-transform group-hover:scale-110"
-                        : "flex size-12 shrink-0 items-center justify-center rounded-full bg-teal/15 text-teal transition-transform group-hover:scale-110"
+                        ? "flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/15 sm:size-12 text-primary transition-transform group-hover:scale-110"
+                        : "flex size-11 shrink-0 items-center justify-center rounded-full bg-teal/15 sm:size-12 text-teal transition-transform group-hover:scale-110"
                     }
                   >
                     <step.icon className="size-6" aria-hidden="true" />
@@ -215,17 +215,17 @@ function LandingPage() {
         {/* Ecosystem */}
         <section
           aria-labelledby="pillars-heading"
-          className="border-y border-border bg-surface px-6 py-16 sm:px-8"
+          className="border-y border-border bg-surface px-5 py-12 sm:px-8 sm:py-16"
         >
           <div className="mx-auto w-full max-w-2xl">
-            <h2 id="pillars-heading" className="text-center text-2xl sm:text-3xl">
+            <h2 id="pillars-heading" className="text-center text-xl sm:text-3xl">
               Five sides, one ecosystem
             </h2>
             <div className="mt-8 space-y-3">
               {pillars.map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="flex items-center gap-4 rounded-2xl border border-border bg-background p-5"
+                  className="flex items-center gap-4 rounded-2xl border border-border bg-background p-4 sm:p-5"
                 >
                   <pillar.icon className="size-5 shrink-0 text-primary" aria-hidden="true" />
                   <div>
@@ -239,7 +239,7 @@ function LandingPage() {
         </section>
 
         {/* Inclusion */}
-        <section aria-labelledby="inclusion-heading" className="px-6 py-16 sm:px-8">
+        <section aria-labelledby="inclusion-heading" className="px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-3xl border border-teal/30 bg-card text-center">
             <img
               src={divyangjanImage}
@@ -274,16 +274,16 @@ function LandingPage() {
         </section>
 
         {/* Resource library */}
-        <section aria-labelledby="resources-heading" className="border-t border-border bg-surface px-6 py-16 sm:px-8">
+        <section aria-labelledby="resources-heading" className="border-t border-border bg-surface px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto w-full max-w-2xl text-center">
-            <h2 id="resources-heading" className="text-2xl sm:text-3xl">
+            <h2 id="resources-heading" className="text-xl sm:text-3xl">
               Programmes, scholarships and guidance
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
               A growing library of Indian skilling programmes, scholarships, Divyangjan schemes,
               national exams and practical career articles — searchable by state and category.
             </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
               {resourceHighlights.map((item) => (
                 <Link
                   key={item.title}
@@ -296,7 +296,7 @@ function LandingPage() {
                     loading="lazy"
                     width={1024}
                     height={640}
-                    className="h-32 w-full object-cover"
+                    className="h-28 w-full object-cover sm:h-32"
                   />
                   <div className="p-5">
                     <h3 className="text-base text-foreground">{item.title}</h3>
@@ -317,9 +317,9 @@ function LandingPage() {
         </section>
 
         {/* Closing CTA */}
-        <section className="px-6 pb-24 text-center sm:px-8" aria-labelledby="cta-heading">
+        <section className="px-5 pb-16 text-center sm:px-8 sm:pb-24" aria-labelledby="cta-heading">
           <div className="mx-auto w-full max-w-2xl">
-            <h2 id="cta-heading" className="text-3xl sm:text-4xl">
+            <h2 id="cta-heading" className="text-2xl sm:text-4xl">
               One account, the right workspace
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
