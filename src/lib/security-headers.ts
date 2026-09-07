@@ -8,7 +8,7 @@ const CSP = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
-  "frame-ancestors 'self'",
+  "frame-ancestors 'self' https://lovable.dev https://*.lovable.dev https://*.lovable.app",
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline' https://cdn.gpteng.co https://lovable.dev",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
@@ -24,7 +24,8 @@ export function withSecurityHeaders(response: Response, request: Request): Respo
   const headers = new Headers(response.headers);
 
   headers.set("Content-Security-Policy", CSP);
-  headers.set("X-Frame-Options", "SAMEORIGIN");
+  // frame-ancestors above is the clickjacking control; X-Frame-Options cannot
+  // express the editor-preview allow-list and browsers prefer CSP when both exist.
   headers.set("X-Content-Type-Options", "nosniff");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set(
