@@ -711,12 +711,27 @@ function CareerStep({ form }: { form: ReturnType<typeof useForm<CareerStepValues
             <FormItem>
               <FormLabel>Preferred location</FormLabel>
               <FormControl>
-                <Input className="min-h-11" placeholder="Pune, Maharashtra" {...field} />
+                <Input
+                  className="min-h-11"
+                  placeholder="Pune, Maharashtra"
+                  list="india-cities"
+                  {...field}
+                />
               </FormControl>
+              <datalist id="india-cities">
+                {majorCities.map((city) => (
+                  <option key={city} value={city} />
+                ))}
+                {indianStates.map((state) => (
+                  <option key={state} value={state} />
+                ))}
+              </datalist>
+              <FormDescription>Start typing an Indian city or state.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="preferredWorkMode"
