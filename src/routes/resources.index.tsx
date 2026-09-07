@@ -69,14 +69,14 @@ function ResourcesPage() {
       <SiteHeader />
 
       <main className="flex-1 bg-surface">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-          <h1 className="text-3xl font-bold sm:text-4xl">Resources</h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+          <h1 className="text-2xl font-bold sm:text-4xl">Resources</h1>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
             Skilling programmes, scholarships, Divyangjan rights and schemes, national exams and
             practical career guidance — written for Indian college students.
           </p>
 
-          <div className="mt-8 grid gap-3 rounded-3xl border border-border bg-card p-4 sm:grid-cols-[1fr_auto_auto]">
+          <div className="mt-6 grid gap-3 rounded-3xl border border-border bg-card p-3 sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
             <div>
               <Label htmlFor="resource-search" className="sr-only">
                 Search resources
@@ -135,9 +135,9 @@ function ResourcesPage() {
             </div>
           </div>
 
-          <ul className="mt-4 flex flex-wrap gap-2">
+          <ul className="-mx-4 mt-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
             {resourceCategories.map((value) => (
-              <li key={value}>
+              <li key={value} className="shrink-0 snap-start">
                 <Button
                   type="button"
                   size="sm"
@@ -161,11 +161,11 @@ function ResourcesPage() {
             </div>
           )}
 
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <div className="mt-4 grid gap-3 sm:gap-4 md:grid-cols-2">
             {isPending &&
               Array.from({ length: 4 }).map((_, index) => (
                 <Card key={index} className="rounded-3xl">
-                  <Skeleton className="h-40 w-full rounded-t-3xl" />
+                  <Skeleton className="h-36 w-full rounded-t-3xl sm:h-40" />
                   <CardHeader className="gap-3">
                     <Skeleton className="h-5 w-2/3" />
                     <Skeleton className="h-12 w-full" />
@@ -182,7 +182,7 @@ function ResourcesPage() {
                     loading="lazy"
                     width={1024}
                     height={640}
-                    className="h-40 w-full object-cover"
+                    className="h-36 w-full object-cover sm:h-40"
                   />
                   <CardHeader>
                     <div className="flex flex-wrap items-center gap-2">
