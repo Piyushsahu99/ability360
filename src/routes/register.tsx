@@ -119,6 +119,15 @@ function RegisterPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
+      <EmailTakenDialog
+        open={takenEmail !== null}
+        email={takenEmail ?? ""}
+        onUseDifferentEmail={() => {
+          setTakenEmail(null);
+          form.setFocus("email");
+        }}
+      />
+
       <main className="flex flex-1 items-center justify-center bg-surface px-4 py-14">
         <Card className="w-full max-w-lg">
           <CardHeader>
