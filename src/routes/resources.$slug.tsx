@@ -98,7 +98,7 @@ function ResourceDetailPage() {
                 ))}
               </div>
 
-              <h1 className="mt-4 text-3xl font-bold sm:text-4xl">{data.title}</h1>
+              <h1 className="mt-4 text-2xl font-bold sm:text-4xl">{data.title}</h1>
               {data.organisation && <p className="mt-1 font-medium">{data.organisation}</p>}
               <p className="mt-3 text-lg text-muted-foreground">{data.summary}</p>
 
