@@ -16,6 +16,12 @@ import {
   Users,
 } from "lucide-react";
 
+import divyangjanImage from "@/assets/divyangjan-inclusion.jpg";
+import journeyHero from "@/assets/journey-hero.jpg";
+import programsImage from "@/assets/res-programs.jpg";
+import scholarshipsImage from "@/assets/res-scholarships.jpg";
+import divyangjanResImage from "@/assets/res-divyangjan.jpg";
+import examsImage from "@/assets/res-exams.jpg";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
@@ -89,6 +95,13 @@ const pillars = [
   { icon: Sparkles, title: "Opportunities", note: "Internships to competitions" },
 ];
 
+const resourceHighlights = [
+  { title: "Skilling programmes", note: "PMKVY, NATS apprenticeships, NPTEL and more", image: programsImage },
+  { title: "Scholarships", note: "National Scholarship Portal, Pragati, INSPIRE", image: scholarshipsImage },
+  { title: "Divyangjan support", note: "UDID, RPwD rights, ADIP assistive devices", image: divyangjanResImage },
+  { title: "Exams and guidance", note: "GATE, CAT, UPSC and campus placement tips", image: examsImage },
+];
+
 function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -142,6 +155,14 @@ function LandingPage() {
                 Sign in
               </Link>
             </p>
+
+            <img
+              src={journeyHero}
+              alt="Illustration of Indian college students, including students with disabilities, walking a rising path from campus to work"
+              width={1280}
+              height={800}
+              className="mt-12 w-full rounded-3xl border border-border object-cover shadow-sm"
+            />
           </div>
         </section>
 
@@ -211,7 +232,16 @@ function LandingPage() {
 
         {/* Inclusion */}
         <section aria-labelledby="inclusion-heading" className="px-6 py-16 sm:px-8">
-          <div className="mx-auto w-full max-w-2xl rounded-3xl border border-teal/30 bg-card p-8 text-center">
+          <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-3xl border border-teal/30 bg-card text-center">
+            <img
+              src={divyangjanImage}
+              alt="Illustration of professionals with disabilities working with accessible desks, sign language and a braille display"
+              loading="lazy"
+              width={1280}
+              height={800}
+              className="h-52 w-full object-cover"
+            />
+            <div className="p-8">
             <Accessibility className="mx-auto size-8 text-teal" aria-hidden="true" />
             <h2 id="inclusion-heading" className="mt-4 text-2xl">
               Built for every student, including Divyangjan
@@ -224,6 +254,55 @@ function LandingPage() {
             <div className="mt-6">
               <Button asChild variant="outline" className="min-h-12 rounded-2xl px-6 font-bold">
                 <Link to="/opportunities">Browse inclusive opportunities</Link>
+              </Button>
+            </div>
+            <div className="mt-3">
+              <Button asChild variant="ghost" className="min-h-12 rounded-2xl px-6 font-bold">
+                <Link to="/resources">Divyangjan schemes and rights</Link>
+              </Button>
+            </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Resource library */}
+        <section aria-labelledby="resources-heading" className="border-t border-border bg-surface px-6 py-16 sm:px-8">
+          <div className="mx-auto w-full max-w-2xl text-center">
+            <h2 id="resources-heading" className="text-2xl sm:text-3xl">
+              Programmes, scholarships and guidance
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
+              A growing library of Indian skilling programmes, scholarships, Divyangjan schemes,
+              national exams and practical career articles — searchable by state and category.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {resourceHighlights.map((item) => (
+                <Link
+                  key={item.title}
+                  to="/resources"
+                  className="overflow-hidden rounded-3xl border border-border bg-background text-left transition-colors hover:border-primary/50"
+                >
+                  <img
+                    src={item.image}
+                    alt=""
+                    loading="lazy"
+                    width={1024}
+                    height={640}
+                    className="h-32 w-full object-cover"
+                  />
+                  <div className="p-5">
+                    <h3 className="text-base text-foreground">{item.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{item.note}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
+                <Link to="/resources">
+                  Open the resource library
+                  <ArrowRight aria-hidden="true" />
+                </Link>
               </Button>
             </div>
           </div>

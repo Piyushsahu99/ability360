@@ -14,6 +14,7 @@ const navLinks = [
   { to: "/roles", label: "Roles" },
   { to: "/opportunities", label: "Opportunities" },
   { to: "/competitions", label: "Competitions" },
+  { to: "/resources", label: "Resources" },
 ] as const;
 
 export function SiteHeader() {

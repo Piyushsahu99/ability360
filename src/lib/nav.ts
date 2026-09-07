@@ -5,6 +5,8 @@ import {
   ClipboardList,
   Users,
   Compass,
+  BookOpen,
+  Activity,
   Gavel,
   HeartHandshake,
   GraduationCap,
@@ -22,6 +24,7 @@ import type { AppRole } from "@/lib/auth";
 
 const studentItems: NavItem[] = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
+  { label: "My journey", icon: Activity, to: "/journey" },
   { label: "Student DNA", icon: UserRound, to: "/dna" },
   { label: "Career roles", icon: Compass, to: "/roles" },
   { label: "My roadmap", icon: RouteIcon, to: "/roadmap" },
@@ -31,6 +34,7 @@ const studentItems: NavItem[] = [
   { label: "Accessibility", icon: Accessibility, to: "/accessibility" },
   { label: "Applications", icon: Briefcase, to: "/applications" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
+  { label: "Resources", icon: BookOpen, to: "/resources" },
 ];
 
 export function studentNav(activePath: string): NavItem[] {
