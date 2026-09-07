@@ -55,6 +55,7 @@ import {
   type CareerStepValues,
   type SkillsStepValues,
 } from "@/lib/onboarding";
+import { indianStates, majorCities } from "@/lib/india";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
   head: () => ({
