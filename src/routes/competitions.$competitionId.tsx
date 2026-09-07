@@ -102,7 +102,7 @@ function CompetitionDetailPage() {
           <Badge variant="outline">{competitionStatusLabels[competition.status]}</Badge>
           {competition.is_inclusive && <Badge className="bg-primary-soft text-primary">Inclusive challenge</Badge>}
         </div>
-        <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{competition.title}</h1>
+        <h1 className="mt-3 text-2xl font-bold sm:text-4xl">{competition.title}</h1>
         <p className="mt-1 text-muted-foreground">{competition.organisation}</p>
 
         <dl className="mt-6 grid gap-3 rounded-lg border border-border bg-surface p-4 text-sm sm:grid-cols-4">

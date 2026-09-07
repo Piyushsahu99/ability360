@@ -92,14 +92,14 @@ function OpportunitiesPage() {
       <SiteHeader />
 
       <main className="flex-1 bg-surface">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-          <h1 className="text-3xl font-bold sm:text-4xl">Opportunities</h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+          <h1 className="text-2xl font-bold sm:text-4xl">Opportunities</h1>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
             Internships, jobs, training programmes and research projects — matched to where you are in
             your course.
           </p>
 
-          <div className="mt-8 grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-[1fr_auto_auto]">
+          <div className="mt-6 grid gap-3 rounded-2xl border border-border bg-card p-3 sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
             <div>
               <Label htmlFor="opportunity-search" className="sr-only">
                 Search opportunities
@@ -158,7 +158,7 @@ function OpportunitiesPage() {
             </div>
           </div>
 
-          <div className="mt-3 grid gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-2">
+          <div className="mt-3 grid gap-3 rounded-2xl border border-border bg-card p-3 sm:p-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="filter-state">State or union territory</Label>
               <Select
@@ -250,7 +250,7 @@ function OpportunitiesPage() {
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="mt-2 text-lg">{item.title}</CardTitle>
+                    <CardTitle className="mt-2 text-base sm:text-lg">{item.title}</CardTitle>
                     <CardDescription className="font-medium text-foreground">
                       {item.organisation}
                     </CardDescription>
@@ -283,7 +283,7 @@ function OpportunitiesPage() {
                         )}
                       </div>
                     )}
-                    <dl className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
+                    <dl className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-3 [&>div]:min-w-0">
                       <div className="flex items-center gap-1.5">
                         <MapPin className="size-4 shrink-0" aria-hidden="true" />
                         <dt className="sr-only">Location</dt>
@@ -308,7 +308,7 @@ function OpportunitiesPage() {
           </div>
 
           {!isPending && !isError && results.length === 0 && (
-            <div className="mt-6 rounded-xl border border-dashed border-border bg-card p-10 text-center">
+            <div className="mt-6 rounded-xl border border-dashed border-border bg-card p-6 sm:p-10 text-center">
               <p className="font-medium">No opportunities match those filters</p>
               <p className="mt-1 text-sm text-muted-foreground">
                 Try a different keyword, type or work mode.

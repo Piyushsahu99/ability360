@@ -67,7 +67,7 @@ function CompetitionsPage() {
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
         <p className="text-sm font-medium uppercase tracking-widest text-teal">Compete and prove it</p>
-        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Competitions and challenges</h1>
+        <h1 className="mt-2 text-2xl font-bold sm:text-4xl">Competitions and challenges</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
           Register solo or with a team, submit your work, get judged on a transparent rubric and earn a verified
           certificate that lands straight in your Ability Passport.

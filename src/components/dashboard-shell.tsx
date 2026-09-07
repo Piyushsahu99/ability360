@@ -75,8 +75,8 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
   return (
     <div className="min-h-screen bg-surface">
       <header className="sticky top-0 z-40 border-b border-border bg-background">
-        <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
-          <div className="flex items-center gap-3">
+        <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-6">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -118,13 +118,13 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-8 sm:px-6">
+      <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-8">
         <aside className="hidden w-60 shrink-0 lg:block">
           <div className="sticky top-24">{sidebar}</div>
         </aside>
 
         <main className="mx-auto min-w-0 max-w-3xl flex-1">
-          <h1 className="text-2xl sm:text-3xl">{title}</h1>
+          <h1 className="text-xl sm:text-3xl">{title}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
 
 
@@ -144,7 +144,7 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
             </Card>
           )}
 
-          <div className="mt-6 space-y-6">{children}</div>
+          <div className="mt-6 space-y-4 sm:space-y-6">{children}</div>
         </main>
       </div>
     </div>
