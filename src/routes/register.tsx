@@ -26,8 +26,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { dashboardPathByRole, meQueryOptions, signUpSchema, type SignUpValues } from "@/lib/auth";
+import { institutionsQueryOptions } from "@/lib/onboarding";
+
 
 export const Route = createFileRoute("/register")({
   head: () => ({
