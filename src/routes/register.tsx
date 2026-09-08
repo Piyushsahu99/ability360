@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Building2, GraduationCap, Loader2, School } from "lucide-react";
@@ -26,8 +26,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { dashboardPathByRole, meQueryOptions, signUpSchema, type SignUpValues } from "@/lib/auth";
+import { institutionsQueryOptions } from "@/lib/onboarding";
+
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -63,7 +72,12 @@ function RegisterPage() {
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: { fullName: "", email: "", password: "", role: "student" },
+    defaultValues: { fullName: "", email: "", password: "", role: "student", institutionId: "" },
+  });
+  const selectedRole = form.watch("role");
+  const { data: institutions } = useQuery({
+    ...institutionsQueryOptions,
+    enabled: selectedRole === "institution",
   });
 
   async function onSubmit(values: SignUpValues) {
@@ -88,9 +102,16 @@ function RegisterPage() {
       password: values.password,
       options: {
         emailRedirectTo: window.location.origin,
-        data: { full_name: values.fullName, role: values.role },
+        data: {
+          full_name: values.fullName,
+          role: values.role,
+          ...(values.role === "institution" && values.institutionId
+            ? { institution_id: values.institutionId }
+            : {}),
+        },
       },
     });
+
 
     if (error) {
       setSubmitting(false);
@@ -226,6 +247,38 @@ function RegisterPage() {
                       </FormItem>
                     )}
                   />
+
+                  {selectedRole === "institution" && (
+                    <FormField
+                      control={form.control}
+                      name="institutionId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Your college or university</FormLabel>
+                          <Select value={field.value ?? ""} onValueChange={field.onChange}>
+                            <FormControl>
+                              <SelectTrigger className="min-h-11">
+                                <SelectValue placeholder="Select your institution" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {(institutions ?? []).map((institution) => (
+                                <SelectItem key={institution.id} value={institution.id}>
+                                  {institution.name}
+                                  {institution.city ? ` — ${institution.city}` : ""}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Can't find it? Pick the closest match — we can update it later.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
 
                   <Button type="submit" className="min-h-11 w-full" disabled={submitting}>
                     {submitting && <Loader2 className="animate-spin" aria-hidden="true" />}
