@@ -248,6 +248,38 @@ function RegisterPage() {
                     )}
                   />
 
+                  {selectedRole === "institution" && (
+                    <FormField
+                      control={form.control}
+                      name="institutionId"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Your college or university</FormLabel>
+                          <Select value={field.value ?? ""} onValueChange={field.onChange}>
+                            <FormControl>
+                              <SelectTrigger className="min-h-11">
+                                <SelectValue placeholder="Select your institution" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {(institutions ?? []).map((institution) => (
+                                <SelectItem key={institution.id} value={institution.id}>
+                                  {institution.name}
+                                  {institution.city ? ` — ${institution.city}` : ""}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormDescription>
+                            Can't find it? Pick the closest match — we can update it later.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+
                   <Button type="submit" className="min-h-11 w-full" disabled={submitting}>
                     {submitting && <Loader2 className="animate-spin" aria-hidden="true" />}
                     Create account
