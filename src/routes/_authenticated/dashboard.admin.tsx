@@ -34,8 +34,20 @@ const nav = [
 ];
 
 function AdminDashboard() {
+  const queryClient = useQueryClient();
   const { data: opportunities } = useQuery(opportunitiesQueryOptions);
+  const { data: overview } = useQuery(adminOverviewQueryOptions);
   const list = opportunities ?? [];
+
+  const decide = useMutation({
+    mutationFn: ({ id, approve }: { id: string; approve: boolean }) =>
+      decideCompanyVerification(id, approve),
+    onSuccess: (_data, variables) => {
+      toast.success(variables.approve ? "Employer verified" : "Employer rejected");
+      void queryClient.invalidateQueries({ queryKey: ["admin", "overview"] });
+    },
+    onError: () => toast.error("We couldn't update that employer. Please try again."),
+  });
 
   return (
     <DashboardShell
@@ -46,10 +58,26 @@ function AdminDashboard() {
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Published opportunities" value={String(list.length)} hint="Visible to students" icon={Compass} />
-        <StatCard label="Pending verifications" value="0" hint="Institutions and employers" icon={ShieldCheck} />
-        <StatCard label="Reports" value="0" hint="No flagged content" icon={Activity} />
-        <StatCard label="System status" value="Healthy" hint="All services operational" icon={BadgeCheck} />
+        <StatCard
+          label="Pending verifications"
+          value={String(overview?.pendingCompanies.length ?? 0)}
+          hint="Employers awaiting review"
+          icon={ShieldCheck}
+        />
+        <StatCard
+          label="Registered accounts"
+          value={String(overview?.accounts ?? 0)}
+          hint="Students, employers and staff"
+          icon={Users}
+        />
+        <StatCard
+          label="Verified employers"
+          value={String(overview?.verifiedCompanies ?? 0)}
+          hint="Approved organisations"
+          icon={BadgeCheck}
+        />
       </div>
+
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
