@@ -63,7 +63,12 @@ function RegisterPage() {
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: { fullName: "", email: "", password: "", role: "student" },
+    defaultValues: { fullName: "", email: "", password: "", role: "student", institutionId: "" },
+  });
+  const selectedRole = form.watch("role");
+  const { data: institutions } = useQuery({
+    ...institutionsQueryOptions,
+    enabled: selectedRole === "institution",
   });
 
   async function onSubmit(values: SignUpValues) {
@@ -88,9 +93,16 @@ function RegisterPage() {
       password: values.password,
       options: {
         emailRedirectTo: window.location.origin,
-        data: { full_name: values.fullName, role: values.role },
+        data: {
+          full_name: values.fullName,
+          role: values.role,
+          ...(values.role === "institution" && values.institutionId
+            ? { institution_id: values.institutionId }
+            : {}),
+        },
       },
     });
+
 
     if (error) {
       setSubmitting(false);
