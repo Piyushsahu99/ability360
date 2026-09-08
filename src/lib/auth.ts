@@ -7,16 +7,28 @@ import { supabase } from "@/integrations/supabase/client";
 export const appRoles = ["student", "industry", "institution", "faculty", "admin"] as const;
 export type AppRole = (typeof appRoles)[number];
 
-export const signUpSchema = z.object({
-  fullName: z.string().trim().min(2, "Please enter your full name").max(80),
-  email: z.string().trim().toLowerCase().email("Enter a valid email address").max(254),
-  password: z
-    .string()
-    .min(8, "Use at least 8 characters")
-    .max(72, "Passwords can be at most 72 characters"),
-  role: z.enum(["student", "industry", "institution"]),
-});
+export const signUpSchema = z
+  .object({
+    fullName: z.string().trim().min(2, "Please enter your full name").max(80),
+    email: z.string().trim().toLowerCase().email("Enter a valid email address").max(254),
+    password: z
+      .string()
+      .min(8, "Use at least 8 characters")
+      .max(72, "Passwords can be at most 72 characters"),
+    role: z.enum(["student", "industry", "institution"]),
+    institutionId: z.string().trim().max(64).optional(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.role === "institution" && !values.institutionId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["institutionId"],
+        message: "Select your college or university",
+      });
+    }
+  });
 export type SignUpValues = z.infer<typeof signUpSchema>;
+
 
 export const signInSchema = z.object({
   email: z.string().trim().toLowerCase().email("Enter a valid email address").max(254),
