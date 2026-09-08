@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Activity,
   BadgeCheck,
@@ -9,10 +9,14 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { adminOverviewQueryOptions, decideCompanyVerification } from "@/lib/admin";
 import { opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
+
 
 export const Route = createFileRoute("/_authenticated/dashboard/admin")({
   head: () => ({
