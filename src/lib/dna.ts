@@ -63,7 +63,14 @@ export type DnaData = {
   profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
   student: Database["public"]["Tables"]["student_profiles"]["Row"] | null;
   institutionName: string | null;
-  skills: { id: string; level: number; verification: string; name: string; category: SkillCategory }[];
+  skills: {
+    id: string;
+    skillId: string;
+    level: number;
+    verification: string;
+    name: string;
+    category: SkillCategory;
+  }[];
   interests: string[];
   projects: ProjectRow[];
   experiences: ExperienceRow[];
@@ -85,7 +92,7 @@ export const dnaQueryOptions = queryOptions({
         supabase.from("student_profiles").select("*").eq("id", user.id).maybeSingle(),
         supabase
           .from("student_skills")
-          .select("id, level, verification_status, skills(name, category)")
+          .select("id, skill_id, level, verification_status, skills(name, category)")
           .eq("student_id", user.id),
         supabase.from("student_interests").select("interest").eq("student_id", user.id),
         supabase
@@ -135,6 +142,7 @@ export const dnaQueryOptions = queryOptions({
         const skill = row.skills as unknown as { name: string; category: SkillCategory } | null;
         return {
           id: row.id,
+          skillId: row.skill_id,
           level: row.level,
           verification: row.verification_status,
           name: skill?.name ?? "Skill",
@@ -223,5 +231,49 @@ export async function deleteRow(
   id: string,
 ) {
   const { error } = await supabase.from(table).delete().eq("id", id);
+  if (error) throw error;
+}
+
+export const skillLevelLabels: Record<number, string> = {
+  1: "Just starting",
+  2: "Learning",
+  3: "Practising",
+  4: "Confident",
+  5: "Advanced",
+};
+
+/** Add a skill the student declares themselves, or raise the level if it already exists. */
+export async function addSkill(skillId: string, level: number) {
+  const studentId = await currentUserId();
+  const { data: existing, error: findError } = await supabase
+    .from("student_skills")
+    .select("id, level")
+    .eq("student_id", studentId)
+    .eq("skill_id", skillId)
+    .maybeSingle();
+  if (findError) throw findError;
+
+  if (existing) {
+    const { error } = await supabase.from("student_skills").update({ level }).eq("id", existing.id);
+    if (error) throw error;
+    return;
+  }
+
+  const { error } = await supabase.from("student_skills").insert({
+    student_id: studentId,
+    skill_id: skillId,
+    level,
+    verification_status: "self_declared",
+  });
+  if (error) throw error;
+}
+
+export async function updateSkillLevel(rowId: string, level: number) {
+  const { error } = await supabase.from("student_skills").update({ level }).eq("id", rowId);
+  if (error) throw error;
+}
+
+export async function removeSkill(rowId: string) {
+  const { error } = await supabase.from("student_skills").delete().eq("id", rowId);
   if (error) throw error;
 }
