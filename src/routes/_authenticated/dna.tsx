@@ -1,20 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Award,
-  BookOpen,
-  Briefcase,
-  Compass,
-  Dna,
-  LayoutDashboard,
-  Lock,
-  Plus,
-  Sparkles,
-  Target,
-  Trash2,
-  UserRound,
-} from "lucide-react";
+import { Award, Lock, Plus, Sparkles, Target, Trash2, UserRound } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
