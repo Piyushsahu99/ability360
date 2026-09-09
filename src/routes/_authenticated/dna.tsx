@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Award, Lock, Plus, Sparkles, Target, Trash2, UserRound } from "lucide-react";
+import { Award, Lock, Plus, Sparkles, Target, Trash2, TriangleAlert, UserRound } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -20,6 +20,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -29,6 +36,7 @@ import {
   addAchievement,
   addExperience,
   addProject,
+  addSkill,
   deleteRow,
   dnaQueryOptions,
   dnaStrength,
@@ -37,12 +45,17 @@ import {
   experienceSchema,
   profileCompleteness,
   projectSchema,
+  removeSkill,
+  skillLevelLabels,
+  updateSkillLevel,
   verificationLabels,
   type AchievementValues,
   type DnaData,
   type ExperienceValues,
   type ProjectValues,
 } from "@/lib/dna";
+import { studentNav } from "@/lib/nav";
+import { skillsCatalogueQueryOptions } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/_authenticated/dna")({
   head: () => ({
