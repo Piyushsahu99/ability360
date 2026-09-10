@@ -218,6 +218,8 @@ function StudentDnaPage() {
             </PanelCard>
           </div>
 
+          <ManageSkillsPanel dna={dna} onDone={invalidate} />
+
           <SkillsPanel dna={dna} />
 
           <div className="grid gap-6 lg:grid-cols-3">
