@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Award, Lock, Plus, Sparkles, Target, Trash2, TriangleAlert, UserRound } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -78,17 +79,10 @@ export const Route = createFileRoute("/_authenticated/dna")({
   component: StudentDnaPage,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
-  { label: "Student DNA", icon: Dna, active: true, to: "/dna" },
-  { label: "Skills", icon: Target, to: "/assessment" },
-  { label: "Learning", icon: BookOpen },
-  { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass, to: "/opportunities" },
-];
+const nav = studentNav("/dna");
 
 function StudentDnaPage() {
-  const { data: dna, isPending } = useQuery(dnaQueryOptions);
+  const { data: dna, isPending, isError, refetch } = useQuery(dnaQueryOptions);
   const queryClient = useQueryClient();
 
   function invalidate() {
@@ -117,7 +111,18 @@ function StudentDnaPage() {
       subtitle="Everything that defines your career profile, in one place."
       nav={nav}
     >
-      {isPending || !dna ? (
+      {isError ? (
+        <EmptyState
+          title="We couldn't load your profile"
+          description="Check your connection and try again."
+          action={
+            <Button variant="outline" className="min-h-11" onClick={() => void refetch()}>
+              <TriangleAlert aria-hidden="true" />
+              Try again
+            </Button>
+          }
+        />
+      ) : isPending || !dna ? (
         <div className="space-y-4">
           <Skeleton className="h-28 w-full" />
           <Skeleton className="h-64 w-full" />
@@ -213,6 +218,8 @@ function StudentDnaPage() {
               </div>
             </PanelCard>
           </div>
+
+          <ManageSkillsPanel dna={dna} onDone={invalidate} />
 
           <SkillsPanel dna={dna} />
 
@@ -339,6 +346,147 @@ function Field({ label, value }: { label: string; value: string }) {
       <dt className="text-muted-foreground">{label}</dt>
       <dd className="text-right font-medium capitalize">{value}</dd>
     </div>
+  );
+}
+
+const levelValues = [1, 2, 3, 4, 5];
+
+function ManageSkillsPanel({ dna, onDone }: { dna: DnaData; onDone: () => void }) {
+  const { data: catalogue } = useQuery(skillsCatalogueQueryOptions);
+  const [picked, setPicked] = useState<string>("");
+  const [level, setLevel] = useState<string>("3");
+
+  const add = useMutation({
+    mutationFn: () => addSkill(picked, Number(level)),
+    onSuccess: () => {
+      toast.success("Skill saved");
+      setPicked("");
+      setLevel("3");
+      onDone();
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const changeLevel = useMutation({
+    mutationFn: ({ id, value }: { id: string; value: number }) => updateSkillLevel(id, value),
+    onSuccess: () => onDone(),
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const drop = useMutation({
+    mutationFn: (id: string) => removeSkill(id),
+    onSuccess: () => {
+      toast.success("Skill removed");
+      onDone();
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const owned = new Set(dna.skills.map((s) => s.skillId));
+  const options = (catalogue ?? []).filter((s) => !owned.has(s.id));
+
+  return (
+    <PanelCard
+      title="My skills"
+      description="Add a skill any time and keep your levels honest. Assessments upgrade them to verified."
+    >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="min-w-0 flex-1">
+          <Label className="text-xs text-muted-foreground">Skill</Label>
+          <Select value={picked} onValueChange={setPicked}>
+            <SelectTrigger className="mt-1 min-h-11" aria-label="Choose a skill">
+              <SelectValue placeholder="Choose a skill" />
+            </SelectTrigger>
+            <SelectContent>
+              {options.map((skill) => (
+                <SelectItem key={skill.id} value={skill.id}>
+                  {skill.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="sm:w-44">
+          <Label className="text-xs text-muted-foreground">Your level</Label>
+          <Select value={level} onValueChange={setLevel}>
+            <SelectTrigger className="mt-1 min-h-11" aria-label="Choose your level">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {levelValues.map((value) => (
+                <SelectItem key={value} value={String(value)}>
+                  {value} — {skillLevelLabels[value]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <Button
+          className="min-h-11"
+          disabled={!picked || add.isPending}
+          onClick={() => add.mutate()}
+        >
+          <Plus aria-hidden="true" />
+          Add skill
+        </Button>
+      </div>
+
+      {dna.skills.length === 0 ? (
+        <div className="mt-4">
+          <EmptyState message="No skills yet. Add the ones you already have to unlock better matches." />
+        </div>
+      ) : (
+        <ul className="mt-5 space-y-3">
+          {dna.skills.map((skill) => {
+            const locked = skill.verification !== "self_declared";
+            return (
+              <li
+                key={skill.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border p-3"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">{skill.name}</p>
+                  <p className="text-xs text-muted-foreground">{verificationLabels[skill.verification]}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {locked ? (
+                    <Badge variant="secondary">Level {skill.level}</Badge>
+                  ) : (
+                    <Select
+                      value={String(skill.level)}
+                      onValueChange={(value) =>
+                        changeLevel.mutate({ id: skill.id, value: Number(value) })
+                      }
+                    >
+                      <SelectTrigger className="min-h-11 w-40" aria-label={`Level for ${skill.name}`}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {levelValues.map((value) => (
+                          <SelectItem key={value} value={String(value)}>
+                            {value} — {skillLevelLabels[value]}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="min-h-11 min-w-11"
+                    aria-label={`Remove ${skill.name}`}
+                    disabled={drop.isPending}
+                    onClick={() => drop.mutate(skill.id)}
+                  >
+                    <Trash2 aria-hidden="true" />
+                  </Button>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </PanelCard>
   );
 }
 

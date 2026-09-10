@@ -1,17 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  BookOpen,
-  Briefcase,
-  CheckCircle2,
-  Compass,
-  Dna,
-  LayoutDashboard,
-  RotateCcw,
-  Target,
-  TriangleAlert,
-} from "lucide-react";
+import { BookOpen, CheckCircle2, Compass, RotateCcw, Target, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -32,6 +22,7 @@ import {
   type SkillCategory,
 } from "@/lib/assessment";
 import { submitAssessment } from "@/lib/assessment.functions";
+import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/assessment")({
   head: () => ({
@@ -54,14 +45,7 @@ export const Route = createFileRoute("/_authenticated/assessment")({
   component: AssessmentPage,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
-  { label: "Student DNA", icon: Dna, to: "/dna" },
-  { label: "Skills", icon: Target, active: true, to: "/assessment" },
-  { label: "Learning", icon: BookOpen },
-  { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass, to: "/opportunities" },
-];
+const nav = studentNav("/assessment");
 
 type Result = Awaited<ReturnType<typeof submitAssessment>>;
 

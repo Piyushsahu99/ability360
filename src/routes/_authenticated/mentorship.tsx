@@ -44,7 +44,12 @@ const nav = studentNav("/mentorship");
 
 function MentorshipPage() {
   const queryClient = useQueryClient();
-  const { data: mentors } = useQuery(mentorDirectoryQueryOptions);
+  const {
+    data: mentors,
+    isPending: mentorsPending,
+    isError: mentorsError,
+    refetch: refetchMentors,
+  } = useQuery(mentorDirectoryQueryOptions);
   const { data: mine, isPending } = useQuery(studentMentorshipQueryOptions);
 
   const context = useMemo(
@@ -89,7 +94,19 @@ function MentorshipPage() {
       ) : (
         <>
           <PanelCard title="Recommended mentors" description="Ranked by overlap with your saved skills, career goal and industries.">
-            {ranked.length === 0 ? (
+            {mentorsError ? (
+              <EmptyState
+                title="We couldn't load mentors"
+                description="Check your connection and try again."
+                action={
+                  <Button variant="outline" className="min-h-11" onClick={() => void refetchMentors()}>
+                    Try again
+                  </Button>
+                }
+              />
+            ) : mentorsPending ? (
+              <div className="h-40 animate-pulse rounded-lg bg-muted" />
+            ) : ranked.length === 0 ? (
               <EmptyState message="No mentor profiles published yet." />
             ) : (
               <ul className="space-y-3">
