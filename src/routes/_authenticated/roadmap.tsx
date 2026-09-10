@@ -33,7 +33,7 @@ export const Route = createFileRoute("/_authenticated/roadmap")({
 const nav = studentNav("/roadmap");
 
 function RoadmapPage() {
-  const { data, isPending } = useQuery(roadmapQueryOptions);
+  const { data, isPending, isError, refetch } = useQuery(roadmapQueryOptions);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ key, completed }: { key: string; completed: boolean }) => {
@@ -45,6 +45,22 @@ function RoadmapPage() {
     },
     onError: (error: Error) => toast.error(error.message),
   });
+
+  if (isError) {
+    return (
+      <DashboardShell role="student" title="My graduation roadmap" subtitle="Your practical path from skills to career evidence." nav={nav}>
+        <EmptyState
+          title="We couldn't load your roadmap"
+          description="Check your connection and try again."
+          action={
+            <Button variant="outline" className="min-h-11" onClick={() => void refetch()}>
+              Try again
+            </Button>
+          }
+        />
+      </DashboardShell>
+    );
+  }
 
   if (isPending) {
     return <DashboardShell role="student" title="My graduation roadmap" subtitle="Loading your next steps…" nav={nav}><div className="h-48 animate-pulse rounded-lg bg-muted" /></DashboardShell>;
