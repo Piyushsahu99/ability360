@@ -22,6 +22,7 @@ import {
   type SkillCategory,
 } from "@/lib/assessment";
 import { submitAssessment } from "@/lib/assessment.functions";
+import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/assessment")({
   head: () => ({
