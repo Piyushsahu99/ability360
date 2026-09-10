@@ -90,7 +90,7 @@ const statusTone: Record<ApplicationStatus, string> = {
 };
 
 function ApplicationsPage() {
-  const { data: applications, isPending } = useQuery(applicationsQueryOptions);
+  const { data: applications, isPending, isError, refetch } = useQuery(applicationsQueryOptions);
   const [filter, setFilter] = useState<"all" | ApplicationStatus>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -155,7 +155,19 @@ function ApplicationsPage() {
             </div>
           )}
 
-          {!isPending && visible.length === 0 && (
+          {isError && (
+            <EmptyState
+              title="We couldn't load your applications"
+              description="Check your connection and try again."
+              action={
+                <Button size="sm" variant="outline" onClick={() => void refetch()}>
+                  Try again
+                </Button>
+              }
+            />
+          )}
+
+          {!isPending && !isError && visible.length === 0 && (
             <EmptyState
               title="Nothing here yet"
               description="Save an opportunity to start tracking it through your pipeline."
@@ -369,12 +381,14 @@ function ApplicationDetail({ application }: { application: ApplicationWithOpport
                 </SelectContent>
               </Select>
             </div>
-            {application.status !== "applied" && application.status !== "saved" ? null : (
-              <Button
-                onClick={() => statusMutation.mutate(application.status === "saved" ? "preparing" : "shortlisted")}
-                disabled={statusMutation.isPending}
-              >
-                {application.status === "saved" ? "Start preparing" : "Mark shortlisted"}
+            {application.status === "saved" && (
+              <Button onClick={() => statusMutation.mutate("preparing")} disabled={statusMutation.isPending}>
+                Start preparing
+              </Button>
+            )}
+            {application.status === "preparing" && (
+              <Button onClick={() => statusMutation.mutate("applied")} disabled={statusMutation.isPending}>
+                Mark as applied
               </Button>
             )}
           </div>
