@@ -78,17 +78,10 @@ export const Route = createFileRoute("/_authenticated/dna")({
   component: StudentDnaPage,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
-  { label: "Student DNA", icon: Dna, active: true, to: "/dna" },
-  { label: "Skills", icon: Target, to: "/assessment" },
-  { label: "Learning", icon: BookOpen },
-  { label: "Applications", icon: Briefcase },
-  { label: "Opportunities", icon: Compass, to: "/opportunities" },
-];
+const nav = studentNav("/dna");
 
 function StudentDnaPage() {
-  const { data: dna, isPending } = useQuery(dnaQueryOptions);
+  const { data: dna, isPending, isError, refetch } = useQuery(dnaQueryOptions);
   const queryClient = useQueryClient();
 
   function invalidate() {
