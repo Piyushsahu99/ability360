@@ -110,7 +110,18 @@ function StudentDnaPage() {
       subtitle="Everything that defines your career profile, in one place."
       nav={nav}
     >
-      {isPending || !dna ? (
+      {isError ? (
+        <EmptyState
+          title="We couldn't load your profile"
+          description="Check your connection and try again."
+          action={
+            <Button variant="outline" className="min-h-11" onClick={() => void refetch()}>
+              <TriangleAlert aria-hidden="true" />
+              Try again
+            </Button>
+          }
+        />
+      ) : isPending || !dna ? (
         <div className="space-y-4">
           <Skeleton className="h-28 w-full" />
           <Skeleton className="h-64 w-full" />
