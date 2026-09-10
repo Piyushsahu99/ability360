@@ -61,7 +61,7 @@ const filters: Array<{ value: JourneyKind | "all"; label: string }> = [
 ];
 
 function JourneyPage() {
-  const { data, isPending } = useQuery(journeyQueryOptions);
+  const { data, isPending, isError, refetch } = useQuery(journeyQueryOptions);
   const { data: roadmap } = useQuery(roadmapQueryOptions);
   const [filter, setFilter] = useState<JourneyKind | "all">("all");
 
@@ -161,7 +161,21 @@ function JourneyPage() {
 
         {isPending && <p className="mt-4 text-sm text-muted-foreground">Loading your journey…</p>}
 
-        {!isPending && events.length === 0 && (
+        {isError && (
+          <div className="mt-4">
+            <EmptyState
+              title="We couldn't load your journey"
+              description="Check your connection and try again."
+              action={
+                <Button size="sm" variant="outline" onClick={() => void refetch()}>
+                  Try again
+                </Button>
+              }
+            />
+          </div>
+        )}
+
+        {!isPending && !isError && events.length === 0 && (
           <div className="mt-4">
             <EmptyState
               title="Nothing here yet"
