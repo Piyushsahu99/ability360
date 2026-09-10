@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { CheckCircle2, RotateCcw, Target, TriangleAlert } from "lucide-react";
+import { BookOpen, CheckCircle2, Compass, RotateCcw, Target, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
