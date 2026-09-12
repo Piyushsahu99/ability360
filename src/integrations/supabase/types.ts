@@ -296,6 +296,93 @@ export type Database = {
         }
         Relationships: []
       }
+      company_contact_messages: {
+        Row: {
+          body: string
+          company_id: string
+          created_at: string
+          id: string
+          opportunity_id: string | null
+          reply_email: string | null
+          student_id: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          company_id: string
+          created_at?: string
+          id?: string
+          opportunity_id?: string | null
+          reply_email?: string | null
+          student_id: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          opportunity_id?: string | null
+          reply_email?: string | null
+          student_id?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_contact_messages_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_contact_messages_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_contact_messages_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_contacts: {
+        Row: {
+          created_at: string
+          hiring_contact_email: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          hiring_contact_email?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          hiring_contact_email?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_contacts_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_profiles: {
         Row: {
           about: string
@@ -304,7 +391,6 @@ export type Database = {
           company_size: string | null
           created_at: string
           headquarters: string | null
-          hiring_contact_email: string | null
           id: string
           industry: string | null
           is_inclusive_employer: boolean
@@ -323,7 +409,6 @@ export type Database = {
           company_size?: string | null
           created_at?: string
           headquarters?: string | null
-          hiring_contact_email?: string | null
           id: string
           industry?: string | null
           is_inclusive_employer?: boolean
@@ -342,7 +427,6 @@ export type Database = {
           company_size?: string | null
           created_at?: string
           headquarters?: string | null
-          hiring_contact_email?: string | null
           id?: string
           industry?: string | null
           is_inclusive_employer?: boolean
