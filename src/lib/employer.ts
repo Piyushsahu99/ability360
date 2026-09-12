@@ -24,7 +24,6 @@ export const companyProfileSchema = z.object({
   company_size: z.string().trim().max(40),
   headquarters: z.string().trim().max(120),
   about: z.string().trim().max(2000),
-  hiring_contact_email: z.string().trim().email("Enter a valid email").or(z.literal("")),
   is_inclusive_employer: z.boolean(),
   accessibility_commitment: z.string().trim().max(1000),
 });
@@ -57,7 +56,6 @@ export async function saveCompanyProfile(values: CompanyProfileValues) {
     company_size: values.company_size || null,
     headquarters: values.headquarters || null,
     about: values.about,
-    hiring_contact_email: values.hiring_contact_email || null,
     is_inclusive_employer: values.is_inclusive_employer,
     accessibility_commitment: values.accessibility_commitment || null,
   });
@@ -73,7 +71,6 @@ export function companyProfileCompleteness(profile: CompanyProfile | null) {
     profile.company_size,
     profile.headquarters,
     profile.about,
-    profile.hiring_contact_email,
   ];
   const filled = fields.filter((value) => Boolean(value && String(value).trim())).length;
   return Math.round((filled / fields.length) * 100);
