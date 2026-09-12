@@ -157,8 +157,10 @@ function CompanyProfilePage() {
         )}
       </PanelCard>
 
+      <PrivateContactPanel />
 
-      <PanelCard title="Organisation details" description="Basic identity and hiring contact.">
+      <PanelCard title="Organisation details" description="Basic identity and how you present the company.">
+
         <form className="grid gap-4 sm:grid-cols-2" onSubmit={submit}>
           <div className="sm:col-span-2">
             <Label htmlFor="company_name">Company name</Label>
