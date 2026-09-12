@@ -4,6 +4,7 @@ import { Accessibility, BadgeCheck, Bookmark, BookmarkCheck, CalendarDays, MapPi
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { ContactEmployerDialog } from "@/components/contact-employer-dialog";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -301,6 +302,7 @@ function OpportunitiesPage() {
                       </div>
                     </dl>
                     <SaveAction opportunity={item} />
+                    <ContactAction opportunity={item} />
                   </CardContent>
                 </Card>
 
