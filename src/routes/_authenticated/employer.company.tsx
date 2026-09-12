@@ -13,6 +13,12 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useMe } from "@/lib/auth";
 import {
+  companyContactQueryOptions,
+  contactEmailSchema,
+  genericContactPlaceholder,
+  saveCompanyContactEmail,
+} from "@/lib/company-contact";
+import {
   companyProfileCompleteness,
   companyProfileQueryOptions,
   companyProfileSchema,
@@ -267,5 +273,70 @@ function CompanyProfilePage() {
         </form>
       </PanelCard>
     </DashboardShell>
+  );
+}
+
+function PrivateContactPanel() {
+  const queryClient = useQueryClient();
+  const { data: contact } = useQuery(companyContactQueryOptions);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
+
+  useEffect(() => {
+    if (!touched) setEmail(contact?.hiring_contact_email ?? "");
+  }, [contact?.hiring_contact_email, touched]);
+
+  const mutation = useMutation({
+    mutationFn: () => saveCompanyContactEmail(email),
+    onSuccess: () => {
+      toast.success("Hiring contact saved privately");
+      setTouched(false);
+      void queryClient.invalidateQueries({ queryKey: ["employer", "company-contact"] });
+    },
+    onError: (mutationError: Error) => toast.error(mutationError.message),
+  });
+
+  function submit(event: React.FormEvent) {
+    event.preventDefault();
+    const parsed = contactEmailSchema.safeParse(email);
+    if (!parsed.success) {
+      setError(parsed.error.issues[0]?.message ?? "Enter a valid email");
+      return;
+    }
+    setError("");
+    mutation.mutate();
+  }
+
+  return (
+    <PanelCard
+      title="Hiring contact (private)"
+      description="Only you and ABILITY360 admins can see this. Students never see your email address — they reach you through the contact form, and their messages arrive under Messages."
+    >
+      <form className="grid gap-4 sm:max-w-md" onSubmit={submit}>
+        <div>
+          <Label htmlFor="private_contact_email">Hiring contact email</Label>
+          <Input
+            id="private_contact_email"
+            type="email"
+            value={email}
+            onChange={(event) => {
+              setTouched(true);
+              setEmail(event.target.value);
+            }}
+            className="mt-1.5"
+          />
+          {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            Public listings show “{genericContactPlaceholder}”.
+          </p>
+        </div>
+        <div>
+          <Button type="submit" variant="outline" className="min-h-11" disabled={mutation.isPending}>
+            {mutation.isPending ? "Saving…" : "Save hiring contact"}
+          </Button>
+        </div>
+      </form>
+    </PanelCard>
   );
 }
