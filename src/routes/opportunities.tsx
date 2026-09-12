@@ -378,3 +378,16 @@ function SaveAction({ opportunity }: { opportunity: Opportunity }) {
     </Button>
   );
 }
+
+function ContactAction({ opportunity }: { opportunity: Opportunity }) {
+  const { data: session } = useSession();
+  if (!session || !opportunity.posted_by) return null;
+  return (
+    <ContactEmployerDialog
+      companyId={opportunity.posted_by}
+      organisation={opportunity.organisation}
+      opportunityId={opportunity.id}
+      opportunityTitle={opportunity.title}
+    />
+  );
+}
