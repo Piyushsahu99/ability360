@@ -53,7 +53,6 @@ const emptyValues: CompanyProfileValues = {
   company_size: "",
   headquarters: "",
   about: "",
-  hiring_contact_email: "",
   is_inclusive_employer: false,
   accessibility_commitment: "",
 };
@@ -74,7 +73,6 @@ function CompanyProfilePage() {
         company_size: profile.company_size ?? "",
         headquarters: profile.headquarters ?? "",
         about: profile.about ?? "",
-        hiring_contact_email: profile.hiring_contact_email ?? "",
         is_inclusive_employer: profile.is_inclusive_employer,
         accessibility_commitment: profile.accessibility_commitment ?? "",
       });
@@ -221,19 +219,6 @@ function CompanyProfilePage() {
             />
           </div>
 
-          <div className="sm:col-span-2">
-            <Label htmlFor="hiring_contact_email">Hiring contact email</Label>
-            <Input
-              id="hiring_contact_email"
-              type="email"
-              value={values.hiring_contact_email}
-              onChange={(event) => set("hiring_contact_email", event.target.value)}
-              className="mt-1.5"
-            />
-            {errors["hiring_contact_email"] && (
-              <p className="mt-1 text-xs text-destructive">{errors["hiring_contact_email"]}</p>
-            )}
-          </div>
 
           <div className="sm:col-span-2">
             <Label htmlFor="about">About the company</Label>
