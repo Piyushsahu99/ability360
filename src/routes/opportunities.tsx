@@ -4,6 +4,7 @@ import { Accessibility, BadgeCheck, Bookmark, BookmarkCheck, CalendarDays, MapPi
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { ContactEmployerDialog } from "@/components/contact-employer-dialog";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -301,6 +302,7 @@ function OpportunitiesPage() {
                       </div>
                     </dl>
                     <SaveAction opportunity={item} />
+                    <ContactAction opportunity={item} />
                   </CardContent>
                 </Card>
 
@@ -374,5 +376,18 @@ function SaveAction({ opportunity }: { opportunity: Opportunity }) {
       <Bookmark className="size-4" aria-hidden="true" />
       Save &amp; track
     </Button>
+  );
+}
+
+function ContactAction({ opportunity }: { opportunity: Opportunity }) {
+  const { data: session } = useSession();
+  if (!session || !opportunity.posted_by) return null;
+  return (
+    <ContactEmployerDialog
+      companyId={opportunity.posted_by}
+      organisation={opportunity.organisation}
+      opportunityId={opportunity.id}
+      opportunityTitle={opportunity.title}
+    />
   );
 }
