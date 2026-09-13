@@ -911,6 +911,72 @@ export type Database = {
         }
         Relationships: []
       }
+      crawl_sources: {
+        Row: {
+          category: string
+          created_at: string
+          domain: string
+          id: string
+          is_active: boolean
+          label: string
+          last_crawled_at: string | null
+          query: string
+          region: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          domain: string
+          id?: string
+          is_active?: boolean
+          label: string
+          last_crawled_at?: string | null
+          query: string
+          region?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          domain?: string
+          id?: string
+          is_active?: boolean
+          label?: string
+          last_crawled_at?: string | null
+          query?: string
+          region?: string
+        }
+        Relationships: []
+      }
+      crawl_state: {
+        Row: {
+          id: string
+          is_paused: boolean
+          last_result: Json | null
+          last_run_at: string | null
+          lease_until: string | null
+          pause_reason: string | null
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          is_paused?: boolean
+          last_result?: Json | null
+          last_run_at?: string | null
+          lease_until?: string | null
+          pause_reason?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          is_paused?: boolean
+          last_result?: Json | null
+          last_run_at?: string | null
+          lease_until?: string | null
+          pause_reason?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faculty_assignments: {
         Row: {
           cohort_label: string | null
@@ -1538,6 +1604,7 @@ export type Database = {
       resources: {
         Row: {
           audience: string[]
+          auto_imported: boolean
           benefit: string
           body: string
           category: string
@@ -1545,13 +1612,17 @@ export type Database = {
           created_by: string | null
           deadline_label: string
           eligibility: string
+          expires_at: string | null
           id: string
           image_key: string
           is_published: boolean
+          last_seen_at: string | null
           link: string | null
           organisation: string
           region: string
           slug: string
+          source_domain: string | null
+          source_url: string | null
           summary: string
           tags: string[]
           title: string
@@ -1559,6 +1630,7 @@ export type Database = {
         }
         Insert: {
           audience?: string[]
+          auto_imported?: boolean
           benefit?: string
           body?: string
           category: string
@@ -1566,13 +1638,17 @@ export type Database = {
           created_by?: string | null
           deadline_label?: string
           eligibility?: string
+          expires_at?: string | null
           id?: string
           image_key?: string
           is_published?: boolean
+          last_seen_at?: string | null
           link?: string | null
           organisation?: string
           region?: string
           slug: string
+          source_domain?: string | null
+          source_url?: string | null
           summary?: string
           tags?: string[]
           title: string
@@ -1580,6 +1656,7 @@ export type Database = {
         }
         Update: {
           audience?: string[]
+          auto_imported?: boolean
           benefit?: string
           body?: string
           category?: string
@@ -1587,13 +1664,17 @@ export type Database = {
           created_by?: string | null
           deadline_label?: string
           eligibility?: string
+          expires_at?: string | null
           id?: string
           image_key?: string
           is_published?: boolean
+          last_seen_at?: string | null
           link?: string | null
           organisation?: string
           region?: string
           slug?: string
+          source_domain?: string | null
+          source_url?: string | null
           summary?: string
           tags?: string[]
           title?: string
