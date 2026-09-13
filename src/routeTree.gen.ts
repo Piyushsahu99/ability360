@@ -46,6 +46,7 @@ import { Route as AuthenticatedInstitutionPartnersRouteImport } from './routes/_
 import { Route as AuthenticatedInstitutionSkillDemandRouteImport } from './routes/_authenticated/institution.skill-demand'
 import { Route as AuthenticatedInstitutionStudentsRouteImport } from './routes/_authenticated/institution.students'
 import { Route as AuthenticatedOrganiserCompetitionsRouteImport } from './routes/_authenticated/organiser.competitions'
+import { Route as ApiPublicHooksCrawlResourcesRouteImport } from './routes/api/public/hooks/crawl-resources'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -251,6 +252,12 @@ const AuthenticatedOrganiserCompetitionsRoute =
     path: '/organiser/competitions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicHooksCrawlResourcesRoute =
+  ApiPublicHooksCrawlResourcesRouteImport.update({
+    id: '/api/public/hooks/crawl-resources',
+    path: '/api/public/hooks/crawl-resources',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -289,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -327,6 +335,7 @@ export interface FileRoutesByTo {
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -367,6 +376,7 @@ export interface FileRoutesById {
   '/_authenticated/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/_authenticated/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -407,6 +417,7 @@ export interface FileRouteTypes {
     | '/institution/students'
     | '/organiser/competitions'
     | '/dashboard/'
+    | '/api/public/hooks/crawl-resources'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -445,6 +456,7 @@ export interface FileRouteTypes {
     | '/institution/students'
     | '/organiser/competitions'
     | '/dashboard'
+    | '/api/public/hooks/crawl-resources'
   id:
     | '__root__'
     | '/'
@@ -484,6 +496,7 @@ export interface FileRouteTypes {
     | '/_authenticated/institution/students'
     | '/_authenticated/organiser/competitions'
     | '/_authenticated/dashboard/'
+    | '/api/public/hooks/crawl-resources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -497,6 +510,7 @@ export interface RootRouteChildren {
   ResourcesSlugRoute: typeof ResourcesSlugRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
   ResourcesIndexRoute: typeof ResourcesIndexRoute
+  ApiPublicHooksCrawlResourcesRoute: typeof ApiPublicHooksCrawlResourcesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -760,6 +774,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrganiserCompetitionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/hooks/crawl-resources': {
+      id: '/api/public/hooks/crawl-resources'
+      path: '/api/public/hooks/crawl-resources'
+      fullPath: '/api/public/hooks/crawl-resources'
+      preLoaderRoute: typeof ApiPublicHooksCrawlResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -841,6 +862,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResourcesSlugRoute: ResourcesSlugRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,
   ResourcesIndexRoute: ResourcesIndexRoute,
+  ApiPublicHooksCrawlResourcesRoute: ApiPublicHooksCrawlResourcesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
