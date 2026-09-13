@@ -58,6 +58,11 @@ export function isResourceCategory(value: string): value is ResourceCategory {
   return (resourceCategories as readonly string[]).includes(value);
 }
 
+/** Imported listings disappear on their own closing date (or 30 days after import). */
+function liveFilter() {
+  return `expires_at.is.null,expires_at.gt.${new Date().toISOString()}`;
+}
+
 export const resourcesQueryOptions = queryOptions({
   queryKey: ["resources", "list"],
   queryFn: async (): Promise<ResourceRow[]> => {
@@ -65,6 +70,7 @@ export const resourcesQueryOptions = queryOptions({
       .from("resources")
       .select("*")
       .eq("is_published", true)
+      .or(liveFilter())
       .order("category")
       .order("title");
     if (error) throw error;
@@ -81,10 +87,16 @@ export function resourceQueryOptions(slug: string) {
         .from("resources")
         .select("*")
         .eq("slug", slug)
+        .or(liveFilter())
         .maybeSingle();
       if (error) throw error;
       return data ?? null;
     },
     staleTime: 5 * 60_000,
   });
+}
+
+export function formatClosingDate(value: string | null) {
+  if (!value) return null;
+  return new Date(value).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
