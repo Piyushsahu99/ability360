@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { indianStates } from "@/lib/india";
 import {
+  formatClosingDate,
   resourceCategories,
   resourceCategoryDescriptions,
   resourceCategoryLabels,
@@ -193,6 +194,11 @@ function ResourcesPage() {
                         <MapPin className="size-3.5" aria-hidden="true" />
                         {item.region}
                       </Badge>
+                      {item.auto_imported && item.expires_at && (
+                        <Badge variant="outline" className="gap-1 text-muted-foreground">
+                          Listed till {formatClosingDate(item.expires_at)}
+                        </Badge>
+                      )}
                     </div>
                     <CardTitle className="mt-2 text-lg">{item.title}</CardTitle>
                     {item.organisation && (
