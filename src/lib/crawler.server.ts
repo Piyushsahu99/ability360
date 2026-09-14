@@ -97,11 +97,14 @@ async function firecrawlSearch(apiKey: string, source: SourceRow) {
     throw new Error(`Firecrawl search failed [${response.status}]: ${body}`);
   }
 
+  type Hit = { url?: string; title?: string; markdown?: string; description?: string };
   const payload = (await response.json()) as {
-    data?: Array<{ url?: string; title?: string; markdown?: string; description?: string }>;
-    web?: Array<{ url?: string; title?: string; markdown?: string; description?: string }>;
+    data?: Hit[] | { web?: Hit[]; news?: Hit[] };
+    web?: Hit[];
   };
-  return payload.data ?? payload.web ?? [];
+  const data = payload.data;
+  if (Array.isArray(data)) return data;
+  return data?.web ?? payload.web ?? [];
 }
 
 const SYSTEM_PROMPT = `You verify Indian student opportunity listings for a careers platform.
