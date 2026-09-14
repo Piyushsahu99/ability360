@@ -275,10 +275,16 @@ export async function runResourceCrawl(): Promise<CrawlSummary> {
           continue;
         }
 
-        if (!item || !looksAuthentic(item, url, source.domain)) continue;
+        if (!item || !looksAuthentic(item, url, source.domain)) {
+          console.log(`[crawl] rejected ${url}`, item ? { include: item.include, title: item.title } : "no extraction");
+          continue;
+        }
 
         const expiresAt = expiryFor(item);
-        if (!expiresAt) continue; // deadline already passed
+        if (!expiresAt) {
+          console.log(`[crawl] closed ${url} (${item.deadline_date})`);
+          continue; // deadline already passed
+        }
 
         const nowIso = new Date().toISOString();
         const { error: upsertError } = await supabaseAdmin.from("resources").upsert(
