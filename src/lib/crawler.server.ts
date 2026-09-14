@@ -97,18 +97,27 @@ async function firecrawlSearch(apiKey: string, source: SourceRow) {
     throw new Error(`Firecrawl search failed [${response.status}]: ${body}`);
   }
 
+  type Hit = { url?: string; title?: string; markdown?: string; description?: string };
   const payload = (await response.json()) as {
-    data?: Array<{ url?: string; title?: string; markdown?: string; description?: string }>;
-    web?: Array<{ url?: string; title?: string; markdown?: string; description?: string }>;
+    data?: Hit[] | { web?: Hit[]; news?: Hit[] };
+    web?: Hit[];
   };
-  return payload.data ?? payload.web ?? [];
+  const data = payload.data;
+  if (Array.isArray(data)) return data;
+  return data?.web ?? payload.web ?? [];
 }
 
-const SYSTEM_PROMPT = `You verify Indian student opportunity listings for a careers platform.
-You receive one scraped web page. Decide whether it is a REAL, currently offered scholarship,
-government/industry programme, exam notification or genuine guidance article for college students in India.
-Set include=false for homepages, index/listing pages, login pages, news roundups, adverts, dead schemes,
-anything already closed, or anything you cannot verify from the page text itself.
+const SYSTEM_PROMPT = `You verify Indian student listings for a careers platform.
+You receive one scraped web page plus its expected category.
+
+For scholarship / program / divyangjan / exam pages, set include=true ONLY when the page describes
+ONE specific, real, currently open scheme, programme, internship or examination that a student can act on,
+with concrete details (who runs it, who can apply, what it gives).
+For the blog category, set include=true when the page is a substantial, genuinely useful guidance article
+for Indian college students (a curated list of schemes counts), and false for thin or promotional pages.
+
+Always set include=false for homepages, search/listing/portal pages, login or registration-form pages,
+adverts, schemes that have closed, and anything you cannot verify from the page text itself.
 Never invent facts: every field must come from the page. Use Indian English and rupee amounts.
 Reply with ONLY a JSON object of this exact shape:
 {"include":boolean,"title":string,"summary":string,"organisation":string,"benefit":string,
@@ -251,6 +260,7 @@ export async function runResourceCrawl(): Promise<CrawlSummary> {
       for (const page of pages) {
         const url = typeof page.url === "string" ? page.url : "";
         if (!url || !isAllowedUrl(url, source.domain)) continue;
+        if (/\.pdf($|\?)/i.test(url)) continue; // keep the library to readable web pages
         found += 1;
 
         let item: ExtractedItem | null = null;
@@ -266,10 +276,16 @@ export async function runResourceCrawl(): Promise<CrawlSummary> {
           continue;
         }
 
-        if (!item || !looksAuthentic(item, url, source.domain)) continue;
+        if (!item || !looksAuthentic(item, url, source.domain)) {
+          console.log(`[crawl] rejected ${url}`, item ? { include: item.include, title: item.title } : "no extraction");
+          continue;
+        }
 
         const expiresAt = expiryFor(item);
-        if (!expiresAt) continue; // deadline already passed
+        if (!expiresAt) {
+          console.log(`[crawl] closed ${url} (${item.deadline_date})`);
+          continue; // deadline already passed
+        }
 
         const nowIso = new Date().toISOString();
         const { error: upsertError } = await supabaseAdmin.from("resources").upsert(
