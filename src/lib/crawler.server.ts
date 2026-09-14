@@ -260,6 +260,7 @@ export async function runResourceCrawl(): Promise<CrawlSummary> {
       for (const page of pages) {
         const url = typeof page.url === "string" ? page.url : "";
         if (!url || !isAllowedUrl(url, source.domain)) continue;
+        if (/\.pdf($|\?)/i.test(url)) continue; // keep the library to readable web pages
         found += 1;
 
         let item: ExtractedItem | null = null;
