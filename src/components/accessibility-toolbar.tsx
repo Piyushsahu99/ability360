@@ -1,5 +1,5 @@
 import { Accessibility, Minus, Plus, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ const scaleLabels: Record<DisplaySettings["textScale"], string> = {
 export function AccessibilityToolbar() {
   const [settings, setSettings] = useState<DisplaySettings>(defaultDisplaySettings);
   const [ready, setReady] = useState(false);
+  const readingGuideRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stored = readDisplaySettings();
@@ -36,6 +37,15 @@ export function AccessibilityToolbar() {
     window.addEventListener("ability360:a11y-change", onChange);
     return () => window.removeEventListener("ability360:a11y-change", onChange);
   }, []);
+
+  useEffect(() => {
+    if (!settings.readingGuide) return;
+    const moveGuide = (event: PointerEvent) => {
+      readingGuideRef.current?.style.setProperty("--reading-guide-y", `${event.clientY}px`);
+    };
+    window.addEventListener("pointermove", moveGuide, { passive: true });
+    return () => window.removeEventListener("pointermove", moveGuide);
+  }, [settings.readingGuide]);
 
   function update(patch: Partial<DisplaySettings>) {
     const next = { ...settings, ...patch };
@@ -56,10 +66,20 @@ export function AccessibilityToolbar() {
     { key: "reduceMotion", label: "Reduce motion", hint: "Stops animation and transitions" },
     { key: "dyslexicFont", label: "Readable font", hint: "Wider letter and word spacing" },
     { key: "underlineLinks", label: "Underline links", hint: "Links never rely on colour alone" },
+    { key: "textSpacing", label: "Extra text spacing", hint: "Adds space between letters and words" },
+    { key: "comfortableReading", label: "Comfortable reading", hint: "Increases line height for longer text" },
+    { key: "largeCursor", label: "Larger cursor", hint: "Makes the pointer easier to locate" },
+    { key: "strongFocus", label: "Strong keyboard focus", hint: "Makes the selected control more visible" },
+    { key: "hideDecorativeImages", label: "Hide decorative images", hint: "Removes non-essential visual decoration" },
+    { key: "readingGuide", label: "Reading guide", hint: "Highlights the line under your pointer" },
   ];
 
   return (
-    <Popover>
+    <>
+      {settings.readingGuide ? (
+        <div ref={readingGuideRef} className="a11y-reading-guide-bar" aria-hidden="true" />
+      ) : null}
+      <Popover>
       <PopoverTrigger asChild>
         <Button
           type="button"
@@ -70,7 +90,7 @@ export function AccessibilityToolbar() {
           <Accessibility className="size-6" aria-hidden="true" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" side="top" className="w-80">
+      <PopoverContent align="end" side="top" className="max-h-[min(38rem,calc(100dvh-6rem))] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto">
         <h2 className="text-sm font-semibold">Accessibility settings</h2>
         <p className="mt-1 text-xs text-muted-foreground">
           Saved on this device. Works whether or not you are signed in.
@@ -135,6 +155,7 @@ export function AccessibilityToolbar() {
           Reset to defaults
         </Button>
       </PopoverContent>
-    </Popover>
+      </Popover>
+    </>
   );
 }

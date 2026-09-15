@@ -136,8 +136,22 @@ function RootComponent() {
     return () => data.subscription.unsubscribe();
   }, [router, queryClient]);
 
+  useEffect(() => {
+    const labelMain = () => {
+      const main = document.querySelector("main");
+      if (main && !main.id) main.id = "main-content";
+    };
+    labelMain();
+    const observer = new MutationObserver(labelMain);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <AccessibilityToolbar />
