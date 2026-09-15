@@ -1158,6 +1158,86 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_modules: {
+        Row: {
+          accessibility_tags: string[]
+          body: string
+          category: string
+          created_at: string
+          duration_minutes: number
+          format_tags: string[]
+          id: string
+          is_published: boolean
+          level: string
+          slug: string
+          summary: string
+          title: string
+        }
+        Insert: {
+          accessibility_tags?: string[]
+          body: string
+          category: string
+          created_at?: string
+          duration_minutes?: number
+          format_tags?: string[]
+          id?: string
+          is_published?: boolean
+          level?: string
+          slug: string
+          summary: string
+          title: string
+        }
+        Update: {
+          accessibility_tags?: string[]
+          body?: string
+          category?: string
+          created_at?: string
+          duration_minutes?: number
+          format_tags?: string[]
+          id?: string
+          is_published?: boolean
+          level?: string
+          slug?: string
+          summary?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      learning_progress: {
+        Row: {
+          completed_at: string | null
+          id: string
+          module_id: string
+          status: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          module_id: string
+          status?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          module_id?: string
+          status?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mentor_profiles: {
         Row: {
           accepts_requests: boolean
@@ -1394,6 +1474,130 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      mock_test_attempts: {
+        Row: {
+          correct_count: number
+          created_at: string
+          extra_time: boolean
+          id: string
+          score: number
+          seconds_used: number
+          student_id: string
+          test_id: string
+          total_questions: number
+        }
+        Insert: {
+          correct_count: number
+          created_at?: string
+          extra_time?: boolean
+          id?: string
+          score: number
+          seconds_used?: number
+          student_id: string
+          test_id: string
+          total_questions: number
+        }
+        Update: {
+          correct_count?: number
+          created_at?: string
+          extra_time?: boolean
+          id?: string
+          score?: number
+          seconds_used?: number
+          student_id?: string
+          test_id?: string
+          total_questions?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mock_test_attempts_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "mock_tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mock_test_questions: {
+        Row: {
+          correct_index: number
+          explanation: string
+          id: string
+          options: string[]
+          position: number
+          prompt: string
+          test_id: string
+          topic: string
+        }
+        Insert: {
+          correct_index: number
+          explanation?: string
+          id?: string
+          options: string[]
+          position: number
+          prompt: string
+          test_id: string
+          topic: string
+        }
+        Update: {
+          correct_index?: number
+          explanation?: string
+          id?: string
+          options?: string[]
+          position?: number
+          prompt?: string
+          test_id?: string
+          topic?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mock_test_questions_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "mock_tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mock_tests: {
+        Row: {
+          accessibility_notes: string | null
+          category: string
+          created_at: string
+          description: string
+          difficulty: string
+          duration_minutes: number
+          id: string
+          is_published: boolean
+          slug: string
+          title: string
+        }
+        Insert: {
+          accessibility_notes?: string | null
+          category: string
+          created_at?: string
+          description: string
+          difficulty?: string
+          duration_minutes?: number
+          id?: string
+          is_published?: boolean
+          slug: string
+          title: string
+        }
+        Update: {
+          accessibility_notes?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          duration_minutes?: number
+          id?: string
+          is_published?: boolean
+          slug?: string
+          title?: string
+        }
+        Relationships: []
       }
       opportunities: {
         Row: {
