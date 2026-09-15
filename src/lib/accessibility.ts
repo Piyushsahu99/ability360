@@ -111,6 +111,12 @@ export type DisplaySettings = {
   reduceMotion: boolean;
   dyslexicFont: boolean;
   underlineLinks: boolean;
+  textSpacing: boolean;
+  comfortableReading: boolean;
+  largeCursor: boolean;
+  strongFocus: boolean;
+  hideDecorativeImages: boolean;
+  readingGuide: boolean;
 };
 
 export const defaultDisplaySettings: DisplaySettings = {
@@ -119,6 +125,12 @@ export const defaultDisplaySettings: DisplaySettings = {
   reduceMotion: false,
   dyslexicFont: false,
   underlineLinks: false,
+  textSpacing: false,
+  comfortableReading: false,
+  largeCursor: false,
+  strongFocus: false,
+  hideDecorativeImages: false,
+  readingGuide: false,
 };
 
 export const displayStorageKey = "ability360:a11y-display";
@@ -143,6 +155,12 @@ export function applyDisplaySettings(settings: DisplaySettings) {
   root.classList.toggle("a11y-reduce-motion", settings.reduceMotion);
   root.classList.toggle("a11y-dyslexic", settings.dyslexicFont);
   root.classList.toggle("a11y-underline-links", settings.underlineLinks);
+  root.classList.toggle("a11y-text-spacing", settings.textSpacing);
+  root.classList.toggle("a11y-comfortable-reading", settings.comfortableReading);
+  root.classList.toggle("a11y-large-cursor", settings.largeCursor);
+  root.classList.toggle("a11y-strong-focus", settings.strongFocus);
+  root.classList.toggle("a11y-hide-decorative-images", settings.hideDecorativeImages);
+  root.classList.toggle("a11y-reading-guide", settings.readingGuide);
 }
 
 export function writeDisplaySettings(settings: DisplaySettings) {

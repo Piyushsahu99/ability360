@@ -138,6 +138,19 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <a
+        href="#main-content"
+        className="skip-link"
+        onClick={(event) => {
+          const main = document.querySelector("main");
+          if (!(main instanceof HTMLElement)) return;
+          event.preventDefault();
+          main.tabIndex = -1;
+          main.focus();
+        }}
+      >
+        Skip to main content
+      </a>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <AccessibilityToolbar />
