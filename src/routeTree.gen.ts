@@ -47,6 +47,8 @@ import { Route as AuthenticatedInstitutionSkillDemandRouteImport } from './route
 import { Route as AuthenticatedInstitutionStudentsRouteImport } from './routes/_authenticated/institution.students'
 import { Route as AuthenticatedLearnIndexRouteImport } from './routes/_authenticated/learn.index'
 import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authenticated/learn.$slug'
+import { Route as AuthenticatedMockTestsIndexRouteImport } from './routes/_authenticated/mock-tests.index'
+import { Route as AuthenticatedMockTestsSlugRouteImport } from './routes/_authenticated/mock-tests.$slug'
 import { Route as AuthenticatedOrganiserCompetitionsRouteImport } from './routes/_authenticated/organiser.competitions'
 import { Route as ApiPublicHooksCrawlResourcesRouteImport } from './routes/api/public/hooks/crawl-resources'
 
@@ -258,6 +260,18 @@ const AuthenticatedLearnSlugRoute = AuthenticatedLearnSlugRouteImport.update({
   path: '/learn/$slug',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMockTestsIndexRoute =
+  AuthenticatedMockTestsIndexRouteImport.update({
+    id: '/mock-tests/',
+    path: '/mock-tests/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMockTestsSlugRoute =
+  AuthenticatedMockTestsSlugRouteImport.update({
+    id: '/mock-tests/$slug',
+    path: '/mock-tests/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedOrganiserCompetitionsRoute =
   AuthenticatedOrganiserCompetitionsRouteImport.update({
     id: '/organiser/competitions',
@@ -307,9 +321,11 @@ export interface FileRoutesByFullPath {
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
+  '/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesByTo {
@@ -348,9 +364,11 @@ export interface FileRoutesByTo {
   '/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
+  '/mock-tests': typeof AuthenticatedMockTestsIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesById {
@@ -391,9 +409,11 @@ export interface FileRoutesById {
   '/_authenticated/institution/skill-demand': typeof AuthenticatedInstitutionSkillDemandRoute
   '/_authenticated/institution/students': typeof AuthenticatedInstitutionStudentsRoute
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
+  '/_authenticated/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/_authenticated/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
+  '/_authenticated/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRouteTypes {
@@ -434,9 +454,11 @@ export interface FileRouteTypes {
     | '/institution/skill-demand'
     | '/institution/students'
     | '/learn/$slug'
+    | '/mock-tests/$slug'
     | '/organiser/competitions'
     | '/dashboard/'
     | '/learn/'
+    | '/mock-tests/'
     | '/api/public/hooks/crawl-resources'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -475,9 +497,11 @@ export interface FileRouteTypes {
     | '/institution/skill-demand'
     | '/institution/students'
     | '/learn/$slug'
+    | '/mock-tests/$slug'
     | '/organiser/competitions'
     | '/dashboard'
     | '/learn'
+    | '/mock-tests'
     | '/api/public/hooks/crawl-resources'
   id:
     | '__root__'
@@ -517,9 +541,11 @@ export interface FileRouteTypes {
     | '/_authenticated/institution/skill-demand'
     | '/_authenticated/institution/students'
     | '/_authenticated/learn/$slug'
+    | '/_authenticated/mock-tests/$slug'
     | '/_authenticated/organiser/competitions'
     | '/_authenticated/dashboard/'
     | '/_authenticated/learn/'
+    | '/_authenticated/mock-tests/'
     | '/api/public/hooks/crawl-resources'
   fileRoutesById: FileRoutesById
 }
@@ -805,6 +831,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLearnSlugRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mock-tests/': {
+      id: '/_authenticated/mock-tests/'
+      path: '/mock-tests'
+      fullPath: '/mock-tests/'
+      preLoaderRoute: typeof AuthenticatedMockTestsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mock-tests/$slug': {
+      id: '/_authenticated/mock-tests/$slug'
+      path: '/mock-tests/$slug'
+      fullPath: '/mock-tests/$slug'
+      preLoaderRoute: typeof AuthenticatedMockTestsSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/organiser/competitions': {
       id: '/_authenticated/organiser/competitions'
       path: '/organiser/competitions'
@@ -849,9 +889,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedInstitutionSkillDemandRoute: typeof AuthenticatedInstitutionSkillDemandRoute
   AuthenticatedInstitutionStudentsRoute: typeof AuthenticatedInstitutionStudentsRoute
   AuthenticatedLearnSlugRoute: typeof AuthenticatedLearnSlugRoute
+  AuthenticatedMockTestsSlugRoute: typeof AuthenticatedMockTestsSlugRoute
   AuthenticatedOrganiserCompetitionsRoute: typeof AuthenticatedOrganiserCompetitionsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedLearnIndexRoute: typeof AuthenticatedLearnIndexRoute
+  AuthenticatedMockTestsIndexRoute: typeof AuthenticatedMockTestsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -884,10 +926,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedInstitutionSkillDemandRoute,
   AuthenticatedInstitutionStudentsRoute: AuthenticatedInstitutionStudentsRoute,
   AuthenticatedLearnSlugRoute: AuthenticatedLearnSlugRoute,
+  AuthenticatedMockTestsSlugRoute: AuthenticatedMockTestsSlugRoute,
   AuthenticatedOrganiserCompetitionsRoute:
     AuthenticatedOrganiserCompetitionsRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedLearnIndexRoute: AuthenticatedLearnIndexRoute,
+  AuthenticatedMockTestsIndexRoute: AuthenticatedMockTestsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
