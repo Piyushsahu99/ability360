@@ -245,6 +245,31 @@ function AccessibilityHub() {
             </ul>
           </PanelCard>
 
+          <PanelCard
+            title="Learn and practise, your way"
+            description="Plain-language lessons and practice tests built for accessibility."
+          >
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li>
+                <span className="font-medium text-foreground">Learning library</span> — your rights
+                under the RPwD Act, asking for exam accommodations, disclosure at work, assistive
+                technology, resumes, interviews and more.
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Mock tests</span> — compensatory extra
+                time, a pausable timer or no timer at all, and one question at a time.
+              </li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button asChild className="min-h-11">
+                <Link to="/learn">Open the learning library</Link>
+              </Button>
+              <Button asChild variant="outline" className="min-h-11">
+                <Link to="/mock-tests">Take a mock test</Link>
+              </Button>
+            </div>
+          </PanelCard>
+
           <PanelCard title="Need a human?" description="Support from your institution.">
             <p className="flex items-start gap-2 text-sm text-muted-foreground">
               <LifeBuoy className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
