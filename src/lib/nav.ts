@@ -30,6 +30,8 @@ const studentItems: NavItem[] = [
   { label: "Career roles", icon: Compass, to: "/roles" },
   { label: "My roadmap", icon: RouteIcon, to: "/roadmap" },
   { label: "Skills", icon: Target, to: "/assessment" },
+  { label: "Learning", icon: GraduationCap, to: "/learn" },
+  { label: "Mock tests", icon: ClipboardList, to: "/mock-tests" },
   { label: "Competitions", icon: Trophy, to: "/competitions" },
   { label: "Mentorship", icon: HeartHandshake, to: "/mentorship" },
   { label: "Accessibility", icon: Accessibility, to: "/accessibility" },

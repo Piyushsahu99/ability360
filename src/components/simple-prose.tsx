@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactElement } from "react";
 
 function inline(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
@@ -13,7 +13,7 @@ function inline(text: string) {
 /** Renders the light markdown used by learning modules: ##, -, 1., **bold**. */
 export function SimpleProse({ body }: { body: string }) {
   const lines = body.split("\n");
-  const blocks: JSX.Element[] = [];
+  const blocks: ReactElement[] = [];
   let list: { ordered: boolean; items: string[] } | null = null;
 
   function flush(key: number) {
