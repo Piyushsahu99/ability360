@@ -296,6 +296,64 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_messages: {
+        Row: {
+          body: string
+          company_id: string
+          created_at: string
+          id: string
+          opportunity_id: string | null
+          read_at: string | null
+          sender_id: string
+          sender_role: string
+          student_id: string
+        }
+        Insert: {
+          body: string
+          company_id: string
+          created_at?: string
+          id?: string
+          opportunity_id?: string | null
+          read_at?: string | null
+          sender_id: string
+          sender_role: string
+          student_id: string
+        }
+        Update: {
+          body?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          opportunity_id?: string | null
+          read_at?: string | null
+          sender_id?: string
+          sender_role?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_contact_messages: {
         Row: {
           body: string
