@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { sendChatMessage } from "@/lib/chat";
 import {
   contactMessageSchema,
   sendCompanyMessage,
@@ -40,10 +41,17 @@ export function ContactEmployerDialog({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const mutation = useMutation({
-    mutationFn: () =>
-      sendCompanyMessage({ companyId, opportunityId: opportunityId ?? null, values }),
+    mutationFn: async () => {
+      await sendCompanyMessage({ companyId, opportunityId: opportunityId ?? null, values });
+      await sendChatMessage({
+        companyId,
+        opportunityId: opportunityId ?? null,
+        body: `${values.subject}\n\n${values.body}`,
+        as: "student",
+      });
+    },
     onSuccess: () => {
-      toast.success("Message sent to the employer");
+      toast.success("Message sent — continue the chat under Messages");
       setValues(empty);
       setErrors({});
       setOpen(false);

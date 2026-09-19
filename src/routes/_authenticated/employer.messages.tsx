@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
+import { ChatPanel } from "@/components/chat-panel";
 import { DashboardShell, EmptyState, PanelCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useMe } from "@/lib/auth";
+import { employerChatQueryOptions } from "@/lib/chat";
 import { employerMessagesQueryOptions } from "@/lib/company-contact";
 import { formatDateIN } from "@/lib/india";
 import { employerNav } from "@/lib/nav";
@@ -30,6 +33,8 @@ export const Route = createFileRoute("/_authenticated/employer/messages")({
 
 function EmployerMessagesPage() {
   const { data, isPending, isError, refetch } = useQuery(employerMessagesQueryOptions);
+  const { data: me } = useMe();
+  const { data: threads, isPending: chatPending } = useQuery(employerChatQueryOptions);
   const messages = data ?? [];
 
   return (
@@ -39,6 +44,19 @@ function EmployerMessagesPage() {
       subtitle="Students contact you here instead of by email, so your address stays private."
       nav={employerNav("/employer/messages")}
     >
+      <PanelCard title="Chat with students" description="Reply in real time — both sides see the full thread.">
+        {chatPending || !me ? (
+          <p className="text-sm text-muted-foreground">Loading conversations…</p>
+        ) : (
+          <ChatPanel
+            threads={threads ?? []}
+            viewerId={me.id}
+            as="employer"
+            queryKey={employerChatQueryOptions.queryKey}
+          />
+        )}
+      </PanelCard>
+
       <PanelCard
         title="Student enquiries"
         description="Every message is tied to a real student account."
