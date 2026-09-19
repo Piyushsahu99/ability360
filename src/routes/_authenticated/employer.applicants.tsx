@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { documentKindLabels, documentUrl, statusLabels } from "@/lib/applications";
+import { useMe } from "@/lib/auth";
+import { employerChatQueryOptions, sendChatMessage } from "@/lib/chat";
 import {
   applicantDocumentsQueryOptions,
   applicantPassportQueryOptions,
@@ -379,6 +381,70 @@ function CandidatePanel({ applicant }: { applicant: ApplicantRow }) {
         </div>
       </PanelCard>
     </div>
+  );
+}
+
+function MessageCandidatePanel({
+  studentId,
+  opportunityId,
+  name,
+}: {
+  studentId: string;
+  opportunityId: string;
+  name: string;
+}) {
+  const queryClient = useQueryClient();
+  const { data: me } = useMe();
+  const [body, setBody] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!me) throw new Error("Please sign in again.");
+      await sendChatMessage({
+        companyId: me.id,
+        studentId,
+        opportunityId,
+        body,
+        as: "employer",
+      });
+    },
+    onSuccess: () => {
+      setBody("");
+      toast.success("Message sent");
+      void queryClient.invalidateQueries({ queryKey: employerChatQueryOptions.queryKey });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  return (
+    <PanelCard
+      title="Message candidate"
+      description={`Start or continue a chat with ${name}. Replies appear under Messages.`}
+    >
+      <form
+        className="space-y-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (body.trim().length === 0) return;
+          mutation.mutate();
+        }}
+      >
+        <Label htmlFor="candidate-message" className="sr-only">
+          Message
+        </Label>
+        <Textarea
+          id="candidate-message"
+          rows={3}
+          maxLength={4000}
+          value={body}
+          placeholder="Share interview details, ask a question or request a document…"
+          onChange={(event) => setBody(event.target.value)}
+        />
+        <Button type="submit" className="min-h-11" disabled={mutation.isPending}>
+          {mutation.isPending ? "Sending…" : "Send message"}
+        </Button>
+      </form>
+    </PanelCard>
   );
 }
 
