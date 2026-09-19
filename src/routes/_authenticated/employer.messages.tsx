@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 
+import { ChatPanel } from "@/components/chat-panel";
 import { DashboardShell, EmptyState, PanelCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useMe } from "@/lib/auth";
+import { employerChatQueryOptions } from "@/lib/chat";
 import { employerMessagesQueryOptions } from "@/lib/company-contact";
 import { formatDateIN } from "@/lib/india";
 import { employerNav } from "@/lib/nav";
