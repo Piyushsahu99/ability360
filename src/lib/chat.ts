@@ -101,7 +101,8 @@ export const studentChatQueryOptions = queryOptions({
 
 export async function sendChatMessage(input: {
   companyId: string;
-  studentId: string;
+  /** Defaults to the signed-in user when they are the student. */
+  studentId?: string;
   opportunityId?: string | null;
   body: string;
   as: "student" | "employer";
@@ -110,7 +111,7 @@ export async function sendChatMessage(input: {
   const body = chatBodySchema.parse(input.body);
   const { error } = await supabase.from("chat_messages").insert({
     company_id: input.companyId,
-    student_id: input.studentId,
+    student_id: input.studentId ?? userId,
     opportunity_id: input.opportunityId ?? null,
     sender_id: userId,
     sender_role: input.as,
