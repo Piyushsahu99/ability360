@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { statusLabels } from "@/lib/applications";
 import { useMe } from "@/lib/auth";
+import { employerChatQueryOptions } from "@/lib/chat";
 import {
   companyProfileCompleteness,
   companyProfileQueryOptions,
@@ -43,7 +44,10 @@ function IndustryDashboard() {
   const { data: company } = useQuery(companyProfileQueryOptions);
   const { data: opportunities } = useQuery(employerOpportunitiesQueryOptions);
   const { data: applicants } = useQuery(employerApplicantsQueryOptions);
+  const { data: threads } = useQuery(employerChatQueryOptions);
 
+  const threadCount = (threads ?? []).length;
+  const unread = (threads ?? []).reduce((total, thread) => total + thread.unread, 0);
   const posts = opportunities ?? [];
   const rows = applicants ?? [];
   const published = posts.filter((item) => item.is_published);
@@ -189,7 +193,21 @@ function IndustryDashboard() {
             </Button>
           </PanelCard>
 
+          <PanelCard title="Student chats" description="Questions from candidates about your roles.">
+            <p className="text-sm text-muted-foreground">
+              {unread > 0
+                ? `${unread} unread message${unread === 1 ? "" : "s"} waiting for a reply.`
+                : threadCount > 0
+                  ? `${threadCount} conversation${threadCount === 1 ? "" : "s"}, all caught up.`
+                  : "No conversations yet."}
+            </p>
+            <Button asChild variant="outline" className="mt-4 min-h-11 w-full">
+              <Link to="/employer/messages">Open messages</Link>
+            </Button>
+          </PanelCard>
+
           <PanelCard title="Inclusive hiring" description="Reach Divyangjan talent with confidence.">
+
             <p className="text-sm text-muted-foreground">
               {company?.is_inclusive_employer
                 ? "Your profile is flagged as an inclusive employer. Add accommodations to each opportunity so candidates know what to expect."
