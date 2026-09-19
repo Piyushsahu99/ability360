@@ -33,6 +33,8 @@ export const Route = createFileRoute("/_authenticated/employer/messages")({
 
 function EmployerMessagesPage() {
   const { data, isPending, isError, refetch } = useQuery(employerMessagesQueryOptions);
+  const { data: me } = useMe();
+  const { data: threads, isPending: chatPending } = useQuery(employerChatQueryOptions);
   const messages = data ?? [];
 
   return (
@@ -42,6 +44,19 @@ function EmployerMessagesPage() {
       subtitle="Students contact you here instead of by email, so your address stays private."
       nav={employerNav("/employer/messages")}
     >
+      <PanelCard title="Chat with students" description="Reply in real time — both sides see the full thread.">
+        {chatPending || !me ? (
+          <p className="text-sm text-muted-foreground">Loading conversations…</p>
+        ) : (
+          <ChatPanel
+            threads={threads ?? []}
+            viewerId={me.id}
+            as="employer"
+            queryKey={employerChatQueryOptions.queryKey}
+          />
+        )}
+      </PanelCard>
+
       <PanelCard
         title="Student enquiries"
         description="Every message is tied to a real student account."

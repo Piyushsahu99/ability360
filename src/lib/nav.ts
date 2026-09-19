@@ -36,6 +36,7 @@ const studentItems: NavItem[] = [
   { label: "Mentorship", icon: HeartHandshake, to: "/mentorship" },
   { label: "Accessibility", icon: Accessibility, to: "/accessibility" },
   { label: "Applications", icon: Briefcase, to: "/applications" },
+  { label: "Messages", icon: Mail, to: "/messages" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
   { label: "Resources", icon: BookOpen, to: "/resources" },
 ];
