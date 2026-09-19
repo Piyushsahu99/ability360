@@ -268,7 +268,14 @@ function CandidatePanel({ applicant }: { applicant: ApplicantRow }) {
         </dl>
       </PanelCard>
 
+      <MessageCandidatePanel
+        studentId={applicant.student_id}
+        opportunityId={applicant.opportunity_id}
+        name={applicant.profiles?.full_name || "this candidate"}
+      />
+
       <PassportPanel studentId={applicant.student_id} />
+
 
 
 
