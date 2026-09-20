@@ -2121,6 +2121,56 @@ export type Database = {
           },
         ]
       }
+      student_goals: {
+        Row: {
+          category: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          notes: string
+          priority: number
+          status: string
+          student_id: string
+          target_date: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string
+          priority?: number
+          status?: string
+          student_id: string
+          target_date?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string
+          priority?: number
+          status?: string
+          student_id?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_goals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_interests: {
         Row: {
           created_at: string
