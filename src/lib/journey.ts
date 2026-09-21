@@ -10,7 +10,8 @@ export type JourneyKind =
   | "achievement"
   | "project"
   | "assessment"
-  | "experience";
+  | "experience"
+  | "goal";
 
 export type JourneyEvent = {
   id: string;
@@ -27,6 +28,7 @@ export const journeyKindLabels: Record<JourneyKind, string> = {
   project: "Project",
   assessment: "Assessment",
   experience: "Experience",
+  goal: "Goal",
 };
 
 const roadmapTaskTitles: Record<string, string> = Object.fromEntries(
@@ -54,13 +56,14 @@ export const journeyQueryOptions = queryOptions({
         project: 0,
         assessment: 0,
         experience: 0,
+        goal: 0,
       },
       lastUpdated: null,
       weekCount: 0,
     };
     if (!user) return empty;
 
-    const [applications, roadmap, achievements, projects, assessments, experiences] = await Promise.all([
+    const [applications, roadmap, achievements, projects, assessments, experiences, goals] = await Promise.all([
       supabase
         .from("opportunity_applications")
         .select("id, status, status_changed_at, opportunities(title, organisation)")
@@ -79,6 +82,12 @@ export const journeyQueryOptions = queryOptions({
         .from("student_experiences")
         .select("id, role, organisation, kind, created_at")
         .eq("student_id", user.id),
+      supabase
+        .from("student_goals")
+        .select("id, title, category, completed_at")
+        .eq("student_id", user.id)
+        .eq("status", "completed")
+        .not("completed_at", "is", null),
     ]);
 
     const events: JourneyEvent[] = [];
@@ -141,6 +150,17 @@ export const journeyQueryOptions = queryOptions({
         title: `${row.role} at ${row.organisation}`,
         detail: row.kind ? `${row.kind} experience` : "Experience added",
         at: row.created_at,
+      });
+    }
+
+    for (const row of goals.data ?? []) {
+      if (!row.completed_at) continue;
+      events.push({
+        id: `goal-${row.id}`,
+        kind: "goal",
+        title: row.title,
+        detail: `${row.category.charAt(0).toUpperCase()}${row.category.slice(1)} goal completed`,
+        at: row.completed_at,
       });
     }
 
