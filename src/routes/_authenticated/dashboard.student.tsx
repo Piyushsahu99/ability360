@@ -1,8 +1,9 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Accessibility, ArrowRight, BadgeCheck, Briefcase, CalendarClock, CheckCircle2, Circle, ExternalLink, GraduationCap, HeartHandshake, Target, UserRound } from "lucide-react";
+import { Accessibility, ArrowRight, BadgeCheck, Briefcase, CalendarClock, CheckCircle2, Circle, ExternalLink, GraduationCap, HeartHandshake, Route as RouteIcon, Target, UserRound } from "lucide-react";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
+import { StudentGoals } from "@/components/student-goals";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -21,6 +22,8 @@ import {
   statusLabels,
 } from "@/lib/applications";
 import { missingSkills, readinessScore, roadmapQueryOptions, roadmapWeeks } from "@/lib/roadmap";
+import { journeyQueryOptions } from "@/lib/journey";
+import { formatDateTimeIN } from "@/lib/india";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
   beforeLoad: async ({ context }) => {
@@ -49,6 +52,7 @@ function StudentDashboard() {
   const { data: roles } = useQuery(careerRolesQueryOptions);
   const { data: roadmap } = useQuery(roadmapQueryOptions);
   const { data: a11yPrefs } = useQuery(accessibilityPrefsQueryOptions);
+  const { data: journey } = useQuery(journeyQueryOptions);
   const targetRole = target?.target_role_id
     ? (roles ?? []).find((role) => role.id === target.target_role_id)
     : undefined;
@@ -88,6 +92,18 @@ function StudentDashboard() {
       subtitle="Your semester-by-semester path from learning to first career."
       nav={studentNav("/dashboard/student")}
     >
+      <section className="border-l-4 border-primary bg-card p-5 shadow-sm sm:p-6" aria-labelledby="current-direction-title">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-primary">Your current direction</p>
+            <h2 id="current-direction-title" className="mt-1 text-2xl sm:text-3xl">{targetRole?.title ?? "Choose the career you want to work towards"}</h2>
+            <p className="mt-2 text-base text-muted-foreground">{targetRole ? `${readiness}% ready · ${gaps.length} priority skill gap${gaps.length === 1 ? "" : "s"}` : "Your roadmap and recommendations will adapt to your choice."}</p>
+          </div>
+          <Button asChild className="min-h-11 shrink-0"><Link to={targetRole ? "/roadmap" : "/roles"}>{targetRole ? "Continue my roadmap" : "Choose a target role"}<ArrowRight aria-hidden="true" /></Link></Button>
+        </div>
+        {targetRole ? <Progress value={readiness} className="mt-5" aria-label={`Career readiness ${readiness}%`} /> : null}
+      </section>
+
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Career readiness"
@@ -119,7 +135,8 @@ function StudentDashboard() {
         />
       </div>
 
-      <PanelCard title="What should I do this week?" description="Three small steps that build real evidence.">
+      <div className="grid gap-6 lg:grid-cols-2">
+      <PanelCard title="Next actions" description="Three small steps that build real evidence.">
         {targetRole ? (
           <>
             <Progress value={readiness} className="mb-4" aria-label={`Career readiness ${readiness}%`} />
@@ -153,6 +170,22 @@ function StudentDashboard() {
           </>
         )}
       </PanelCard>
+
+      <PanelCard title="Personal goals" description="Your own priorities, alongside the guided roadmap.">
+        <StudentGoals compact limit={3} title="My current goals" />
+      </PanelCard>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <PanelCard title="Upcoming deadlines" description={upcoming.length === 0 ? "Nothing due from your saved list." : `${upcoming.length} deadline${upcoming.length === 1 ? "" : "s"} ahead.`}>
+          {upcoming.length === 0 ? <EmptyState message="Save an opportunity to see its deadline here." /> : <ul className="space-y-3">{upcoming.slice(0, 3).map(({ item, days }) => <li key={item.id} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 border-b border-border pb-3 last:border-0"><div className="min-w-0"><p className="font-medium">{item.opportunities?.title ?? "Opportunity"}</p><p className="mt-1 text-sm text-muted-foreground">{statusLabels[item.status]}</p></div><Badge variant={days !== null && days <= 3 ? "default" : "secondary"}>{days === 0 ? "Today" : `${days} day${days === 1 ? "" : "s"}`}</Badge></li>)}</ul>}
+          <Button asChild variant="outline" className="mt-4 min-h-11"><Link to="/applications">Open applications</Link></Button>
+        </PanelCard>
+        <PanelCard title="Recent journey updates" description="Your latest progress across ABILITY360.">
+          {(journey?.events.length ?? 0) === 0 ? <EmptyState message="Your completed steps will appear here." /> : <ol className="space-y-3">{(journey?.events ?? []).slice(0, 4).map((event) => <li key={event.id} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3 border-b border-border pb-3 last:border-0"><RouteIcon className="mt-1 size-4 text-primary" aria-hidden="true" /><div className="min-w-0"><p className="font-medium">{event.title}</p><p className="mt-1 text-sm text-muted-foreground">{formatDateTimeIN(event.at)}</p></div></li>)}</ol>}
+          <Button asChild variant="outline" className="mt-4 min-h-11"><Link to="/journey">View my journey</Link></Button>
+        </PanelCard>
+      </div>
 
       <PanelCard
         title="Divyangjan resources hub"
@@ -325,37 +358,7 @@ function StudentDashboard() {
             )}
           </PanelCard>
 
-          <PanelCard
-            title="Upcoming deadlines"
-            description={
-              upcoming.length === 0
-                ? "Nothing due from your saved list."
-                : `${upcoming.length} deadline${upcoming.length === 1 ? "" : "s"} ahead.`
-            }
-          >
-            {upcoming.length === 0 ? (
-              <EmptyState message="Save an opportunity to see its deadline here." />
-            ) : (
-              <ul className="space-y-3">
-                {upcoming.map(({ item, days }) => (
-                  <li key={item.id} className="rounded-md border border-border p-3">
-                    <p className="text-sm font-medium">{item.opportunities?.title ?? "Opportunity"}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {statusLabels[item.status]} ·{" "}
-                      {days === 0 ? "Closes today" : `${days} day${days === 1 ? "" : "s"} left`}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <Button asChild variant="outline" className="mt-4 min-h-11">
-              <Link to="/applications">Open my applications</Link>
-            </Button>
-            <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-              <CalendarClock className="size-3.5" aria-hidden="true" />
-              Deadlines sync automatically once you save or apply.
-            </p>
-          </PanelCard>
+          <p className="flex items-center gap-2 text-sm text-muted-foreground"><CalendarClock className="size-4" aria-hidden="true" />Deadlines sync when you save or apply.</p>
         </div>
       </div>
     </DashboardShell>

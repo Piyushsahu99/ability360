@@ -5,9 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * ABILITY360 design system — "Modern Career OS" on Royal Purple Dusk.
- * Near-black violet surfaces, violet primary, pink accent.
- * Sora headings + Manrope body. All colors in oklch via @theme inline.
+ * ABILITY360 design system — grounded charcoal, accessible green, warm white and amber.
+ * Outfit headings + Figtree body. All colours use semantic oklch tokens.
  */
 
 @theme inline {
@@ -18,8 +17,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -67,48 +66,48 @@
 
 :root,
 .dark {
-  --radius: 0.75rem;
-  --background: oklch(0.145 0.045 302);
-  --foreground: oklch(0.95 0.015 300);
-  --surface: oklch(0.2 0.075 300);
-  --surface-foreground: oklch(0.96 0.012 300);
-  --card: oklch(0.2 0.075 300);
-  --card-foreground: oklch(0.96 0.012 300);
-  --popover: oklch(0.2 0.075 300);
-  --popover-foreground: oklch(0.96 0.012 300);
-  --primary: oklch(0.51 0.23 287);
-  --primary-foreground: oklch(0.99 0.005 300);
-  --primary-soft: oklch(0.28 0.09 292);
-  --secondary: oklch(0.25 0.06 300);
-  --secondary-foreground: oklch(0.95 0.012 300);
-  --muted: oklch(0.24 0.055 300);
-  --muted-foreground: oklch(0.7 0.03 295);
-  --accent: oklch(0.28 0.09 292);
-  --accent-foreground: oklch(0.92 0.05 300);
-  --teal: oklch(0.72 0.19 350);
-  --teal-foreground: oklch(0.16 0.04 350);
-  --amber: oklch(0.78 0.13 78);
-  --amber-foreground: oklch(0.18 0.04 60);
-  --success: oklch(0.72 0.13 158);
-  --success-foreground: oklch(0.16 0.03 158);
+  --radius: 0.5rem;
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.27 0.015 195);
+  --surface: oklch(0.96 0.008 88);
+  --surface-foreground: oklch(0.27 0.015 195);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.27 0.015 195);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.27 0.015 195);
+  --primary: oklch(0.53 0.12 157);
+  --primary-foreground: oklch(0.99 0.004 90);
+  --primary-soft: oklch(0.93 0.035 156);
+  --secondary: oklch(0.94 0.012 90);
+  --secondary-foreground: oklch(0.27 0.015 195);
+  --muted: oklch(0.94 0.008 90);
+  --muted-foreground: oklch(0.49 0.02 195);
+  --accent: oklch(0.93 0.04 82);
+  --accent-foreground: oklch(0.31 0.03 70);
+  --teal: oklch(0.53 0.12 157);
+  --teal-foreground: oklch(0.99 0.004 90);
+  --amber: oklch(0.72 0.14 78);
+  --amber-foreground: oklch(0.25 0.04 65);
+  --success: oklch(0.55 0.13 150);
+  --success-foreground: oklch(0.99 0.004 90);
   --destructive: oklch(0.62 0.2 22);
   --destructive-foreground: oklch(0.98 0.01 20);
-  --border: oklch(0.3 0.06 300);
-  --input: oklch(0.33 0.06 300);
-  --ring: oklch(0.72 0.19 350);
-  --chart-1: oklch(0.51 0.23 287);
-  --chart-2: oklch(0.72 0.19 350);
-  --chart-3: oklch(0.78 0.13 78);
-  --chart-4: oklch(0.72 0.13 158);
-  --chart-5: oklch(0.7 0.03 295);
-  --sidebar: oklch(0.165 0.055 302);
-  --sidebar-foreground: oklch(0.95 0.015 300);
-  --sidebar-primary: oklch(0.51 0.23 287);
-  --sidebar-primary-foreground: oklch(0.99 0.005 300);
-  --sidebar-accent: oklch(0.25 0.06 300);
-  --sidebar-accent-foreground: oklch(0.95 0.012 300);
-  --sidebar-border: oklch(0.3 0.06 300);
-  --sidebar-ring: oklch(0.72 0.19 350);
+  --border: oklch(0.87 0.012 90);
+  --input: oklch(0.78 0.02 100);
+  --ring: oklch(0.53 0.12 157);
+  --chart-1: oklch(0.53 0.12 157);
+  --chart-2: oklch(0.72 0.14 78);
+  --chart-3: oklch(0.47 0.08 215);
+  --chart-4: oklch(0.62 0.11 25);
+  --chart-5: oklch(0.49 0.02 195);
+  --sidebar: oklch(0.27 0.015 195);
+  --sidebar-foreground: oklch(0.97 0.008 90);
+  --sidebar-primary: oklch(0.66 0.13 157);
+  --sidebar-primary-foreground: oklch(0.2 0.02 195);
+  --sidebar-accent: oklch(0.34 0.025 195);
+  --sidebar-accent-foreground: oklch(0.97 0.008 90);
+  --sidebar-border: oklch(0.4 0.025 195);
+  --sidebar-ring: oklch(0.66 0.13 157);
 }
 
 @layer base {
@@ -157,7 +156,7 @@
   h4 {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
 
@@ -214,6 +213,13 @@ html.a11y-underline-links a {
 html.a11y-text-spacing body {
   letter-spacing: 0.04em;
   word-spacing: 0.14em;
+}
+
+html.a11y-text-spacing h1,
+html.a11y-text-spacing h2,
+html.a11y-text-spacing h3,
+html.a11y-text-spacing h4 {
+  letter-spacing: 0;
 }
 
 html.a11y-comfortable-reading body {

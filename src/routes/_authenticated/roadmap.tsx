@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, CheckCircle2, Circle, Target, Trophy } from "luci
 import { toast } from "sonner";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
+import { StudentGoals } from "@/components/student-goals";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -92,10 +93,10 @@ function RoadmapPage() {
         <StatCard label="Current stage" value={`Semester ${data.studentSemester}`} hint="Your plan adapts as you grow" icon={BookOpen} />
       </div>
 
-      <section className="rounded-lg border border-primary/30 bg-primary-soft p-5 sm:p-6" aria-labelledby="roadmap-role-title">
+      <section className="border-l-4 border-primary bg-card p-5 shadow-sm sm:p-6" aria-labelledby="roadmap-role-title">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal">Your north star</p>
+            <p className="text-sm font-semibold text-primary">Your north star</p>
             <h2 id="roadmap-role-title" className="mt-2 text-2xl font-semibold">{data.role.title}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{data.role.course} · {data.role.branch} · {data.role.demand} demand</p>
           </div>
@@ -105,13 +106,15 @@ function RoadmapPage() {
         <p className="mt-2 text-sm text-muted-foreground">You already match {data.role.skills.length - gaps.length} of {data.role.skills.length} core skills listed for this role.</p>
       </section>
 
+      <section className="bg-card p-5 shadow-sm sm:p-6"><StudentGoals title="Goals I chose" /></section>
+
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <PanelCard title="What should I do this week?" description="Small actions that build visible proof, one step at a time.">
           <div className="space-y-6">
             {roadmapWeeks.map((section) => (
               <div key={section.semester}>
-                <div className="mb-3 flex items-baseline justify-between gap-3">
-                  <div><p className="text-xs font-semibold uppercase tracking-[0.12em] text-teal">{section.semester}</p><h3 className="mt-1 font-display text-lg">{section.label}</h3></div>
+                 <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+                   <div className="min-w-0"><p className="text-sm font-semibold text-primary">{section.semester}</p><h3 className="mt-1 font-display text-lg">{section.label}</h3></div>
                   <span className="text-xs text-muted-foreground">{section.items.filter((item) => done.has(item.key)).length}/{section.items.length}</span>
                 </div>
                 <ul className="space-y-2">
@@ -121,14 +124,14 @@ function RoadmapPage() {
                       <li key={item.key}>
                         <button
                           type="button"
-                          className="flex min-h-16 w-full items-start gap-3 rounded-md border border-border p-3 text-left transition-colors hover:bg-secondary"
+                           className="flex min-h-20 w-full items-start gap-3 rounded-md border border-border p-4 text-left transition-colors hover:bg-secondary"
                           aria-pressed={completed}
                           onClick={() => mutation.mutate({ key: item.key, completed: !completed })}
                         >
                           {completed ? <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" aria-hidden="true" /> : <Circle className="mt-0.5 size-5 shrink-0 text-muted-foreground" aria-hidden="true" />}
                           <span className={completed ? "min-w-0 flex-1 line-through opacity-70" : "min-w-0 flex-1"}>
-                            <span className="block text-sm font-medium">{item.title}</span>
-                            <span className="mt-1 block text-xs text-muted-foreground">{item.detail}</span>
+                             <span className="block text-base font-medium">{item.title}</span>
+                             <span className="mt-1 block text-sm text-muted-foreground">{item.detail}</span>
                           </span>
                         </button>
                       </li>

@@ -118,12 +118,12 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto flex w-full max-w-7xl gap-8 px-4 py-6 sm:px-6 sm:py-8">
         <aside className="hidden w-60 shrink-0 lg:block">
           <div className="sticky top-24">{sidebar}</div>
         </aside>
 
-        <main className="mx-auto min-w-0 max-w-3xl flex-1">
+        <main className="mx-auto min-w-0 max-w-5xl flex-1">
           <h1 className="text-xl sm:text-3xl">{title}</h1>
           <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
 
@@ -163,7 +163,7 @@ export function StatCard({
   icon?: LucideIcon;
 }) {
   return (
-    <Card className="rounded-3xl">
+    <Card>
 
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
@@ -173,7 +173,7 @@ export function StatCard({
         <CardTitle className="text-2xl">{value}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-xs text-muted-foreground">{hint}</p>
+        <p className="text-sm text-muted-foreground">{hint}</p>
       </CardContent>
     </Card>
   );
@@ -191,10 +191,10 @@ export function PanelCard({
   children: ReactNode;
 }) {
   return (
-    <Card className="rounded-3xl">
+    <Card>
       <CardHeader>
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+          <div className="min-w-0">
             <CardTitle className="text-base">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
@@ -218,7 +218,7 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted-foreground">
+    <div className="rounded-md border border-dashed border-border bg-surface p-6 text-center text-sm text-muted-foreground">
       {title ? <p className="font-medium text-foreground">{title}</p> : null}
       {description ? <p className="mt-1">{description}</p> : null}
       {message}
