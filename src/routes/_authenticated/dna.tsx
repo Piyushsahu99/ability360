@@ -129,6 +129,13 @@ function StudentDnaPage() {
         </div>
       ) : (
         <>
+          <section className="border-l-4 border-primary bg-card p-5 shadow-sm sm:p-6" aria-labelledby="passport-overview-title">
+            <p className="text-sm font-semibold text-primary">Ability Passport</p>
+            <h2 id="passport-overview-title" className="mt-1 text-2xl">{dna.profile?.full_name || "Your career profile"}</h2>
+            <p className="mt-2 max-w-2xl text-base text-muted-foreground">{dna.student?.career_goal || "Add your career direction, evidence and verified skills to tell a clearer story."}</p>
+            <div className="mt-4 flex flex-wrap gap-2"><Badge variant="secondary">{profileCompleteness(dna)}% complete</Badge><Badge variant="outline">{dna.skills.length} skills</Badge><Badge variant="outline">{dna.projects.length + dna.experiences.length + dna.achievements.length} evidence items</Badge></div>
+          </section>
+
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard
               label="Profile completeness"

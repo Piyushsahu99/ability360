@@ -8,12 +8,14 @@ import {
   Route as RouteIcon,
   Sparkles,
   Target,
+  Flag,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 
 import journeyTrack from "@/assets/journey-track.jpg";
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
+import { StudentGoals } from "@/components/student-goals";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -48,6 +50,7 @@ const kindIcons: Record<JourneyKind, LucideIcon> = {
   project: FolderKanban,
   assessment: Target,
   experience: Sparkles,
+  goal: Flag,
 };
 
 const filters: Array<{ value: JourneyKind | "all"; label: string }> = [
@@ -58,6 +61,7 @@ const filters: Array<{ value: JourneyKind | "all"; label: string }> = [
   { value: "project", label: journeyKindLabels.project },
   { value: "assessment", label: journeyKindLabels.assessment },
   { value: "experience", label: journeyKindLabels.experience },
+  { value: "goal", label: journeyKindLabels.goal },
 ];
 
 function JourneyPage() {
@@ -80,7 +84,7 @@ function JourneyPage() {
       subtitle="Every update from your first semester to your first career, in one timeline."
       nav={nav}
     >
-      <div className="overflow-hidden rounded-3xl border border-border bg-card">
+      <div className="overflow-hidden border border-border bg-card">
         <img
           src={journeyTrack}
           alt="Illustration of a rising progress path with milestone checkpoints"
@@ -107,6 +111,8 @@ function JourneyPage() {
           </div>
         </div>
       </div>
+
+      <section className="bg-card p-5 shadow-sm sm:p-6"><StudentGoals compact limit={4} title="Goals shaping this journey" /></section>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
@@ -144,7 +150,7 @@ function JourneyPage() {
           </Button>
         }
       >
-        <ul className="flex flex-wrap gap-2">
+        <ul className="flex gap-2 overflow-x-auto pb-2">
           {filters.map((item) => (
             <li key={item.value}>
               <Button
@@ -190,16 +196,16 @@ function JourneyPage() {
         )}
 
         {events.length > 0 && (
-          <ol className="mt-4 space-y-4 border-l border-border pl-5">
+          <ol className="mt-5 space-y-0 border-l-2 border-primary/30 pl-6">
             {events.map((event) => {
               const Icon = kindIcons[event.kind];
               return (
-                <li key={event.id} className="relative">
+                <li key={event.id} className="relative pb-6 last:pb-0">
                   <span
-                    className="absolute -left-[27px] flex size-5 items-center justify-center rounded-full bg-primary-soft text-primary"
+                    className="absolute -left-[35px] flex size-7 items-center justify-center rounded-full border border-primary bg-background text-primary"
                     aria-hidden="true"
                   >
-                    <Icon className="size-3" />
+                     <Icon className="size-4" />
                   </span>
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-medium">{event.title}</p>
@@ -207,8 +213,8 @@ function JourneyPage() {
                       {journeyKindLabels[event.kind]}
                     </Badge>
                   </div>
-                  {event.detail && <p className="text-sm text-muted-foreground">{event.detail}</p>}
-                  <p className="text-xs text-muted-foreground">{formatDateTimeIN(event.at)}</p>
+                  {event.detail && <p className="mt-1 text-sm text-muted-foreground">{event.detail}</p>}
+                  <p className="mt-1 text-sm font-medium text-muted-foreground">{formatDateTimeIN(event.at)}</p>
                 </li>
               );
             })}
