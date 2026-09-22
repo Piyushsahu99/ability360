@@ -37,6 +37,7 @@ const citiesByStateLower: Record<string, string[]> = Object.fromEntries(
 );
 
 export const Route = createFileRoute("/opportunities")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Opportunities — ABILITY360" },

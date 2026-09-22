@@ -33,6 +33,7 @@ import { employerNav } from "@/lib/nav";
 
 
 export const Route = createFileRoute("/_authenticated/employer/company")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Company profile — ABILITY360" },

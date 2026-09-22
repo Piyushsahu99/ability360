@@ -26,6 +26,7 @@ import { journeyQueryOptions } from "@/lib/journey";
 import { formatDateTimeIN } from "@/lib/india";
 
 export const Route = createFileRoute("/_authenticated/dashboard/student")({
+  staticData: { sitemap: false },
   beforeLoad: async ({ context }) => {
     const userId = (context as { user?: { id: string } }).user?.id;
     if (!userId) return;

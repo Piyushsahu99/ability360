@@ -37,6 +37,7 @@ import { opportunitiesQueryOptions } from "@/lib/opportunities";
 import { verificationLabels } from "@/lib/dna";
 
 export const Route = createFileRoute("/_authenticated/faculty/students")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My students — ABILITY360 faculty workspace" },

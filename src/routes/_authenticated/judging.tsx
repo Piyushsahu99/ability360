@@ -15,6 +15,7 @@ import { judgeCompetitionsQueryOptions, judgingQueueQueryOptions, saveScore } fr
 import { navForRole } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/judging")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Judging panel — ABILITY360" },

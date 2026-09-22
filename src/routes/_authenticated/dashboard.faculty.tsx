@@ -10,6 +10,7 @@ import { facultyDirectoryQueryOptions } from "@/lib/faculty";
 import { facultyNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/dashboard/faculty")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Faculty overview — ABILITY360" },

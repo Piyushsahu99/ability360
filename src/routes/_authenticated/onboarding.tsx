@@ -58,6 +58,7 @@ import {
 import { indianStates, majorCities } from "@/lib/india";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Set up your profile — ABILITY360" },

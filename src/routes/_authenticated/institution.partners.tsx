@@ -8,6 +8,7 @@ import { institutionNav } from "@/lib/nav";
 import { institutionPartnershipsQueryOptions } from "@/lib/institution";
 
 export const Route = createFileRoute("/_authenticated/institution/partners")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Industry partnerships — ABILITY360" },

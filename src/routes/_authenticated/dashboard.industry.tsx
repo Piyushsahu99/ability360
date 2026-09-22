@@ -20,6 +20,7 @@ import { employerNav } from "@/lib/nav";
 import { formatDeadline, opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/dashboard/industry")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Industry dashboard — ABILITY360" },

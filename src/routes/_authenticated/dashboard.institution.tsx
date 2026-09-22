@@ -19,6 +19,7 @@ import {
 import { useMe } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/dashboard/institution")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Institution dashboard — ABILITY360" },

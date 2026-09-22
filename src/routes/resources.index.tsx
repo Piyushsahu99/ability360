@@ -24,6 +24,7 @@ import {
 } from "@/lib/resources";
 
 export const Route = createFileRoute("/resources/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Student resources, scholarships and Divyangjan support — ABILITY360" },

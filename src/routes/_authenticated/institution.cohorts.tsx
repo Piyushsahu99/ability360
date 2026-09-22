@@ -18,6 +18,7 @@ import {
 } from "@/lib/institution";
 
 export const Route = createFileRoute("/_authenticated/institution/cohorts")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Cohort readiness — ABILITY360" },

@@ -15,6 +15,7 @@ function authorise(request: Request): Response | null {
 }
 
 export const Route = createFileRoute("/api/public/hooks/crawl-resources")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       POST: async ({ request }) => {

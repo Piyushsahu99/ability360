@@ -8,6 +8,7 @@ import { studentChatQueryOptions } from "@/lib/chat";
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/messages")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Messages — ABILITY360" },

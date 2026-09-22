@@ -34,6 +34,7 @@ import { employerNav } from "@/lib/nav";
 import { opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/employer/applicants")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Applicants — ABILITY360" },

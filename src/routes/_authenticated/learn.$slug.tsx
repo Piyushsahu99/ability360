@@ -16,6 +16,7 @@ import {
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/learn/$slug")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Lesson — ABILITY360 learning library" },

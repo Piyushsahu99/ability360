@@ -29,6 +29,7 @@ import { dashboardPathByRole, useMe } from "@/lib/auth";
 
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "ABILITY360 — From First Semester to First Career" },

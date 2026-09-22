@@ -18,6 +18,7 @@ import {
 } from "@/lib/roadmap";
 
 export const Route = createFileRoute("/_authenticated/roadmap")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My graduation roadmap — ABILITY360" },

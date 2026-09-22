@@ -39,6 +39,7 @@ import {
 } from "@/lib/careers";
 
 export const Route = createFileRoute("/roles")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Roles & Responsibilities — ABILITY360" },
