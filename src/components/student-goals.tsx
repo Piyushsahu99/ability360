@@ -124,7 +124,7 @@ export function StudentGoals({ compact = false, limit, title = "My goals" }: Pro
           {shown.map((goal) => {
             const done = goal.status === "completed";
             return (
-              <li key={goal.id} className="grid grid-cols-[auto_minmax(0,1fr)_auto] gap-3 border-b border-border pb-3 last:border-0 last:pb-0">
+              <li key={goal.id} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3 border-b border-border pb-3 last:border-0 last:pb-0 sm:grid-cols-[auto_minmax(0,1fr)_auto]">
                 <Button
                   type="button"
                   size="icon"
@@ -144,7 +144,7 @@ export function StudentGoals({ compact = false, limit, title = "My goals" }: Pro
                   </div>
                   {!compact && goal.notes ? <p className="mt-2 text-sm text-muted-foreground">{goal.notes}</p> : null}
                 </div>
-                <div className="flex shrink-0 items-start gap-1">
+                <div className={compact ? "flex shrink-0 items-start gap-1 sm:col-auto" : "col-span-2 flex shrink-0 items-start justify-end gap-1 sm:col-span-1 sm:justify-start"}>
                   {!compact ? (
                     <>
                       <Button type="button" size="icon" variant="ghost" className="min-h-11 min-w-11" aria-label={`Raise priority for ${goal.title}`} disabled={goal.priority === 1} onClick={() => priority.mutate({ goal, direction: -1 })}><ArrowUp aria-hidden="true" /></Button>

@@ -22,9 +22,9 @@ export const goalCategoryLabels = Object.fromEntries(
 
 export const goalSchema = z.object({
   title: z.string().trim().min(1, "Add a goal title.").max(120),
-  notes: z.string().trim().max(600).default(""),
+  notes: z.string().trim().max(600),
   category: z.enum(["career", "skill", "learning", "application", "personal"]),
-  priority: z.coerce.number().int().min(1).max(3),
+  priority: z.number().int().min(1).max(3),
   targetDate: z.string().optional(),
 });
 
