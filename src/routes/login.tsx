@@ -29,6 +29,8 @@ export const Route = createFileRoute("/login")({
       { name: "description", content: "Sign in to your ABILITY360 student, industry, institution or admin workspace." },
       { property: "og:title", content: "Sign in — ABILITY360" },
       { property: "og:description", content: "Access your personalised ABILITY360 career workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: LoginPage,

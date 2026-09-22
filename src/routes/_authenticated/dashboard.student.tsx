@@ -40,6 +40,10 @@ export const Route = createFileRoute("/_authenticated/dashboard/student")({
     meta: [
       { title: "Student dashboard — ABILITY360" },
       { name: "description", content: "Track your readiness, skills and matched opportunities." },
+      { property: "og:title", content: "Student dashboard — ABILITY360" },
+      { property: "og:description", content: "Track your goals, readiness, roadmap, deadlines and career journey." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: StudentDashboard,
