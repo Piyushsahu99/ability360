@@ -32,6 +32,7 @@ import { formatDeadline, opportunitiesQueryOptions, opportunityTypeLabels } from
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/accessibility")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Accessibility & Divyangjan support — ABILITY360" },

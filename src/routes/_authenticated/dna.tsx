@@ -59,6 +59,7 @@ import { studentNav } from "@/lib/nav";
 import { skillsCatalogueQueryOptions } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/_authenticated/dna")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Student DNA — ABILITY360" },

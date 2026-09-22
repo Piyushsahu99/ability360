@@ -33,6 +33,7 @@ import {
 import { FeedbackForm } from "@/routes/_authenticated/mentorship";
 
 export const Route = createFileRoute("/_authenticated/mentor")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Mentor workspace — ABILITY360" },

@@ -27,6 +27,7 @@ import { studentNav } from "@/lib/nav";
 import { workModeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/mentorship")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Find a mentor — ABILITY360" },

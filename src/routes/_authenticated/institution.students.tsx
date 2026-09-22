@@ -18,6 +18,7 @@ import {
 } from "@/lib/institution";
 
 export const Route = createFileRoute("/_authenticated/institution/students")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Student directory — ABILITY360" },

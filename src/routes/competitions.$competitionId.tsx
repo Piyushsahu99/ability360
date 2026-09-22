@@ -29,6 +29,7 @@ import {
 import { workModeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/competitions/$competitionId")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Competition details — ABILITY360" },

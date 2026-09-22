@@ -39,6 +39,7 @@ import { institutionsQueryOptions } from "@/lib/onboarding";
 
 
 export const Route = createFileRoute("/register")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Create your account — ABILITY360" },

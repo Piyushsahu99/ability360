@@ -11,6 +11,7 @@ import { learningModulesQueryOptions, learningProgressQueryOptions } from "@/lib
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/learn/")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Learning library — ABILITY360" },

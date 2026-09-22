@@ -16,6 +16,7 @@ import {
 } from "@/lib/resources";
 
 export const Route = createFileRoute("/resources/$slug")({
+  staticData: { sitemap: true },
   head: ({ params }) => {
     const readable = params.slug.replace(/-/g, " ");
     return {

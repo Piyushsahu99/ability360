@@ -20,6 +20,7 @@ import { opportunityTypeLabels } from "@/lib/opportunities";
 import { institutionNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/institution/skill-demand")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Industry skill demand — ABILITY360" },

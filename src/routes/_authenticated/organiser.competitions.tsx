@@ -35,6 +35,7 @@ import {
 import { navForRole } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/organiser/competitions")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Run competitions — ABILITY360" },

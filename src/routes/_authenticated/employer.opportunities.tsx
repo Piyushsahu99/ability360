@@ -47,6 +47,7 @@ import {
 } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/employer/opportunities")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Manage opportunities — ABILITY360" },

@@ -25,6 +25,7 @@ import { submitAssessment } from "@/lib/assessment.functions";
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/assessment")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Skill assessment — ABILITY360" },

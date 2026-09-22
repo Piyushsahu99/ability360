@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { dashboardPathByRole, useMe } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "Dashboard — ABILITY360" }] }),
   component: DashboardRedirect,
 });

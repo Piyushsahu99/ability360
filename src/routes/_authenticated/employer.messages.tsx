@@ -12,6 +12,7 @@ import { formatDateIN } from "@/lib/india";
 import { employerNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/employer/messages")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Employer messages — ABILITY360" },

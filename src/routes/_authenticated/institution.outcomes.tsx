@@ -17,6 +17,7 @@ import {
 } from "@/lib/institution";
 
 export const Route = createFileRoute("/_authenticated/institution/outcomes")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Applications, internships and placements — ABILITY360" },

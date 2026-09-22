@@ -19,6 +19,7 @@ import { opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportun
 
 
 export const Route = createFileRoute("/_authenticated/dashboard/admin")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Admin dashboard — ABILITY360" },

@@ -32,6 +32,7 @@ import { submitMockTest } from "@/lib/mock-tests.functions";
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/mock-tests/$slug")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Take a mock test — ABILITY360" },

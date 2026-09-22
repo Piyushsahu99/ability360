@@ -58,6 +58,7 @@ import { studentNav } from "@/lib/nav";
 import { formatDeadline, opportunityTypeLabels, workModeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/applications")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My applications — ABILITY360" },

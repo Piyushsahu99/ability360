@@ -10,6 +10,7 @@ import { mockAttemptsQueryOptions, mockTestsQueryOptions } from "@/lib/mock-test
 import { studentNav } from "@/lib/nav";
 
 export const Route = createFileRoute("/_authenticated/mock-tests/")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Mock tests — ABILITY360" },

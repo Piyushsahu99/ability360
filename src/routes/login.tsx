@@ -23,6 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { dashboardPathByRole, meQueryOptions, signInSchema, type SignInValues } from "@/lib/auth";
 
 export const Route = createFileRoute("/login")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Sign in — ABILITY360" },

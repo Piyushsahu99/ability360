@@ -25,6 +25,7 @@ import { studentNav } from "@/lib/nav";
 import { missingSkills, readinessScore, roadmapQueryOptions } from "@/lib/roadmap";
 
 export const Route = createFileRoute("/_authenticated/journey")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My journey — ABILITY360" },
