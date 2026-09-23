@@ -18,50 +18,157 @@ export type Database = {
         Row: {
           accessible_venue: boolean
           captions: boolean
+          communication: string[]
           created_at: string
+          environment: string[]
           flexible_schedule: boolean
           high_contrast: boolean
           id: string
+          interview: string[]
           keyboard_navigation: boolean
+          learning: string[]
           other_accommodation: string | null
           reduced_motion: boolean
           remote_participation: boolean
           screen_reader: boolean
+          sharing: Json
           updated_at: string
+          work: string[]
         }
         Insert: {
           accessible_venue?: boolean
           captions?: boolean
+          communication?: string[]
           created_at?: string
+          environment?: string[]
           flexible_schedule?: boolean
           high_contrast?: boolean
           id: string
+          interview?: string[]
           keyboard_navigation?: boolean
+          learning?: string[]
           other_accommodation?: string | null
           reduced_motion?: boolean
           remote_participation?: boolean
           screen_reader?: boolean
+          sharing?: Json
           updated_at?: string
+          work?: string[]
         }
         Update: {
           accessible_venue?: boolean
           captions?: boolean
+          communication?: string[]
           created_at?: string
+          environment?: string[]
           flexible_schedule?: boolean
           high_contrast?: boolean
           id?: string
+          interview?: string[]
           keyboard_navigation?: boolean
+          learning?: string[]
           other_accommodation?: string | null
           reduced_motion?: boolean
           remote_participation?: boolean
           screen_reader?: boolean
+          sharing?: Json
           updated_at?: string
+          work?: string[]
         }
         Relationships: [
           {
             foreignKeyName: "accessibility_preferences_id_fkey"
             columns: ["id"]
             isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      accessibility_support_requests: {
+        Row: {
+          barrier: string
+          created_at: string
+          id: string
+          student_id: string
+          supports: Json
+          updated_at: string
+        }
+        Insert: {
+          barrier: string
+          created_at?: string
+          id?: string
+          student_id: string
+          supports?: Json
+          updated_at?: string
+        }
+        Update: {
+          barrier?: string
+          created_at?: string
+          id?: string
+          student_id?: string
+          supports?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accessibility_support_requests_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      application_accommodations: {
+        Row: {
+          application_id: string
+          created_at: string
+          employer_response: string | null
+          history: Json
+          id: string
+          request_text: string
+          status: string
+          student_id: string
+          supports: string[]
+          updated_at: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string
+          employer_response?: string | null
+          history?: Json
+          id?: string
+          request_text: string
+          status?: string
+          student_id: string
+          supports?: string[]
+          updated_at?: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string
+          employer_response?: string | null
+          history?: Json
+          id?: string
+          request_text?: string
+          status?: string
+          student_id?: string
+          supports?: string[]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "application_accommodations_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: true
+            referencedRelation: "opportunity_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "application_accommodations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
@@ -1035,6 +1142,41 @@ export type Database = {
         }
         Relationships: []
       }
+      employer_accessibility_profiles: {
+        Row: {
+          accessibility_contact: string | null
+          accommodation_process: string | null
+          created_at: string
+          features: string[]
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          accessibility_contact?: string | null
+          accommodation_process?: string | null
+          created_at?: string
+          features?: string[]
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          accessibility_contact?: string | null
+          accommodation_process?: string | null
+          created_at?: string
+          features?: string[]
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_accessibility_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       faculty_assignments: {
         Row: {
           cohort_label: string | null
@@ -1816,6 +1958,35 @@ export type Database = {
           },
         ]
       }
+      passport_sharing: {
+        Row: {
+          categories: Json
+          created_at: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          categories?: Json
+          created_at?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          categories?: Json
+          created_at?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "passport_sharing_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -2504,6 +2675,10 @@ export type Database = {
         Args: { _poster: string; _student: string }
         Returns: boolean
       }
+      is_application_poster: {
+        Args: { _application: string; _user: string }
+        Returns: boolean
+      }
       is_competition_judge: {
         Args: { _competition: string; _user: string }
         Returns: boolean
@@ -2539,6 +2714,7 @@ export type Database = {
           role_title: string
         }[]
       }
+      shared_accessibility_for: { Args: { _student: string }; Returns: Json }
       skill_demand_overview: {
         Args: never
         Returns: {
