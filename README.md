@@ -66,13 +66,10 @@ Use clean white/off-white surfaces, navy primary colour, accessible accent colou
 
 Make the UI responsive and mobile friendly.
 
-This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://ability360.lovable.app
 
 ## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/11e41508-3060-4773-8f7b-169b1f521ca3).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
