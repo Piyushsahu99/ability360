@@ -18,6 +18,7 @@ import {
   Target,
   Trophy,
   UserRound,
+  ShieldCheck,
 } from "lucide-react";
 
 import type { NavItem } from "@/components/dashboard-shell";
@@ -39,6 +40,7 @@ const studentItems: NavItem[] = [
   { label: "Messages", icon: Mail, to: "/messages" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
   { label: "Resources", icon: BookOpen, to: "/resources" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function studentNav(activePath: string): NavItem[] {
@@ -55,6 +57,7 @@ const employerItems: NavItem[] = [
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
   { label: "Browse talent pool", icon: Compass, to: "/opportunities" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function employerNav(activePath: string): NavItem[] {
@@ -71,6 +74,7 @@ const institutionItems: NavItem[] = [
   { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function institutionNav(activePath: string): NavItem[] {
@@ -84,15 +88,58 @@ const facultyItems: NavItem[] = [
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function facultyNav(activePath: string): NavItem[] {
   return facultyItems.map((item) => ({ ...item, active: item.to === activePath }));
 }
 
+const mentorItems: NavItem[] = [
+  { label: "Mentor workspace", icon: HeartHandshake, to: "/mentor" },
+  { label: "Find students", icon: Users, to: "/mentorship" },
+  { label: "Opportunities", icon: Compass, to: "/opportunities" },
+  { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
+  { label: "Judging", icon: Gavel, to: "/judging" },
+  { label: "Community", icon: Users, to: "/community" },
+];
+
+export function mentorNav(activePath: string): NavItem[] {
+  return mentorItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
+const organizerItems: NavItem[] = [
+  { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
+  { label: "Judging", icon: Gavel, to: "/judging" },
+  { label: "Opportunities", icon: ClipboardList, to: "/employer/opportunities" },
+  { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
+  { label: "Community", icon: Users, to: "/community" },
+];
+
+export function organizerNav(activePath: string): NavItem[] {
+  return organizerItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
+const adminItems: NavItem[] = [
+  { label: "Overview", icon: LayoutDashboard, to: "/dashboard/admin" },
+  { label: "Accounts", icon: Users },
+  { label: "Institutions", icon: Building2 },
+  { label: "Opportunities", icon: Compass },
+  { label: "Verification", icon: ShieldCheck },
+  { label: "Audit log", icon: Activity },
+  { label: "Community", icon: Users, to: "/community" },
+];
+
+export function adminNav(activePath: string): NavItem[] {
+  return adminItems.map((item) => ({ ...item, active: item.to === activePath }));
+}
+
 export function navForRole(role: AppRole, activePath: string): NavItem[] {
   if (role === "student") return studentNav(activePath);
   if (role === "institution") return institutionNav(activePath);
   if (role === "faculty") return facultyNav(activePath);
+  if (role === "mentor") return mentorNav(activePath);
+  if (role === "organizer") return organizerNav(activePath);
+  if (role === "gov_admin" || role === "admin") return adminNav(activePath);
   return employerNav(activePath);
 }

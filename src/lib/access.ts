@@ -329,7 +329,12 @@ export function computeAccessMatch(
         continue;
       }
       result.missing.push({ preference: label, section, detail: "Accessibility information unavailable" });
-      result.questions.push(`Can you share whether “${featureLabel(needs[0])}” is available?`);
+      const firstFeature = needs[0];
+      result.questions.push(
+        firstFeature
+          ? `Can you share whether “${featureLabel(firstFeature)}” is available?`
+          : "Can you share the accessibility support available for this preference?",
+      );
     }
   }
   const known = result.matches.length + result.barriers.length;
