@@ -12,7 +12,7 @@ export async function callTool<T>(opts: {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "google/gemini-3-flash-preview",
+      model: "google/gemini-3.8-flash",
       messages: [
         { role: "system", content: opts.system },
         { role: "user", content: opts.user },
