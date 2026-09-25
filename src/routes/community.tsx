@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { MessageSquarePlus, Search, Send, ShieldCheck, Sparkles, ThumbsUp } from "lucide-react";
+import { MessageSquarePlus, Search, Send, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -224,7 +224,7 @@ function CommunitySubmitCard({ signedIn }: { signedIn: boolean }) {
         </CardHeader>
         <CardContent>
           <Button asChild className="w-full min-h-11">
-            <a href="/login">Sign in to post</a>
+            <Link to="/login">Sign in to post</Link>
           </Button>
         </CardContent>
       </Card>
