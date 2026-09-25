@@ -11,10 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
+import { Route as AuthenticatedAccessRouteImport } from './routes/_authenticated/access'
 import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authenticated/accessibility'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedAssessmentRouteImport } from './routes/_authenticated/assessment'
@@ -25,6 +27,7 @@ import { Route as AuthenticatedMentorRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedMentorshipRouteImport } from './routes/_authenticated/mentorship'
 import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPracticeRouteImport } from './routes/_authenticated/practice'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
 import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
@@ -36,6 +39,7 @@ import { Route as AuthenticatedDashboardFacultyRouteImport } from './routes/_aut
 import { Route as AuthenticatedDashboardIndustryRouteImport } from './routes/_authenticated/dashboard.industry'
 import { Route as AuthenticatedDashboardInstitutionRouteImport } from './routes/_authenticated/dashboard.institution'
 import { Route as AuthenticatedDashboardStudentRouteImport } from './routes/_authenticated/dashboard.student'
+import { Route as AuthenticatedEmployerAccessibilityRouteImport } from './routes/_authenticated/employer.accessibility'
 import { Route as AuthenticatedEmployerApplicantsRouteImport } from './routes/_authenticated/employer.applicants'
 import { Route as AuthenticatedEmployerCompanyRouteImport } from './routes/_authenticated/employer.company'
 import { Route as AuthenticatedEmployerMessagesRouteImport } from './routes/_authenticated/employer.messages'
@@ -62,6 +66,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExperienceRoute = ExperienceRouteImport.update({
+  id: '/experience',
+  path: '/experience',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -81,6 +90,11 @@ const RolesRoute = RolesRouteImport.update({
   id: '/roles',
   path: '/roles',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAccessRoute = AuthenticatedAccessRouteImport.update({
+  id: '/access',
+  path: '/access',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAccessibilityRoute =
   AuthenticatedAccessibilityRouteImport.update({
@@ -132,6 +146,11 @@ const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPracticeRoute = AuthenticatedPracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
@@ -194,6 +213,12 @@ const AuthenticatedDashboardStudentRoute =
   AuthenticatedDashboardStudentRouteImport.update({
     id: '/dashboard/student',
     path: '/dashboard/student',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerAccessibilityRoute =
+  AuthenticatedEmployerAccessibilityRouteImport.update({
+    id: '/employer/accessibility',
+    path: '/employer/accessibility',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedEmployerApplicantsRoute =
@@ -293,10 +318,12 @@ const ApiPublicHooksCrawlResourcesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
@@ -307,6 +334,7 @@ export interface FileRoutesByFullPath {
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/messages': typeof AuthenticatedMessagesRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/practice': typeof AuthenticatedPracticeRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
@@ -317,6 +345,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/employer/accessibility': typeof AuthenticatedEmployerAccessibilityRoute
   '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -337,10 +366,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/assessment': typeof AuthenticatedAssessmentRoute
@@ -351,6 +382,7 @@ export interface FileRoutesByTo {
   '/mentorship': typeof AuthenticatedMentorshipRoute
   '/messages': typeof AuthenticatedMessagesRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/practice': typeof AuthenticatedPracticeRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
@@ -361,6 +393,7 @@ export interface FileRoutesByTo {
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/employer/accessibility': typeof AuthenticatedEmployerAccessibilityRoute
   '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -383,10 +416,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/_authenticated/access': typeof AuthenticatedAccessRoute
   '/_authenticated/accessibility': typeof AuthenticatedAccessibilityRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/assessment': typeof AuthenticatedAssessmentRoute
@@ -397,6 +432,7 @@ export interface FileRoutesById {
   '/_authenticated/mentorship': typeof AuthenticatedMentorshipRoute
   '/_authenticated/messages': typeof AuthenticatedMessagesRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/practice': typeof AuthenticatedPracticeRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
@@ -407,6 +443,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
   '/_authenticated/dashboard/institution': typeof AuthenticatedDashboardInstitutionRoute
   '/_authenticated/dashboard/student': typeof AuthenticatedDashboardStudentRoute
+  '/_authenticated/employer/accessibility': typeof AuthenticatedEmployerAccessibilityRoute
   '/_authenticated/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
   '/_authenticated/employer/company': typeof AuthenticatedEmployerCompanyRoute
   '/_authenticated/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -429,10 +466,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/experience'
     | '/login'
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/access'
     | '/accessibility'
     | '/applications'
     | '/assessment'
@@ -443,6 +482,7 @@ export interface FileRouteTypes {
     | '/mentorship'
     | '/messages'
     | '/onboarding'
+    | '/practice'
     | '/roadmap'
     | '/competitions/$competitionId'
     | '/resources/$slug'
@@ -453,6 +493,7 @@ export interface FileRouteTypes {
     | '/dashboard/industry'
     | '/dashboard/institution'
     | '/dashboard/student'
+    | '/employer/accessibility'
     | '/employer/applicants'
     | '/employer/company'
     | '/employer/messages'
@@ -473,10 +514,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/experience'
     | '/login'
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/access'
     | '/accessibility'
     | '/applications'
     | '/assessment'
@@ -487,6 +530,7 @@ export interface FileRouteTypes {
     | '/mentorship'
     | '/messages'
     | '/onboarding'
+    | '/practice'
     | '/roadmap'
     | '/competitions/$competitionId'
     | '/resources/$slug'
@@ -497,6 +541,7 @@ export interface FileRouteTypes {
     | '/dashboard/industry'
     | '/dashboard/institution'
     | '/dashboard/student'
+    | '/employer/accessibility'
     | '/employer/applicants'
     | '/employer/company'
     | '/employer/messages'
@@ -518,10 +563,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/experience'
     | '/login'
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/_authenticated/access'
     | '/_authenticated/accessibility'
     | '/_authenticated/applications'
     | '/_authenticated/assessment'
@@ -532,6 +579,7 @@ export interface FileRouteTypes {
     | '/_authenticated/mentorship'
     | '/_authenticated/messages'
     | '/_authenticated/onboarding'
+    | '/_authenticated/practice'
     | '/_authenticated/roadmap'
     | '/competitions/$competitionId'
     | '/resources/$slug'
@@ -542,6 +590,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/industry'
     | '/_authenticated/dashboard/institution'
     | '/_authenticated/dashboard/student'
+    | '/_authenticated/employer/accessibility'
     | '/_authenticated/employer/applicants'
     | '/_authenticated/employer/company'
     | '/_authenticated/employer/messages'
@@ -564,6 +613,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ExperienceRoute: typeof ExperienceRoute
   LoginRoute: typeof LoginRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
@@ -589,6 +639,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experience': {
+      id: '/experience'
+      path: '/experience'
+      fullPath: '/experience'
+      preLoaderRoute: typeof ExperienceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -618,6 +675,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/roles'
       preLoaderRoute: typeof RolesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/access': {
+      id: '/_authenticated/access'
+      path: '/access'
+      fullPath: '/access'
+      preLoaderRoute: typeof AuthenticatedAccessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/accessibility': {
       id: '/_authenticated/accessibility'
@@ -687,6 +751,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/practice': {
+      id: '/_authenticated/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof AuthenticatedPracticeRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/roadmap': {
@@ -764,6 +835,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/student'
       fullPath: '/dashboard/student'
       preLoaderRoute: typeof AuthenticatedDashboardStudentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/accessibility': {
+      id: '/_authenticated/employer/accessibility'
+      path: '/employer/accessibility'
+      fullPath: '/employer/accessibility'
+      preLoaderRoute: typeof AuthenticatedEmployerAccessibilityRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/employer/applicants': {
@@ -882,6 +960,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccessRoute: typeof AuthenticatedAccessRoute
   AuthenticatedAccessibilityRoute: typeof AuthenticatedAccessibilityRoute
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedAssessmentRoute: typeof AuthenticatedAssessmentRoute
@@ -892,12 +971,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMentorshipRoute: typeof AuthenticatedMentorshipRoute
   AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPracticeRoute: typeof AuthenticatedPracticeRoute
   AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardFacultyRoute: typeof AuthenticatedDashboardFacultyRoute
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
   AuthenticatedDashboardInstitutionRoute: typeof AuthenticatedDashboardInstitutionRoute
   AuthenticatedDashboardStudentRoute: typeof AuthenticatedDashboardStudentRoute
+  AuthenticatedEmployerAccessibilityRoute: typeof AuthenticatedEmployerAccessibilityRoute
   AuthenticatedEmployerApplicantsRoute: typeof AuthenticatedEmployerApplicantsRoute
   AuthenticatedEmployerCompanyRoute: typeof AuthenticatedEmployerCompanyRoute
   AuthenticatedEmployerMessagesRoute: typeof AuthenticatedEmployerMessagesRoute
@@ -917,6 +998,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccessRoute: AuthenticatedAccessRoute,
   AuthenticatedAccessibilityRoute: AuthenticatedAccessibilityRoute,
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedAssessmentRoute: AuthenticatedAssessmentRoute,
@@ -927,6 +1009,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMentorshipRoute: AuthenticatedMentorshipRoute,
   AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPracticeRoute: AuthenticatedPracticeRoute,
   AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardFacultyRoute: AuthenticatedDashboardFacultyRoute,
@@ -934,6 +1017,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardInstitutionRoute:
     AuthenticatedDashboardInstitutionRoute,
   AuthenticatedDashboardStudentRoute: AuthenticatedDashboardStudentRoute,
+  AuthenticatedEmployerAccessibilityRoute:
+    AuthenticatedEmployerAccessibilityRoute,
   AuthenticatedEmployerApplicantsRoute: AuthenticatedEmployerApplicantsRoute,
   AuthenticatedEmployerCompanyRoute: AuthenticatedEmployerCompanyRoute,
   AuthenticatedEmployerMessagesRoute: AuthenticatedEmployerMessagesRoute,
@@ -961,6 +1046,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ExperienceRoute: ExperienceRoute,
   LoginRoute: LoginRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
