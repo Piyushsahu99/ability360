@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
+import { Route as CommunityRouteImport } from './routes/community'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as AuthenticatedAccessRouteImport } from './routes/_authenticated/access'
@@ -74,6 +75,11 @@ const ExperienceRoute = ExperienceRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
@@ -321,6 +327,8 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/community': typeof CommunityRoute
+  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/access': typeof AuthenticatedAccessRoute
@@ -369,6 +377,7 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/access': typeof AuthenticatedAccessRoute
@@ -616,6 +625,7 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   LoginRoute: typeof LoginRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
+  CommunityRoute: typeof CommunityRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
@@ -660,6 +670,13 @@ declare module '@tanstack/react-router' {
       path: '/opportunities'
       fullPath: '/opportunities'
       preLoaderRoute: typeof OpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -1049,6 +1066,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   LoginRoute: LoginRoute,
   OpportunitiesRoute: OpportunitiesRoute,
+  CommunityRoute: CommunityRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
