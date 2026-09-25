@@ -328,7 +328,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/community': typeof CommunityRoute
-  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/access': typeof AuthenticatedAccessRoute
@@ -428,6 +427,7 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/_authenticated/access': typeof AuthenticatedAccessRoute
@@ -478,6 +478,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/login'
     | '/opportunities'
+    | '/community'
     | '/register'
     | '/roles'
     | '/access'
@@ -526,6 +527,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/login'
     | '/opportunities'
+    | '/community'
     | '/register'
     | '/roles'
     | '/access'
