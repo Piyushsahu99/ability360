@@ -15,14 +15,14 @@ import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/da
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { adminOverviewQueryOptions, decideCompanyVerification } from "@/lib/admin";
+import { useMe } from "@/lib/auth";
 import { opportunitiesQueryOptions, opportunityTypeLabels } from "@/lib/opportunities";
-
 
 export const Route = createFileRoute("/_authenticated/dashboard/admin")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
-      { title: "Admin dashboard — ABILITY360" },
+      { title: "Administration — ABILITY360" },
       { name: "description", content: "Monitor platform health, accounts and verification queues." },
     ],
   }),
@@ -39,6 +39,9 @@ const nav = [
 ];
 
 function AdminDashboard() {
+  const { data: me } = useMe();
+  const role = me?.role ?? "admin";
+  const canVerifyEmployers = role === "admin";
   const queryClient = useQueryClient();
   const { data: opportunities } = useQuery(opportunitiesQueryOptions);
   const { data: overview } = useQuery(adminOverviewQueryOptions);
@@ -56,9 +59,13 @@ function AdminDashboard() {
 
   return (
     <DashboardShell
-      role="admin"
-      title="Platform administration"
-      subtitle="Health, integrity and verification across ABILITY360."
+      role={role}
+      title={role === "gov_admin" ? "Government administration" : "Platform administration"}
+      subtitle={
+        role === "gov_admin"
+          ? "Read-only programme intelligence across ABILITY360."
+          : "Health, integrity and verification across ABILITY360."
+      }
       nav={nav}
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -82,7 +89,6 @@ function AdminDashboard() {
           icon={BadgeCheck}
         />
       </div>
-
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
@@ -109,35 +115,43 @@ function AdminDashboard() {
         </div>
 
         <div className="space-y-6">
-          <PanelCard title="Verification queue" description="Employers awaiting approval.">
+          <PanelCard
+            title="Verification queue"
+            description={
+              canVerifyEmployers
+                ? "Employers awaiting approval."
+                : "Read-only queue. Employer verification is reserved for Super Admins."
+            }
+          >
             {overview && overview.pendingCompanies.length > 0 ? (
               <ul className="space-y-3">
                 {overview.pendingCompanies.map((company) => (
                   <li key={company.id} className="rounded-lg border border-border p-3">
                     <p className="text-sm font-medium">{company.company_name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {[company.industry, company.headquarters].filter(Boolean).join(" · ") ||
-                        "Details pending"}
+                      {[company.industry, company.headquarters].filter(Boolean).join(" · ") || "Details pending"}
                     </p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      <Button
-                        size="sm"
-                        className="min-h-11"
-                        disabled={decide.isPending}
-                        onClick={() => decide.mutate({ id: company.id, approve: true })}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="min-h-11"
-                        disabled={decide.isPending}
-                        onClick={() => decide.mutate({ id: company.id, approve: false })}
-                      >
-                        Reject
-                      </Button>
-                    </div>
+                    {canVerifyEmployers ? (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <Button
+                          size="sm"
+                          className="min-h-11"
+                          disabled={decide.isPending}
+                          onClick={() => decide.mutate({ id: company.id, approve: true })}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="min-h-11"
+                          disabled={decide.isPending}
+                          onClick={() => decide.mutate({ id: company.id, approve: false })}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -145,12 +159,12 @@ function AdminDashboard() {
               <EmptyState message="Nothing waiting for review." />
             )}
           </PanelCard>
+
           <PanelCard title="Registered institutions" description="Colleges and universities on ABILITY360.">
             <p className="text-2xl font-semibold">{overview?.institutions ?? 0}</p>
             <p className="text-xs text-muted-foreground">Available when students choose their college.</p>
           </PanelCard>
         </div>
-
       </div>
     </DashboardShell>
   );
