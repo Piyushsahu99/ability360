@@ -1,16 +1,16 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  Activity,
   BadgeCheck,
   Building2,
   Compass,
-  LayoutDashboard,
+  MessageSquarePlus,
   ShieldCheck,
   Users,
-  MessageSquarePlus,
 } from "lucide-react";
 import { toast } from "sonner";
+
+import { supabase } from "@/integrations/supabase/client";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
@@ -47,15 +47,6 @@ export const Route = createFileRoute("/_authenticated/dashboard/admin")({
   component: AdminDashboard,
 });
 
-const nav = [
-  { label: "Overview", icon: LayoutDashboard, active: true },
-  { label: "Accounts", icon: Users },
-  { label: "Institutions", icon: Building2 },
-  { label: "Opportunities", icon: Compass },
-  { label: "Verification", icon: BadgeCheck },
-  { label: "Audit log", icon: Activity },
-];
-
 function AdminDashboard() {
   const { data: me, isPending: isMePending } = useMe();
   const role = me?.role;
@@ -68,6 +59,16 @@ function AdminDashboard() {
     enabled: role === "admin",
   });
   const list = opportunities ?? [];
+
+  const decide = useMutation({
+    mutationFn: ({ id, approve }: { id: string; approve: boolean }) =>
+      decideCompanyVerification(id, approve),
+    onSuccess: (_data, variables) => {
+      toast.success(variables.approve ? "Employer verified" : "Employer rejected");
+      void queryClient.invalidateQueries({ queryKey: ["admin", "overview"] });
+    },
+    onError: () => toast.error("We couldn't update that employer. Please try again."),
+  });
 
   const moderate = useMutation({
     mutationFn: ({ id, decision }: { id: string; decision: "approved" | "rejected" }) =>
@@ -83,16 +84,6 @@ function AdminDashboard() {
   if (isMePending || !role) {
     return <div className="min-h-screen bg-background p-8 text-sm text-muted-foreground">Loading administration…</div>;
   }
-
-  const decide = useMutation({
-    mutationFn: ({ id, approve }: { id: string; approve: boolean }) =>
-      decideCompanyVerification(id, approve),
-    onSuccess: (_data, variables) => {
-      toast.success(variables.approve ? "Employer verified" : "Employer rejected");
-      void queryClient.invalidateQueries({ queryKey: ["admin", "overview"] });
-    },
-    onError: () => toast.error("We couldn't update that employer. Please try again."),
-  });
 
   return (
     <DashboardShell
