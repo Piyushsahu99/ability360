@@ -196,7 +196,7 @@ export async function uploadDocument(input: {
   file: File;
 }) {
   const studentId = await requireUserId();
-  const safeName = input.file.name.replace(/[^\w.\-]+/g, "-");
+  const safeName = input.file.name.replace(/[^\w.-]+/g, "-");
   const path = `${studentId}/${input.applicationId}/${Date.now()}-${safeName}`;
 
   const { error: uploadError } = await supabase.storage
