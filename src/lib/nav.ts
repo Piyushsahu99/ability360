@@ -40,6 +40,7 @@ const studentItems: NavItem[] = [
   { label: "Messages", icon: Mail, to: "/messages" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
   { label: "Resources", icon: BookOpen, to: "/resources" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function studentNav(activePath: string): NavItem[] {
@@ -56,6 +57,7 @@ const employerItems: NavItem[] = [
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
   { label: "Browse talent pool", icon: Compass, to: "/opportunities" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function employerNav(activePath: string): NavItem[] {
@@ -72,6 +74,7 @@ const institutionItems: NavItem[] = [
   { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function institutionNav(activePath: string): NavItem[] {
@@ -85,6 +88,7 @@ const facultyItems: NavItem[] = [
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function facultyNav(activePath: string): NavItem[] {
@@ -97,6 +101,7 @@ const mentorItems: NavItem[] = [
   { label: "Opportunities", icon: Compass, to: "/opportunities" },
   { label: "Competitions", icon: Trophy, to: "/organiser/competitions" },
   { label: "Judging", icon: Gavel, to: "/judging" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function mentorNav(activePath: string): NavItem[] {
@@ -108,6 +113,7 @@ const organizerItems: NavItem[] = [
   { label: "Judging", icon: Gavel, to: "/judging" },
   { label: "Opportunities", icon: ClipboardList, to: "/employer/opportunities" },
   { label: "Mentoring", icon: HeartHandshake, to: "/mentor" },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function organizerNav(activePath: string): NavItem[] {
@@ -121,6 +127,7 @@ const adminItems: NavItem[] = [
   { label: "Opportunities", icon: Compass },
   { label: "Verification", icon: ShieldCheck },
   { label: "Audit log", icon: Activity },
+  { label: "Community", icon: Users, to: "/community" },
 ];
 
 export function adminNav(activePath: string): NavItem[] {
