@@ -31,6 +31,7 @@ import {
   type ApplicantRow,
 } from "@/lib/employer";
 import { employerNav } from "@/lib/nav";
+import { EmployerAccommodationPanel } from "@/components/employer-accommodation";
 import { opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/employer/applicants")({
@@ -276,6 +277,8 @@ function CandidatePanel({ applicant }: { applicant: ApplicantRow }) {
         opportunityId={applicant.opportunity_id}
         name={applicant.profiles?.full_name || "this candidate"}
       />
+
+      <EmployerAccommodationPanel applicationId={applicant.id} />
 
       <PassportPanel studentId={applicant.student_id} />
 
