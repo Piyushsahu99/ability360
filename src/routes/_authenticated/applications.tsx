@@ -55,6 +55,7 @@ import {
   type ApplicationWithOpportunity,
 } from "@/lib/applications";
 import { studentNav } from "@/lib/nav";
+import { AccommodationRequestPanel } from "@/components/accommodation-request";
 import { formatDeadline, opportunityTypeLabels, workModeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/applications")({
@@ -520,6 +521,10 @@ function ApplicationDetail({ application }: { application: ApplicationWithOpport
             </Button>
           </div>
         </PanelCard>
+      )}
+
+      {opportunity && application.status !== "saved" && (
+        <AccommodationRequestPanel applicationId={application.id} opportunityTitle={opportunity.title} />
       )}
 
       <PanelCard

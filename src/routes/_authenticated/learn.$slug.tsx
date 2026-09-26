@@ -14,6 +14,7 @@ import {
   setModuleProgress,
 } from "@/lib/learning";
 import { studentNav } from "@/lib/nav";
+import { VisualExplainer } from "@/components/visual-explainer";
 
 export const Route = createFileRoute("/_authenticated/learn/$slug")({
   staticData: { sitemap: false },
@@ -94,6 +95,10 @@ function LessonPage() {
           <article className="mt-4 max-w-3xl">
             <SimpleProse body={module.body} />
           </article>
+
+          <div className="mt-6 max-w-3xl">
+            <VisualExplainer concept={module.title} context={module.body} />
+          </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <Button

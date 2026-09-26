@@ -24,6 +24,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { applicationsQueryOptions, saveOpportunity, statusLabels } from "@/lib/applications";
 import { citiesByState, citiesFor, formatDateIN, formatStipend, indianStates } from "@/lib/india";
 import { useSession } from "@/lib/auth";
+import { AccessMatchPanel } from "@/components/access-match";
+import { accessDnaQueryOptions, computeAccessMatch, dnaCount, employerAccessMapQueryOptions } from "@/lib/access";
+import { checkEligibility, eligibilityContextQueryOptions } from "@/lib/applications";
 import {
   opportunitiesQueryOptions,
   opportunityTypeLabels,
@@ -65,6 +68,10 @@ function OpportunitiesPage() {
   const [stateFilter, setStateFilter] = useState("all");
   const [cityFilter, setCityFilter] = useState("all");
 
+  const { data: session } = useSession();
+  const { data: dna } = useQuery({ ...accessDnaQueryOptions, enabled: Boolean(session) });
+  const { data: employers } = useQuery({ ...employerAccessMapQueryOptions, enabled: Boolean(session) });
+  const { data: eligibilityCtx } = useQuery({ ...eligibilityContextQueryOptions, enabled: Boolean(session) });
   const cityOptions = useMemo(() => citiesFor(stateFilter), [stateFilter]);
 
   const results = useMemo(() => {
@@ -302,6 +309,23 @@ function OpportunitiesPage() {
                         <dd>{formatDateIN(item.deadline)}</dd>
                       </div>
                     </dl>
+                    {session && (
+                      <AccessMatchPanel
+                        opportunityTitle={item.title}
+                        hasDna={dnaCount(dna) > 0}
+                        careerScore={
+                          eligibilityCtx
+                            ? checkEligibility({
+                                opportunity: item,
+                                studentSkills: eligibilityCtx.skills,
+                                profileComplete: eligibilityCtx.profileComplete,
+                                preferredMode: eligibilityCtx.preferredMode,
+                              }).score
+                            : null
+                        }
+                        match={computeAccessMatch(dna, item, item.posted_by ? employers?.[item.posted_by] : null)}
+                      />
+                    )}
                     <SaveAction opportunity={item} />
                     <ContactAction opportunity={item} />
                   </CardContent>
