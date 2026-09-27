@@ -11,10 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
-import { Route as CommunityRouteImport } from './routes/community'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as AuthenticatedAccessRouteImport } from './routes/_authenticated/access'
@@ -67,6 +67,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExperienceRoute = ExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
@@ -75,11 +80,6 @@ const ExperienceRoute = ExperienceRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CommunityRoute = CommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
@@ -324,10 +324,10 @@ const ApiPublicHooksCrawlResourcesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
-  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/access': typeof AuthenticatedAccessRoute
@@ -373,10 +373,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
-  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/access': typeof AuthenticatedAccessRoute
@@ -424,10 +424,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
-  '/community': typeof CommunityRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/_authenticated/access': typeof AuthenticatedAccessRoute
@@ -475,10 +475,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/community'
     | '/experience'
     | '/login'
     | '/opportunities'
-    | '/community'
     | '/register'
     | '/roles'
     | '/access'
@@ -524,10 +524,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/community'
     | '/experience'
     | '/login'
     | '/opportunities'
-    | '/community'
     | '/register'
     | '/roles'
     | '/access'
@@ -574,6 +574,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/community'
     | '/experience'
     | '/login'
     | '/opportunities'
@@ -624,10 +625,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CommunityRoute: typeof CommunityRoute
   ExperienceRoute: typeof ExperienceRoute
   LoginRoute: typeof LoginRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
-  CommunityRoute: typeof CommunityRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
@@ -653,6 +654,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/experience': {
       id: '/experience'
       path: '/experience'
@@ -672,13 +680,6 @@ declare module '@tanstack/react-router' {
       path: '/opportunities'
       fullPath: '/opportunities'
       preLoaderRoute: typeof OpportunitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/community': {
-      id: '/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof CommunityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -1065,10 +1066,10 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CommunityRoute: CommunityRoute,
   ExperienceRoute: ExperienceRoute,
   LoginRoute: LoginRoute,
   OpportunitiesRoute: OpportunitiesRoute,
-  CommunityRoute: CommunityRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
