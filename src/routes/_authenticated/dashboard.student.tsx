@@ -2,6 +2,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Accessibility, ArrowRight, BadgeCheck, Briefcase, CalendarClock, CheckCircle2, Circle, ExternalLink, GraduationCap, HeartHandshake, Route as RouteIcon, Target, UserRound } from "lucide-react";
 
+import { AccessJourney } from "@/components/access-journey";
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { StudentGoals } from "@/components/student-goals";
 import { Badge } from "@/components/ui/badge";
@@ -175,6 +176,8 @@ function StudentDashboard() {
           </>
         )}
       </PanelCard>
+
+      <AccessJourney />
 
       <PanelCard title="Personal goals" description="Your own priorities, alongside the guided roadmap.">
         <StudentGoals compact limit={3} title="My current goals" />

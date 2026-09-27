@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { PassportSharingPanel } from "@/components/passport-sharing";
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -165,6 +166,7 @@ function StudentDnaPage() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
+            <PassportSharingPanel />
             <PanelCard title="Academic profile" description="From your onboarding answers.">
               <dl className="space-y-3 text-sm">
                 <Field label="Name" value={dna.profile?.full_name || "—"} />
