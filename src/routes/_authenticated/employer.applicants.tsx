@@ -32,6 +32,7 @@ import {
 } from "@/lib/employer";
 import { employerNav } from "@/lib/nav";
 import { EmployerAccommodationPanel } from "@/components/employer-accommodation";
+import { defaultPassportSharing, optionLabel, passportSharingQueryOptions, sharedAccessibilityFor, type DnaSection } from "@/lib/access";
 import { opportunityTypeLabels } from "@/lib/opportunities";
 
 export const Route = createFileRoute("/_authenticated/employer/applicants")({
@@ -454,6 +455,11 @@ function MessageCandidatePanel({
 
 function PassportPanel({ studentId }: { studentId: string }) {
   const { data, isPending } = useQuery(applicantPassportQueryOptions(studentId));
+  const { data: sharing } = useQuery(passportSharingQueryOptions(studentId));
+  const { data: sharedAccess } = useQuery({
+    queryKey: ["access", "shared", studentId],
+    queryFn: () => sharedAccessibilityFor(studentId),
+  });
 
   if (isPending) {
     return (
@@ -463,7 +469,21 @@ function PassportPanel({ studentId }: { studentId: string }) {
     );
   }
 
-  const passport = data ?? { skills: [], projects: [], achievements: [], experiences: [] };
+  const raw = data ?? { skills: [], projects: [], achievements: [], experiences: [] };
+  const share = sharing ?? defaultPassportSharing;
+  const passport = {
+    skills: raw.skills.filter((s) =>
+      s.verification_status === "self_declared" ? share.skills : share.verified_skills,
+    ),
+    projects: share.projects ? raw.projects : [],
+    achievements: raw.achievements.filter((a) =>
+      a.category === "competition" ? share.competitions : a.category === "certification" ? share.certifications : share.achievements,
+    ),
+    experiences: share.internships ? raw.experiences : [],
+  };
+  const accessEntries = share.accommodations
+    ? Object.entries(sharedAccess ?? {}).filter(([, v]) => Array.isArray(v) && v.length > 0)
+    : [];
   const empty =
     passport.skills.length === 0 &&
     passport.projects.length === 0 &&
