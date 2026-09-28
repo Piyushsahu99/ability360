@@ -117,6 +117,8 @@ export type DisplaySettings = {
   strongFocus: boolean;
   hideDecorativeImages: boolean;
   readingGuide: boolean;
+  captions: boolean;
+  keyboardNav: boolean;
 };
 
 export const defaultDisplaySettings: DisplaySettings = {
@@ -131,6 +133,8 @@ export const defaultDisplaySettings: DisplaySettings = {
   strongFocus: false,
   hideDecorativeImages: false,
   readingGuide: false,
+  captions: false,
+  keyboardNav: false,
 };
 
 export const displayStorageKey = "ability360:a11y-display";
@@ -158,9 +162,14 @@ export function applyDisplaySettings(settings: DisplaySettings) {
   root.classList.toggle("a11y-text-spacing", settings.textSpacing);
   root.classList.toggle("a11y-comfortable-reading", settings.comfortableReading);
   root.classList.toggle("a11y-large-cursor", settings.largeCursor);
-  root.classList.toggle("a11y-strong-focus", settings.strongFocus);
   root.classList.toggle("a11y-hide-decorative-images", settings.hideDecorativeImages);
   root.classList.toggle("a11y-reading-guide", settings.readingGuide);
+  root.classList.toggle("a11y-strong-focus", settings.strongFocus || settings.keyboardNav);
+  document.querySelectorAll("video").forEach((video) => {
+    Array.from(video.textTracks).forEach((track) => {
+      if (track.kind === "captions" || track.kind === "subtitles") track.mode = settings.captions ? "showing" : "hidden";
+    });
+  });
 }
 
 export function writeDisplaySettings(settings: DisplaySettings) {
@@ -168,6 +177,28 @@ export function writeDisplaySettings(settings: DisplaySettings) {
   window.localStorage.setItem(displayStorageKey, JSON.stringify(settings));
   applyDisplaySettings(settings);
   window.dispatchEvent(new CustomEvent("ability360:a11y-change", { detail: settings }));
+  void syncDisplayToAccount(settings);
+}
+
+/** For signed-in users, mirror overlapping choices into their saved account preferences. */
+async function syncDisplayToAccount(settings: DisplaySettings) {
+  try {
+    const { data } = await supabase.auth.getSession();
+    const user = data.session?.user;
+    if (!user) return;
+    await supabase.from("accessibility_preferences").upsert(
+      {
+        id: user.id,
+        high_contrast: settings.highContrast,
+        reduced_motion: settings.reduceMotion,
+        captions: settings.captions,
+        keyboard_navigation: settings.keyboardNav,
+      },
+      { onConflict: "id" },
+    );
+  } catch {
+    // Device settings still apply even if account sync fails.
+  }
 }
 
 /* ------------------------------------------------------------------ */

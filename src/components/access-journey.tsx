@@ -45,7 +45,7 @@ export function AccessJourney() {
 
   return (
     <PanelCard title="Your Accessibility Journey" description="From your preferences to a verified outcome — all under your control.">
-      <ol className="grid gap-2 sm:grid-cols-3 lg:grid-cols-6" aria-label="Accessibility journey stages">
+      <ol className="grid grid-cols-2 gap-2 xl:grid-cols-3" aria-label="Accessibility journey stages">
         {steps.map((s, i) => (
           <li key={s.label} className="rounded-lg border border-border bg-surface p-3">
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">

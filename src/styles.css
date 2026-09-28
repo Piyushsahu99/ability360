@@ -305,3 +305,11 @@ html.a11y-high-contrast :focus-visible {
   outline: 3px solid var(--color-ring);
   outline-offset: 2px;
 }
+
+/* Guided navigation highlight (Access Mode) */
+.a11y-guide-target {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 6px;
+  border-radius: 4px;
+  scroll-margin: 6rem;
+}
