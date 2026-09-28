@@ -575,6 +575,19 @@ function PassportPanel({ studentId }: { studentId: string }) {
           )}
         </div>
       )}
+      {accessEntries.length > 0 && (
+        <div className="mt-4 rounded-md border border-border bg-surface p-3">
+          <p className="text-sm font-medium">Accessibility preferences shared by the candidate</p>
+          <ul className="mt-2 space-y-1 text-sm">
+            {accessEntries.map(([section, keys]) => (
+              <li key={section}>
+                <span className="font-medium capitalize">{section}:</span>{" "}
+                {(keys as string[]).map((k) => optionLabel(section as DnaSection, k)).join(", ")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </PanelCard>
   );
 }
