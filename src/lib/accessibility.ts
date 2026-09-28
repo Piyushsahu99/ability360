@@ -162,7 +162,6 @@ export function applyDisplaySettings(settings: DisplaySettings) {
   root.classList.toggle("a11y-text-spacing", settings.textSpacing);
   root.classList.toggle("a11y-comfortable-reading", settings.comfortableReading);
   root.classList.toggle("a11y-large-cursor", settings.largeCursor);
-  root.classList.toggle("a11y-strong-focus", settings.strongFocus);
   root.classList.toggle("a11y-hide-decorative-images", settings.hideDecorativeImages);
   root.classList.toggle("a11y-reading-guide", settings.readingGuide);
   root.classList.toggle("a11y-strong-focus", settings.strongFocus || settings.keyboardNav);
