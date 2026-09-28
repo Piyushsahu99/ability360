@@ -136,7 +136,7 @@ export function AccessibilityToolbar() {
 
   async function simplify() {
     const text = mainText().slice(0, 6000);
-    if (text.length < 20) return toast.info("There isn't enough text on this page to simplify.");
+    if (text.length < 20) { toast.info("There isn't enough text on this page to simplify."); return; }
     setSimplifying(true);
     try {
       setSimplified(await simplifyFn({ data: { text } }));
@@ -151,7 +151,7 @@ export function AccessibilityToolbar() {
   function startGuide() {
     const main = document.querySelector("main") ?? document.body;
     const targets = Array.from(main.querySelectorAll<HTMLElement>("h1, h2, h3")).filter((el) => el.offsetParent !== null);
-    if (targets.length === 0) return toast.info("No sections found on this page.");
+    if (targets.length === 0) { toast.info("No sections found on this page."); return; }
     setGuideTargets(targets);
     goGuide(0, targets);
   }
