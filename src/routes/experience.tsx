@@ -11,7 +11,9 @@ import { defaultDisplaySettings, readDisplaySettings, writeDisplaySettings, type
 export const Route = createFileRoute("/experience")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/experience" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/experience" },
       { title: "Experience ABILITY360 — see how the platform adapts" },
       { name: "description", content: "Explore how ABILITY360 adapts its interface and opportunity journey to different accessibility requirements." },
       { property: "og:title", content: "Experience ABILITY360 — see how the platform adapts" },

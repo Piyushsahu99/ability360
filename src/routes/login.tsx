@@ -25,7 +25,9 @@ import { dashboardPathByRole, meQueryOptions, signInSchema, type SignInValues } 
 export const Route = createFileRoute("/login")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/login" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/login" },
       { title: "Sign in — ABILITY360" },
       { name: "description", content: "Sign in to your ABILITY360 student, industry, institution or admin workspace." },
       { property: "og:title", content: "Sign in — ABILITY360" },

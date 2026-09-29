@@ -23,7 +23,9 @@ import { workModeLabels } from "@/lib/opportunities";
 export const Route = createFileRoute("/competitions/")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/competitions" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/competitions" },
       { title: "Competitions and challenges — ABILITY360" },
       {
         name: "description",

@@ -17,6 +17,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAccessRouteImport } from './routes/_authenticated/access'
 import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authenticated/accessibility'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
@@ -95,6 +96,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const RolesRoute = RolesRouteImport.update({
   id: '/roles',
   path: '/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAccessRoute = AuthenticatedAccessRouteImport.update({
@@ -330,6 +336,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -379,6 +386,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -430,6 +438,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/access': typeof AuthenticatedAccessRoute
   '/_authenticated/accessibility': typeof AuthenticatedAccessibilityRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
@@ -481,6 +490,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/sitemap.xml'
     | '/access'
     | '/accessibility'
     | '/applications'
@@ -530,6 +540,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/sitemap.xml'
     | '/access'
     | '/accessibility'
     | '/applications'
@@ -580,6 +591,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/register'
     | '/roles'
+    | '/sitemap.xml'
     | '/_authenticated/access'
     | '/_authenticated/accessibility'
     | '/_authenticated/applications'
@@ -631,6 +643,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
   ResourcesSlugRoute: typeof ResourcesSlugRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
@@ -694,6 +707,13 @@ declare module '@tanstack/react-router' {
       path: '/roles'
       fullPath: '/roles'
       preLoaderRoute: typeof RolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/access': {
@@ -1072,6 +1092,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
   ResourcesSlugRoute: ResourcesSlugRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,

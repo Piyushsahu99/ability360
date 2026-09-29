@@ -26,7 +26,9 @@ import {
 export const Route = createFileRoute("/community")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/community" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/community" },
       { title: "Community needs and problems — ABILITY360" },
       {
         name: "description",

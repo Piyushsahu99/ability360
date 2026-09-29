@@ -31,7 +31,9 @@ import { dashboardPathByRole, useMe } from "@/lib/auth";
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/" },
       { title: "ABILITY360 — From First Semester to First Career" },
       {
         name: "description",
