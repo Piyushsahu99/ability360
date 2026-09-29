@@ -27,19 +27,65 @@ import {
   withdrawRegistration,
 } from "@/lib/competitions";
 import { workModeLabels } from "@/lib/opportunities";
+import { getCompetitionSeo } from "@/lib/seo.functions";
 
 export const Route = createFileRoute("/competitions/$competitionId")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title: "Competition details — ABILITY360" },
-      { name: "description", content: "Register, form a team, submit your entry and follow the live leaderboard." },
-      { property: "og:title", content: "Competition details — ABILITY360" },
-      { property: "og:description", content: "Everything about this challenge: rules, teams, submissions, judging and certificates." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    try {
+      return { seo: await getCompetitionSeo({ data: { id: params.competitionId } }) };
+    } catch {
+      return { seo: null };
+    }
+  },
+  head: ({ params, loaderData }) => {
+    const seo = loaderData?.seo;
+    const url = `https://ability360.lovable.app/competitions/${params.competitionId}`;
+    const title = seo ? `${seo.title} — ${seo.organisation} | ABILITY360` : "Competition details — ABILITY360";
+    const description = seo?.summary?.slice(0, 160) || "Register, form a team, submit your entry and follow the live leaderboard.";
+    const scripts = seo
+      ? [
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              name: seo.title,
+              description,
+              url,
+              ...(seo.starts_on ? { startDate: seo.starts_on } : {}),
+              ...(seo.ends_on ? { endDate: seo.ends_on } : {}),
+              eventAttendanceMode:
+                seo.mode === "remote"
+                  ? "https://schema.org/OnlineEventAttendanceMode"
+                  : seo.mode === "hybrid"
+                    ? "https://schema.org/MixedEventAttendanceMode"
+                    : "https://schema.org/OfflineEventAttendanceMode",
+              location:
+                seo.mode === "remote"
+                  ? { "@type": "VirtualLocation", url }
+                  : { "@type": "Place", name: seo.location, address: seo.location },
+              organizer: { "@type": "Organization", name: seo.organisation },
+            }),
+          },
+        ]
+      : [];
+    return {
+      links: [{ rel: "canonical", href: url }],
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
+      ],
+      scripts,
+    };
+  },
+  errorComponent: () => <p className="p-8 text-center">Could not load this competition.</p>,
+  notFoundComponent: () => <p className="p-8 text-center">Competition not found.</p>,
   component: CompetitionDetailPage,
 });
 
