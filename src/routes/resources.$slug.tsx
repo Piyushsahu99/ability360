@@ -19,8 +19,11 @@ export const Route = createFileRoute("/resources/$slug")({
   staticData: { sitemap: true },
   head: ({ params }) => {
     const readable = params.slug.replace(/-/g, " ");
+    const url = `https://ability360.lovable.app/resources/${params.slug}`;
     return {
+      links: [{ rel: "canonical", href: url }],
       meta: [
+        { property: "og:url", content: url },
         { title: `${readable} — ABILITY360 resources` },
         {
           name: "description",

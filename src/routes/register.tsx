@@ -41,7 +41,9 @@ import { institutionsQueryOptions } from "@/lib/onboarding";
 export const Route = createFileRoute("/register")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/register" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/register" },
       { title: "Create your account — ABILITY360" },
       {
         name: "description",

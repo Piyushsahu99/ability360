@@ -41,7 +41,9 @@ import {
 export const Route = createFileRoute("/roles")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/roles" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/roles" },
       { title: "Roles & Responsibilities — ABILITY360" },
       {
         name: "description",

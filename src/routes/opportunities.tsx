@@ -42,7 +42,9 @@ const citiesByStateLower: Record<string, string[]> = Object.fromEntries(
 export const Route = createFileRoute("/opportunities")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://ability360.lovable.app/opportunities" }],
     meta: [
+      { property: "og:url", content: "https://ability360.lovable.app/opportunities" },
       { title: "Opportunities — ABILITY360" },
       {
         name: "description",
