@@ -128,13 +128,20 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
-      else queryClient.removeQueries({ queryKey: ["auth"] });
-    });
-    return () => data.subscription.unsubscribe();
+    // A build missing backend config must not blank the whole app.
+    let unsubscribe: (() => void) | undefined;
+    try {
+      const { data } = supabase.auth.onAuthStateChange((event) => {
+        if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+        router.invalidate();
+        if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+        else queryClient.removeQueries({ queryKey: ["auth"] });
+      });
+      unsubscribe = () => data.subscription.unsubscribe();
+    } catch (error) {
+      console.error(error);
+    }
+    return () => unsubscribe?.();
   }, [router, queryClient]);
 
   return (
