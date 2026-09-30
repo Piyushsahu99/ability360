@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ExperienceRouteImport } from './routes/experience'
+import { Route as HighestPayingEngineeringJobsRouteImport } from './routes/highest-paying-engineering-jobs'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -78,6 +79,12 @@ const ExperienceRoute = ExperienceRouteImport.update({
   path: '/experience',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HighestPayingEngineeringJobsRoute =
+  HighestPayingEngineeringJobsRouteImport.update({
+    id: '/highest-paying-engineering-jobs',
+    path: '/highest-paying-engineering-jobs',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -332,6 +339,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
@@ -382,6 +390,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
@@ -434,6 +443,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
@@ -486,6 +496,7 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/experience'
+    | '/highest-paying-engineering-jobs'
     | '/login'
     | '/opportunities'
     | '/register'
@@ -536,6 +547,7 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/experience'
+    | '/highest-paying-engineering-jobs'
     | '/login'
     | '/opportunities'
     | '/register'
@@ -587,6 +599,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/community'
     | '/experience'
+    | '/highest-paying-engineering-jobs'
     | '/login'
     | '/opportunities'
     | '/register'
@@ -639,6 +652,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   CommunityRoute: typeof CommunityRoute
   ExperienceRoute: typeof ExperienceRoute
+  HighestPayingEngineeringJobsRoute: typeof HighestPayingEngineeringJobsRoute
   LoginRoute: typeof LoginRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
@@ -679,6 +693,13 @@ declare module '@tanstack/react-router' {
       path: '/experience'
       fullPath: '/experience'
       preLoaderRoute: typeof ExperienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/highest-paying-engineering-jobs': {
+      id: '/highest-paying-engineering-jobs'
+      path: '/highest-paying-engineering-jobs'
+      fullPath: '/highest-paying-engineering-jobs'
+      preLoaderRoute: typeof HighestPayingEngineeringJobsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -1088,6 +1109,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   CommunityRoute: CommunityRoute,
   ExperienceRoute: ExperienceRoute,
+  HighestPayingEngineeringJobsRoute: HighestPayingEngineeringJobsRoute,
   LoginRoute: LoginRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
