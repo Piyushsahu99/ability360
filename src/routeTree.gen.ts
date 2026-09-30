@@ -15,10 +15,12 @@ import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ExperienceRouteImport } from './routes/experience'
 import { Route as HighestPayingEngineeringJobsRouteImport } from './routes/highest-paying-engineering-jobs'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAccessRouteImport } from './routes/_authenticated/access'
 import { Route as AuthenticatedAccessibilityRouteImport } from './routes/_authenticated/accessibility'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
@@ -36,6 +38,7 @@ import { Route as CompetitionsIndexRouteImport } from './routes/competitions.ind
 import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardAdminRouteImport } from './routes/_authenticated/dashboard.admin'
 import { Route as AuthenticatedDashboardFacultyRouteImport } from './routes/_authenticated/dashboard.faculty'
@@ -90,6 +93,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
   id: '/opportunities',
   path: '/opportunities',
@@ -110,6 +118,12 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAccessRoute = AuthenticatedAccessRouteImport.update({
   id: '/access',
   path: '/access',
@@ -196,6 +210,11 @@ const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
 const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
   id: '/resources/$slug',
   path: '/resources/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardIndexRoute =
@@ -341,10 +360,12 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -362,6 +383,7 @@ export interface FileRoutesByFullPath {
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/resources/': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -392,10 +414,12 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/access': typeof AuthenticatedAccessRoute
   '/accessibility': typeof AuthenticatedAccessibilityRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -413,6 +437,7 @@ export interface FileRoutesByTo {
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions': typeof CompetitionsIndexRoute
   '/resources': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -445,10 +470,12 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
+  '/mcp': typeof McpRoute
   '/opportunities': typeof OpportunitiesRoute
   '/register': typeof RegisterRoute
   '/roles': typeof RolesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/access': typeof AuthenticatedAccessRoute
   '/_authenticated/accessibility': typeof AuthenticatedAccessibilityRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
@@ -466,6 +493,7 @@ export interface FileRoutesById {
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/resources/': typeof ResourcesIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/_authenticated/dashboard/admin': typeof AuthenticatedDashboardAdminRoute
   '/_authenticated/dashboard/faculty': typeof AuthenticatedDashboardFacultyRoute
   '/_authenticated/dashboard/industry': typeof AuthenticatedDashboardIndustryRoute
@@ -498,10 +526,12 @@ export interface FileRouteTypes {
     | '/experience'
     | '/highest-paying-engineering-jobs'
     | '/login'
+    | '/mcp'
     | '/opportunities'
     | '/register'
     | '/roles'
     | '/sitemap.xml'
+    | '/.well-known/oauth-protected-resource'
     | '/access'
     | '/accessibility'
     | '/applications'
@@ -519,6 +549,7 @@ export interface FileRouteTypes {
     | '/resources/$slug'
     | '/competitions/'
     | '/resources/'
+    | '/.lovable/oauth/consent'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -549,10 +580,12 @@ export interface FileRouteTypes {
     | '/experience'
     | '/highest-paying-engineering-jobs'
     | '/login'
+    | '/mcp'
     | '/opportunities'
     | '/register'
     | '/roles'
     | '/sitemap.xml'
+    | '/.well-known/oauth-protected-resource'
     | '/access'
     | '/accessibility'
     | '/applications'
@@ -570,6 +603,7 @@ export interface FileRouteTypes {
     | '/resources/$slug'
     | '/competitions'
     | '/resources'
+    | '/.lovable/oauth/consent'
     | '/dashboard/admin'
     | '/dashboard/faculty'
     | '/dashboard/industry'
@@ -601,10 +635,12 @@ export interface FileRouteTypes {
     | '/experience'
     | '/highest-paying-engineering-jobs'
     | '/login'
+    | '/mcp'
     | '/opportunities'
     | '/register'
     | '/roles'
     | '/sitemap.xml'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/access'
     | '/_authenticated/accessibility'
     | '/_authenticated/applications'
@@ -622,6 +658,7 @@ export interface FileRouteTypes {
     | '/resources/$slug'
     | '/competitions/'
     | '/resources/'
+    | '/.lovable/oauth/consent'
     | '/_authenticated/dashboard/admin'
     | '/_authenticated/dashboard/faculty'
     | '/_authenticated/dashboard/industry'
@@ -654,14 +691,17 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   HighestPayingEngineeringJobsRoute: typeof HighestPayingEngineeringJobsRoute
   LoginRoute: typeof LoginRoute
+  McpRoute: typeof McpRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   RegisterRoute: typeof RegisterRoute
   RolesRoute: typeof RolesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
   ResourcesSlugRoute: typeof ResourcesSlugRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
   ResourcesIndexRoute: typeof ResourcesIndexRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicHooksCrawlResourcesRoute: typeof ApiPublicHooksCrawlResourcesRoute
 }
 
@@ -709,6 +749,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/opportunities': {
       id: '/opportunities'
       path: '/opportunities'
@@ -735,6 +782,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/access': {
@@ -854,6 +908,13 @@ declare module '@tanstack/react-router' {
       path: '/resources/$slug'
       fullPath: '/resources/$slug'
       preLoaderRoute: typeof ResourcesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
@@ -1111,14 +1172,18 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   HighestPayingEngineeringJobsRoute: HighestPayingEngineeringJobsRoute,
   LoginRoute: LoginRoute,
+  McpRoute: McpRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   RegisterRoute: RegisterRoute,
   RolesRoute: RolesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
   ResourcesSlugRoute: ResourcesSlugRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,
   ResourcesIndexRoute: ResourcesIndexRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicHooksCrawlResourcesRoute: ApiPublicHooksCrawlResourcesRoute,
 }
 export const routeTree = rootRouteImport
