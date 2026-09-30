@@ -28,7 +28,7 @@ function GoogleMark() {
   );
 }
 
-export function GoogleSignInButton({ label = "Continue with Google", next }: { label?: string; next?: string }) {
+export function GoogleSignInButton({ label = "Continue with Google", next }: { label?: string; next?: string | undefined }) {
   const [pending, setPending] = useState(false);
 
   async function handleGoogle() {

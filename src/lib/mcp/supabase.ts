@@ -25,7 +25,7 @@ export function supabaseForUser(ctx: TokenCtx) {
 export function userIdFrom(ctx: TokenCtx): string {
   const token = ctx.getToken() ?? "";
   try {
-    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    const payload = JSON.parse(atob((token.split(".")[1] ?? "").replace(/-/g, "+").replace(/_/g, "/")));
     if (typeof payload.sub === "string") return payload.sub;
   } catch {
     /* fall through */

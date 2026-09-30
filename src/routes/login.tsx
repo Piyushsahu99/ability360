@@ -25,7 +25,7 @@ import { dashboardPathByRole, meQueryOptions, signInSchema, type SignInValues } 
 export const Route = createFileRoute("/login")({
   staticData: { sitemap: false },
   validateSearch: (search: Record<string, unknown>): { next?: string } => {
-    const next = typeof search.next === "string" ? search.next : undefined;
+    const next = typeof search["next"] === "string" ? search["next"] : undefined;
     return next && next.startsWith("/") && !next.startsWith("//") ? { next } : {};
   },
   head: () => ({
