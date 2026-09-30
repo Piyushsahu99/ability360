@@ -24,6 +24,10 @@ import { dashboardPathByRole, meQueryOptions, signInSchema, type SignInValues } 
 
 export const Route = createFileRoute("/login")({
   staticData: { sitemap: false },
+  validateSearch: (search: Record<string, unknown>): { next?: string } => {
+    const next = typeof search.next === "string" ? search.next : undefined;
+    return next && next.startsWith("/") && !next.startsWith("//") ? { next } : {};
+  },
   head: () => ({
     links: [{ rel: "canonical", href: "https://ability360.lovable.app/login" }],
     meta: [
@@ -41,6 +45,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const queryClient = useQueryClient();
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,6 +70,10 @@ function LoginPage() {
     const me = await queryClient.fetchQuery(meQueryOptions);
     setSubmitting(false);
     toast.success("Welcome back");
+    if (next) {
+      window.location.assign(next);
+      return;
+    }
     navigate({ to: me ? dashboardPathByRole[me.role] : "/opportunities" });
   }
 
@@ -129,7 +138,7 @@ function LoginPage() {
                 <span className="text-xs text-muted-foreground">or</span>
                 <span className="h-px flex-1 bg-border" />
               </div>
-              <GoogleSignInButton />
+              <GoogleSignInButton next={next} />
             </Form>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
