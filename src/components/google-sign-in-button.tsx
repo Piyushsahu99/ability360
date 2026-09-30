@@ -28,13 +28,13 @@ function GoogleMark() {
   );
 }
 
-export function GoogleSignInButton({ label = "Continue with Google" }: { label?: string }) {
+export function GoogleSignInButton({ label = "Continue with Google", next }: { label?: string; next?: string | undefined }) {
   const [pending, setPending] = useState(false);
 
   async function handleGoogle() {
     setPending(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: window.location.origin + (next ?? ""),
     });
     if (result.error) {
       setPending(false);

@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "sdk_version": "3.0.4",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://bioxtxwxtdgadtpdbsdt.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "ability-360",
+      "version": "0.1.0",
+      "title": "Ability 360"
+    },
+    "tools": [
+      {
+        "name": "search_opportunities",
+        "title": "Search opportunities",
+        "description": "Search published internships, jobs, training and research opportunities on ABILITY360 by keyword, type or work mode.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "maxLength": 100,
+              "description": "Keyword matched against title, organisation or location"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "internship",
+                "job",
+                "project",
+                "training",
+                "apprenticeship",
+                "challenge",
+                "mentorship"
+              ]
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "onsite",
+                "remote",
+                "hybrid"
+              ]
+            },
+            "inclusive_only": {
+              "type": "boolean",
+              "description": "Only employers that publish accommodations"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_career_roles",
+        "title": "List career roles",
+        "description": "List career roles on ABILITY360 with salary ranges in LPA (Indian rupees), key skills and demand. Optionally filter by course or keyword.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "course": {
+              "type": "string",
+              "maxLength": 60,
+              "description": "e.g. B.Tech, BCA, MBA"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_applications",
+        "title": "List my applications",
+        "description": "List the signed-in student's saved and submitted applications with their current status.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_my_goals",
+        "title": "List my goals",
+        "description": "List the signed-in student's personal career goals, with status, priority and target dates.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
