@@ -5,7 +5,7 @@ import myApplications from "./tools/my-applications";
 import myGoals from "./tools/my-goals";
 import opportunities from "./tools/opportunities";
 
-const projectId = import.meta.env["VITE_SUPABASE_PROJECT_ID"] as string | undefined;
+const projectId = (import.meta.env["VITE_SUPABASE_PROJECT_ID"] as string | undefined) ?? "project-ref-unset";
 
 export default defineMcp({
   name: "ability-360",
