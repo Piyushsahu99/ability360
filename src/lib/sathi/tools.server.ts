@@ -3,7 +3,20 @@ import { z } from "zod";
 
 import type { SathiUser } from "./auth.server";
 
-const clean = (value: string) => value.replace(/[%,()*\\]/g, " ").replace(/\s+/g, " ").trim().slice(0, 80);
+const clean = (value: string) => value.replace(/[%,()*\\.:"']/g, " ").replace(/\s+/g, " ").trim().slice(0, 80);
+
+const STOP = new Set(["for", "the", "and", "with", "students", "student", "any", "open", "india", "scheme", "schemes"]);
+
+/** Match any meaningful word of the query in any of the columns (keeps searches forgiving). */
+function anyWord(query: string | null, columns: string[]) {
+  const words = clean(query ?? "")
+    .toLowerCase()
+    .split(" ")
+    .filter((w) => w.length >= 3 && !STOP.has(w))
+    .slice(0, 5);
+  if (!words.length) return null;
+  return words.flatMap((w) => columns.map((c) => `${c}.ilike.%${w}%`)).join(",");
+}
 
 /**
  * Read-only tools Sathi can use. Every query runs as the signed-in user,
@@ -33,8 +46,8 @@ export function buildSathiTools(user: SathiUser) {
         if (args.type) q = q.eq("type", args.type);
         if (args.mode) q = q.eq("mode", args.mode);
         if (args.inclusive_only) q = q.eq("is_inclusive_employer", true);
-        const t = args.query ? clean(args.query) : "";
-        if (t) q = q.or(`title.ilike.%${t}%,organisation.ilike.%${t}%,location.ilike.%${t}%`);
+        const filter = anyWord(args.query, ["title", "organisation", "location"]);
+        if (filter) q = q.or(filter);
         const { data, error } = await q;
         if (error) return { error: "Could not search opportunities right now." };
         return {
@@ -67,8 +80,8 @@ export function buildSathiTools(user: SathiUser) {
           .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
           .limit(8);
         if (args.category) q = q.ilike("category", `%${clean(args.category)}%`);
-        const t = args.query ? clean(args.query) : "";
-        if (t) q = q.or(`title.ilike.%${t}%,summary.ilike.%${t}%,organisation.ilike.%${t}%`);
+        const filter = anyWord(args.query, ["title", "summary", "eligibility"]);
+        if (filter) q = q.or(filter);
         const { data, error } = await q;
         if (error) return { error: "Could not search resources right now." };
         return {
