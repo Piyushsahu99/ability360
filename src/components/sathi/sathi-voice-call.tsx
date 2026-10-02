@@ -32,7 +32,7 @@ export function SathiVoiceCall() {
   }, []);
 
   const call = useLiveVoice({ onEvent: onEvent as never, getAccessToken: sathiAccessToken });
-  const active = call.status === "starting" || call.status === "connected" || call.status === "stopping";
+  const active = call.status === "connecting" || call.status === "connected" || call.status === "stopping";
 
   return (
     <div className="rounded-xl border bg-card p-4 sm:p-5">
@@ -74,7 +74,7 @@ export function SathiVoiceCall() {
       </div>
 
       <p className="mt-3 text-sm" role="status" aria-live="polite">
-        {call.status === "starting"
+        {call.status === "connecting"
           ? "Connecting…"
           : call.status === "connected"
             ? working
