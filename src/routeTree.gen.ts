@@ -61,6 +61,8 @@ import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authentica
 import { Route as AuthenticatedMockTestsIndexRouteImport } from './routes/_authenticated/mock-tests.index'
 import { Route as AuthenticatedMockTestsSlugRouteImport } from './routes/_authenticated/mock-tests.$slug'
 import { Route as AuthenticatedOrganiserCompetitionsRouteImport } from './routes/_authenticated/organiser.competitions'
+import { Route as ApiSathiChatRouteImport } from './routes/api/sathi/chat'
+import { Route as ApiSathiTranscribeRouteImport } from './routes/api/sathi/transcribe'
 import { Route as ApiPublicHooksCrawlResourcesRouteImport } from './routes/api/public/hooks/crawl-resources'
 
 const IndexRoute = IndexRouteImport.update({
@@ -347,6 +349,16 @@ const AuthenticatedOrganiserCompetitionsRoute =
     path: '/organiser/competitions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiSathiChatRoute = ApiSathiChatRouteImport.update({
+  id: '/api/sathi/chat',
+  path: '/api/sathi/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSathiTranscribeRoute = ApiSathiTranscribeRouteImport.update({
+  id: '/api/sathi/transcribe',
+  path: '/api/sathi/transcribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksCrawlResourcesRoute =
   ApiPublicHooksCrawlResourcesRouteImport.update({
     id: '/api/public/hooks/crawl-resources',
@@ -403,6 +415,8 @@ export interface FileRoutesByFullPath {
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/api/sathi/chat': typeof ApiSathiChatRoute
+  '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
   '/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
@@ -457,6 +471,8 @@ export interface FileRoutesByTo {
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/api/sathi/chat': typeof ApiSathiChatRoute
+  '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
   '/mock-tests': typeof AuthenticatedMockTestsIndexRoute
@@ -513,6 +529,8 @@ export interface FileRoutesById {
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/_authenticated/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/_authenticated/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/api/sathi/chat': typeof ApiSathiChatRoute
+  '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
   '/_authenticated/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
@@ -569,6 +587,8 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/mock-tests/$slug'
     | '/organiser/competitions'
+    | '/api/sathi/chat'
+    | '/api/sathi/transcribe'
     | '/dashboard/'
     | '/learn/'
     | '/mock-tests/'
@@ -623,6 +643,8 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/mock-tests/$slug'
     | '/organiser/competitions'
+    | '/api/sathi/chat'
+    | '/api/sathi/transcribe'
     | '/dashboard'
     | '/learn'
     | '/mock-tests'
@@ -678,6 +700,8 @@ export interface FileRouteTypes {
     | '/_authenticated/learn/$slug'
     | '/_authenticated/mock-tests/$slug'
     | '/_authenticated/organiser/competitions'
+    | '/api/sathi/chat'
+    | '/api/sathi/transcribe'
     | '/_authenticated/dashboard/'
     | '/_authenticated/learn/'
     | '/_authenticated/mock-tests/'
@@ -702,6 +726,8 @@ export interface RootRouteChildren {
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
   ResourcesIndexRoute: typeof ResourcesIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  ApiSathiChatRoute: typeof ApiSathiChatRoute
+  ApiSathiTranscribeRoute: typeof ApiSathiTranscribeRoute
   ApiPublicHooksCrawlResourcesRoute: typeof ApiPublicHooksCrawlResourcesRoute
 }
 
@@ -1071,6 +1097,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrganiserCompetitionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/sathi/chat': {
+      id: '/api/sathi/chat'
+      path: '/api/sathi/chat'
+      fullPath: '/api/sathi/chat'
+      preLoaderRoute: typeof ApiSathiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/sathi/transcribe': {
+      id: '/api/sathi/transcribe'
+      path: '/api/sathi/transcribe'
+      fullPath: '/api/sathi/transcribe'
+      preLoaderRoute: typeof ApiSathiTranscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/crawl-resources': {
       id: '/api/public/hooks/crawl-resources'
       path: '/api/public/hooks/crawl-resources'
@@ -1184,6 +1224,8 @@ const rootRouteChildren: RootRouteChildren = {
   CompetitionsIndexRoute: CompetitionsIndexRoute,
   ResourcesIndexRoute: ResourcesIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  ApiSathiChatRoute: ApiSathiChatRoute,
+  ApiSathiTranscribeRoute: ApiSathiTranscribeRoute,
   ApiPublicHooksCrawlResourcesRoute: ApiPublicHooksCrawlResourcesRoute,
 }
 export const routeTree = rootRouteImport
