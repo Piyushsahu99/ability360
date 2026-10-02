@@ -30,7 +30,7 @@ export function withSecurityHeaders(response: Response, request: Request): Respo
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+    "camera=(), microphone=(self), geolocation=(), payment=(), usb=(), interest-cohort=()",
   );
   headers.set("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
   headers.set("X-Permitted-Cross-Domain-Policies", "none");
