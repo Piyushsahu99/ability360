@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { stepCountIs, streamText, tool, type ModelMessage } from "ai";
+import { stepCountIs, streamText, type ModelMessage } from "ai";
 import process from "node:process";
 import { z } from "zod";
 
@@ -161,7 +161,7 @@ async function answerQuestion(
   correlation: { runID: string; sessionID: string | undefined; delegationID: string },
   signal: AbortSignal,
   consumeInput: () => void,
-  onPlan: (plan: ReturnType<typeof planStudySchedule>) => void,
+  _onPlan: (plan: ReturnType<typeof planStudySchedule>) => void,
 ) {
   signal.throwIfAborted();
   const provider = createOpenAI({
