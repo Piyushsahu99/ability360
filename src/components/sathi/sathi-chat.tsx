@@ -76,7 +76,7 @@ function SathiChatInner({ threadId, initialMessages }: { threadId: string; initi
           return token ? { Authorization: `Bearer ${token}` } : {};
         },
         prepareSendMessagesRequest: ({ messages, headers }) => ({
-          headers,
+          ...(headers ? { headers } : {}),
           body: { threadId, message: messages[messages.length - 1] },
         }),
       }),
@@ -186,7 +186,11 @@ function SathiChatInner({ threadId, initialMessages }: { threadId: string; initi
                       const name = part.type.replace(/^tool-/, "");
                       return (
                         <Tool key={i} defaultOpen={false}>
-                          <ToolHeader type={part.type} state={part.state} title={TOOL_LABELS[name] ?? name} />
+                          {part.type === "dynamic-tool" ? (
+                            <ToolHeader type={part.type} state={part.state} toolName={part.toolName} title={part.toolName} />
+                          ) : (
+                            <ToolHeader type={part.type} state={part.state} title={TOOL_LABELS[name] ?? name} />
+                          )}
                           <ToolContent>
                             <ToolInput input={part.input} />
                             <ToolOutput output={part.output} errorText={part.errorText} />
