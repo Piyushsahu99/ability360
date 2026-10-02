@@ -20,6 +20,7 @@ import {
   Trophy,
   UserRound,
   ShieldCheck,
+  MessageCircleHeart,
 } from "lucide-react";
 
 import type { NavItem } from "@/components/dashboard-shell";
@@ -27,6 +28,7 @@ import type { AppRole } from "@/lib/auth";
 
 const studentItems: NavItem[] = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard/student" },
+  { label: "Ask Sathi", icon: MessageCircleHeart, to: "/sathi" },
   { label: "My journey", icon: Activity, to: "/journey" },
   { label: "Student DNA", icon: UserRound, to: "/dna" },
   { label: "Career roles", icon: Compass, to: "/roles" },
@@ -52,6 +54,7 @@ export function studentNav(activePath: string): NavItem[] {
 
 const employerItems: NavItem[] = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard/industry" },
+  { label: "Ask Sathi", icon: MessageCircleHeart, to: "/sathi" },
   { label: "Company profile", icon: Building2, to: "/employer/company" },
   { label: "Opportunities", icon: ClipboardList, to: "/employer/opportunities" },
   { label: "Applicants", icon: Users, to: "/employer/applicants" },
@@ -70,6 +73,7 @@ export function employerNav(activePath: string): NavItem[] {
 
 const institutionItems: NavItem[] = [
   { label: "Overview", icon: LayoutDashboard, to: "/dashboard/institution" },
+  { label: "Ask Sathi", icon: MessageCircleHeart, to: "/sathi" },
   { label: "Students", icon: GraduationCap, to: "/institution/students" },
   { label: "Cohorts", icon: Users, to: "/institution/cohorts" },
   { label: "Outcomes", icon: LineChart, to: "/institution/outcomes" },
