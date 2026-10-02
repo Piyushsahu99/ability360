@@ -66,8 +66,8 @@ function SathiLayout() {
       subtitle="Your companion for opportunities, scholarships and career questions — type or talk."
       nav={navForRole(role, "/sathi")}
     >
-      <div className="grid gap-4 lg:grid-cols-[240px_1fr]">
-        <aside className="space-y-2" aria-label="Your Sathi chats">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[240px_1fr]">
+        <aside className="min-w-0 space-y-2" aria-label="Your Sathi chats">
           <Button onClick={() => void newChat()} className="min-h-11 w-full justify-start">
             <MessageSquarePlus className="mr-2 h-4 w-4" aria-hidden /> New chat
           </Button>
