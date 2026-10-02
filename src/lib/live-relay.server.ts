@@ -3,16 +3,26 @@ import { stepCountIs, streamText, tool, type ModelMessage } from "ai";
 import process from "node:process";
 import { z } from "zod";
 
+import { verifySathiToken, type SathiUser } from "./sathi/auth.server";
+import { buildSathiTools, SATHI_SYSTEM } from "./sathi/tools.server";
+
 export type LiveConfig = {
   baseURL: string;
   key: string;
   liveModel: string;
   backendModel: string;
   openingInstructions?: string;
+  user?: SathiUser;
 };
 
 // Fill from co-loaded knowledge: the gateway URL, the Live model and the resolved chat model.
-const liveSettings = { baseURL: "", liveModel: "", backendModel: "" };
+const liveSettings = {
+  baseURL: "https://ai.gateway.lovable.dev/v1",
+  liveModel: "openai/gpt-live-1",
+  backendModel: "openai/gpt-6-astra",
+  openingInstructions:
+    "Greet the student warmly as Sathi from ABILITY360 in one short sentence, in simple English with a little Hindi warmth, ask what they are looking for today, then listen.",
+};
 
 export type LiveSocket = {
   readonly readyState: number;
@@ -111,16 +121,15 @@ export function handleLiveRequest(request: Request): Response {
   return new Response(null, response);
 }
 
-const conversationInstructions = `You are Mira, a calm learning companion.
-Speak naturally in brief replies. Ask a focused question when details are unclear.
-Backchannel policy: Use moderate listening sounds without taking over.
-Interruption policy: Stop your answer and listen when the user interrupts.
+const conversationInstructions = `You are Sathi, the friendly voice companion of ABILITY360, an Indian career platform for college students, including Divyangjan.
+Speak naturally in brief, simple replies. Reply in the language the student speaks (English, Hindi, Hinglish or another Indian language).
+Backchannel policy: Use light listening sounds without taking over.
+Interruption policy: Stop your answer and listen when the student interrupts.
 Delegation policy:
-Backend tools: Reason through questions and plan study sessions across days.
-Delegate to the backend when: The user wants a study schedule or careful reasoning,
-or a correction changes a question already being worked on.
-Do not delegate to the backend when: Greeting, clarifying a question, or repeating
-a still-current answer. Wait for the backend result before presenting its answer.`;
+Backend tools: Search ABILITY360 opportunities, scholarships, schemes, programs, events, career roles and salaries, and read the student's own applications and goals.
+Delegate to the backend when: The student asks about any of those, or corrects a request already being worked on.
+Do not delegate to the backend when: Greeting, clarifying, small talk, or repeating a still-current answer. Wait for the backend result before presenting it.
+Never invent opportunities, amounts or deadlines. Never ask for a medical diagnosis. You can only read information, never apply or change anything.`;
 
 const studyScheduleInput = z
   .object({
@@ -200,26 +209,11 @@ async function answerQuestion(
       },
     },
     system:
-      "Help a spoken learning companion answer the latest user question. " +
-      "Transcripts may be incomplete or corrected. Use the latest correction. " +
-      "Continue from completed tool results; do not repeat completed actions. " +
-      "Return verified facts and useful next steps in at most 150 words. " +
-      "To display a study schedule for the current request, call plan_study_schedule with its total minutes and days. " +
-      "Ask for missing details instead of guessing. The tool only calculates a draft plan; " +
-      "it does not save calendar events. You have no other tools.",
+      SATHI_SYSTEM +
+      "\nYou are answering for a spoken voice call: transcripts may be incomplete or corrected, so use the latest correction. " +
+      "Continue from completed tool results; do not repeat them. Answer in at most 120 words of plain speakable text with no markdown, links or tables; name the page to open instead.",
     messages,
-    tools: {
-      plan_study_schedule: tool({
-        description: "Distribute a total study time evenly across days and return a draft schedule.",
-        inputSchema: studyScheduleInput,
-        execute: async (args) => {
-          signal.throwIfAborted();
-          const plan = planStudySchedule(args);
-          onPlan(plan);
-          return plan;
-        },
-      }),
-    },
+    tools: config.user ? buildSathiTools(config.user) : {},
   });
   let completed = false;
   let stepCompleted = false;
@@ -615,8 +609,16 @@ export function bindLiveConnection(
           throw new Error("Voice startup message required");
         }
         starting = true;
+        const sdp: string = event.sdp;
+        const accessToken: unknown = event.access_token;
         execution.waitUntil(
-          startSession(event.sdp).catch((error) => {
+          verifySathiToken(typeof accessToken === "string" ? accessToken : null)
+            .then((user) => {
+              if (!user) throw new Error("Please sign in to talk with Sathi.");
+              config.user = user;
+              return startSession(sdp);
+            })
+            .catch((error) => {
             if (!closing)
               emit({
                 type: "app.error",
