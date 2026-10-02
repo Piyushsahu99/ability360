@@ -34,6 +34,7 @@ import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPracticeRouteImport } from './routes/_authenticated/practice'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
+import { Route as AuthenticatedSathiRouteImport } from './routes/_authenticated/sathi'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
 import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
@@ -61,6 +62,8 @@ import { Route as AuthenticatedLearnSlugRouteImport } from './routes/_authentica
 import { Route as AuthenticatedMockTestsIndexRouteImport } from './routes/_authenticated/mock-tests.index'
 import { Route as AuthenticatedMockTestsSlugRouteImport } from './routes/_authenticated/mock-tests.$slug'
 import { Route as AuthenticatedOrganiserCompetitionsRouteImport } from './routes/_authenticated/organiser.competitions'
+import { Route as AuthenticatedSathiIndexRouteImport } from './routes/_authenticated/sathi.index'
+import { Route as AuthenticatedSathiThreadIdRouteImport } from './routes/_authenticated/sathi.$threadId'
 import { Route as ApiSathiChatRouteImport } from './routes/api/sathi/chat'
 import { Route as ApiSathiTranscribeRouteImport } from './routes/api/sathi/transcribe'
 import { Route as ApiPublicHooksCrawlResourcesRouteImport } from './routes/api/public/hooks/crawl-resources'
@@ -191,6 +194,11 @@ const AuthenticatedPracticeRoute = AuthenticatedPracticeRouteImport.update({
 const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
   id: '/roadmap',
   path: '/roadmap',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSathiRoute = AuthenticatedSathiRouteImport.update({
+  id: '/sathi',
+  path: '/sathi',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const CompetitionsIndexRoute = CompetitionsIndexRouteImport.update({
@@ -349,6 +357,17 @@ const AuthenticatedOrganiserCompetitionsRoute =
     path: '/organiser/competitions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSathiIndexRoute = AuthenticatedSathiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedSathiRoute,
+} as any)
+const AuthenticatedSathiThreadIdRoute =
+  AuthenticatedSathiThreadIdRouteImport.update({
+    id: '/$threadId',
+    path: '/$threadId',
+    getParentRoute: () => AuthenticatedSathiRoute,
+  } as any)
 const ApiSathiChatRoute = ApiSathiChatRouteImport.update({
   id: '/api/sathi/chat',
   path: '/api/sathi/chat',
@@ -391,6 +410,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/practice': typeof AuthenticatedPracticeRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
+  '/sathi': typeof AuthenticatedSathiRouteWithChildren
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
@@ -415,11 +435,13 @@ export interface FileRoutesByFullPath {
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/sathi/$threadId': typeof AuthenticatedSathiThreadIdRoute
   '/api/sathi/chat': typeof ApiSathiChatRoute
   '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/learn/': typeof AuthenticatedLearnIndexRoute
   '/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
+  '/sathi/': typeof AuthenticatedSathiIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesByTo {
@@ -471,11 +493,13 @@ export interface FileRoutesByTo {
   '/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/sathi/$threadId': typeof AuthenticatedSathiThreadIdRoute
   '/api/sathi/chat': typeof ApiSathiChatRoute
   '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/learn': typeof AuthenticatedLearnIndexRoute
   '/mock-tests': typeof AuthenticatedMockTestsIndexRoute
+  '/sathi': typeof AuthenticatedSathiIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRoutesById {
@@ -505,6 +529,7 @@ export interface FileRoutesById {
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/practice': typeof AuthenticatedPracticeRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
+  '/_authenticated/sathi': typeof AuthenticatedSathiRouteWithChildren
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
@@ -529,11 +554,13 @@ export interface FileRoutesById {
   '/_authenticated/learn/$slug': typeof AuthenticatedLearnSlugRoute
   '/_authenticated/mock-tests/$slug': typeof AuthenticatedMockTestsSlugRoute
   '/_authenticated/organiser/competitions': typeof AuthenticatedOrganiserCompetitionsRoute
+  '/_authenticated/sathi/$threadId': typeof AuthenticatedSathiThreadIdRoute
   '/api/sathi/chat': typeof ApiSathiChatRoute
   '/api/sathi/transcribe': typeof ApiSathiTranscribeRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/learn/': typeof AuthenticatedLearnIndexRoute
   '/_authenticated/mock-tests/': typeof AuthenticatedMockTestsIndexRoute
+  '/_authenticated/sathi/': typeof AuthenticatedSathiIndexRoute
   '/api/public/hooks/crawl-resources': typeof ApiPublicHooksCrawlResourcesRoute
 }
 export interface FileRouteTypes {
@@ -563,6 +590,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/practice'
     | '/roadmap'
+    | '/sathi'
     | '/competitions/$competitionId'
     | '/resources/$slug'
     | '/competitions/'
@@ -587,11 +615,13 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/mock-tests/$slug'
     | '/organiser/competitions'
+    | '/sathi/$threadId'
     | '/api/sathi/chat'
     | '/api/sathi/transcribe'
     | '/dashboard/'
     | '/learn/'
     | '/mock-tests/'
+    | '/sathi/'
     | '/api/public/hooks/crawl-resources'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -643,11 +673,13 @@ export interface FileRouteTypes {
     | '/learn/$slug'
     | '/mock-tests/$slug'
     | '/organiser/competitions'
+    | '/sathi/$threadId'
     | '/api/sathi/chat'
     | '/api/sathi/transcribe'
     | '/dashboard'
     | '/learn'
     | '/mock-tests'
+    | '/sathi'
     | '/api/public/hooks/crawl-resources'
   id:
     | '__root__'
@@ -676,6 +708,7 @@ export interface FileRouteTypes {
     | '/_authenticated/onboarding'
     | '/_authenticated/practice'
     | '/_authenticated/roadmap'
+    | '/_authenticated/sathi'
     | '/competitions/$competitionId'
     | '/resources/$slug'
     | '/competitions/'
@@ -700,11 +733,13 @@ export interface FileRouteTypes {
     | '/_authenticated/learn/$slug'
     | '/_authenticated/mock-tests/$slug'
     | '/_authenticated/organiser/competitions'
+    | '/_authenticated/sathi/$threadId'
     | '/api/sathi/chat'
     | '/api/sathi/transcribe'
     | '/_authenticated/dashboard/'
     | '/_authenticated/learn/'
     | '/_authenticated/mock-tests/'
+    | '/_authenticated/sathi/'
     | '/api/public/hooks/crawl-resources'
   fileRoutesById: FileRoutesById
 }
@@ -908,6 +943,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sathi': {
+      id: '/_authenticated/sathi'
+      path: '/sathi'
+      fullPath: '/sathi'
+      preLoaderRoute: typeof AuthenticatedSathiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/competitions/': {
       id: '/competitions/'
       path: '/competitions'
@@ -1097,6 +1139,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrganiserCompetitionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sathi/': {
+      id: '/_authenticated/sathi/'
+      path: '/'
+      fullPath: '/sathi/'
+      preLoaderRoute: typeof AuthenticatedSathiIndexRouteImport
+      parentRoute: typeof AuthenticatedSathiRoute
+    }
+    '/_authenticated/sathi/$threadId': {
+      id: '/_authenticated/sathi/$threadId'
+      path: '/$threadId'
+      fullPath: '/sathi/$threadId'
+      preLoaderRoute: typeof AuthenticatedSathiThreadIdRouteImport
+      parentRoute: typeof AuthenticatedSathiRoute
+    }
     '/api/sathi/chat': {
       id: '/api/sathi/chat'
       path: '/api/sathi/chat'
@@ -1121,6 +1177,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedSathiRouteChildren {
+  AuthenticatedSathiThreadIdRoute: typeof AuthenticatedSathiThreadIdRoute
+  AuthenticatedSathiIndexRoute: typeof AuthenticatedSathiIndexRoute
+}
+
+const AuthenticatedSathiRouteChildren: AuthenticatedSathiRouteChildren = {
+  AuthenticatedSathiThreadIdRoute: AuthenticatedSathiThreadIdRoute,
+  AuthenticatedSathiIndexRoute: AuthenticatedSathiIndexRoute,
+}
+
+const AuthenticatedSathiRouteWithChildren =
+  AuthenticatedSathiRoute._addFileChildren(AuthenticatedSathiRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccessRoute: typeof AuthenticatedAccessRoute
   AuthenticatedAccessibilityRoute: typeof AuthenticatedAccessibilityRoute
@@ -1135,6 +1204,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPracticeRoute: typeof AuthenticatedPracticeRoute
   AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
+  AuthenticatedSathiRoute: typeof AuthenticatedSathiRouteWithChildren
   AuthenticatedDashboardAdminRoute: typeof AuthenticatedDashboardAdminRoute
   AuthenticatedDashboardFacultyRoute: typeof AuthenticatedDashboardFacultyRoute
   AuthenticatedDashboardIndustryRoute: typeof AuthenticatedDashboardIndustryRoute
@@ -1173,6 +1243,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPracticeRoute: AuthenticatedPracticeRoute,
   AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
+  AuthenticatedSathiRoute: AuthenticatedSathiRouteWithChildren,
   AuthenticatedDashboardAdminRoute: AuthenticatedDashboardAdminRoute,
   AuthenticatedDashboardFacultyRoute: AuthenticatedDashboardFacultyRoute,
   AuthenticatedDashboardIndustryRoute: AuthenticatedDashboardIndustryRoute,
