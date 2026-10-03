@@ -141,11 +141,7 @@ function SathiChatInner({ threadId, initialMessages }: { threadId: string; initi
       <Conversation className="min-w-0 flex-1">
         <ConversationContent className="gap-6">
           {messages.length === 0 ? (
-            <ConversationEmptyState
-              icon={<img src={sathiMark} alt="" width={64} height={64} className="h-16 w-16" />}
-              title="Namaste! I'm Sathi."
-              description="Ask me about internships, jobs, scholarships, government schemes, career roles or your own applications. You can type or speak."
-            >
+            <ConversationEmptyState className="min-w-0">
               <div className="mt-2 flex w-full min-w-0 flex-col items-center gap-3">
                 <img src={sathiMark} alt="" width={64} height={64} className="h-16 w-16" />
                 <h2 className="text-lg font-semibold">Namaste! I'm Sathi.</h2>
