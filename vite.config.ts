@@ -17,5 +17,17 @@ export default defineConfig({
   },
   vite: {
     plugins: [mcpPlugin(), liveVoiceDev()],
+    define: {
+      // Publishable (anon) Supabase settings — safe to ship to browsers. The
+      // publish build environment does not inject these, so pin them here with
+      // process.env fallbacks for environments that do provide them.
+      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
+        process.env["VITE_SUPABASE_URL"] ?? "https://bioxtxwxtdgadtpdbsdt.supabase.co",
+      ),
+      "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(
+        process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ??
+          "sb_publishable_UTcNlG4JTKDdJiCA1XwDJg_sG90Htl7",
+      ),
+    },
   },
 });
