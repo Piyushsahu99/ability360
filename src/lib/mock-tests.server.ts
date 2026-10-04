@@ -9,6 +9,15 @@ export async function gradeMockTest(
 ) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+  const { data: test, error: testError } = await supabaseAdmin
+    .from("mock_tests")
+    .select("id")
+    .eq("id", testId)
+    .eq("is_published", true)
+    .maybeSingle();
+  if (testError) throw testError;
+  if (!test) throw new Error("This test is not available.");
+
   const { data: questions, error } = await supabaseAdmin
     .from("mock_test_questions")
     .select("id, position, topic, prompt, options, correct_index, explanation")
