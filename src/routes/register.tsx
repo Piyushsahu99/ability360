@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { Building2, GraduationCap, Loader2, School } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,7 +10,6 @@ import { EmailTakenDialog } from "@/components/email-taken-dialog";
 import { GoogleSignInButton } from "@/components/google-sign-in-button";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { checkEmailRegistered } from "@/lib/auth.functions";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -71,7 +69,6 @@ function RegisterPage() {
   const [submitting, setSubmitting] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
   const [takenEmail, setTakenEmail] = useState<string | null>(null);
-  const checkRegistered = useServerFn(checkEmailRegistered);
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
@@ -86,19 +83,6 @@ function RegisterPage() {
   async function onSubmit(values: SignUpValues) {
     setSubmitting(true);
     const email = values.email.trim().toLowerCase();
-
-    /* The auth service intentionally returns a success-shaped response for an
-       existing address, so ask the server first and never claim a mail was sent. */
-    try {
-      const existing = await checkRegistered({ data: { email } });
-      if (existing.registered) {
-        setSubmitting(false);
-        setTakenEmail(email);
-        return;
-      }
-    } catch (error) {
-      console.error(error);
-    }
 
     const { data, error } = await supabase.auth.signUp({
       email,

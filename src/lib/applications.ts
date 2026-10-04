@@ -190,11 +190,22 @@ export async function addDocumentLink(input: {
   if (error) throw error;
 }
 
+export const ALLOWED_DOC_EXTENSIONS = ["pdf", "doc", "docx", "png", "jpg", "jpeg", "webp", "txt"];
+const MAX_DOC_BYTES = 10 * 1024 * 1024;
+
+/** Stages a student may set on their own application; later stages belong to the employer. */
+export const studentSettableStatuses = ["saved", "preparing", "applied", "rejected"] as const;
+
 export async function uploadDocument(input: {
   applicationId: string;
   kind: ApplicationDocumentKind;
   file: File;
 }) {
+  const ext = (input.file.name.split(".").pop() ?? "").toLowerCase();
+  if (!ALLOWED_DOC_EXTENSIONS.includes(ext)) {
+    throw new Error("Please upload a PDF, Word document, text file or image (PNG, JPG, WEBP).");
+  }
+  if (input.file.size > MAX_DOC_BYTES) throw new Error("Files must be 10 MB or smaller.");
   const studentId = await requireUserId();
   const safeName = input.file.name.replace(/[^\w.-]+/g, "-");
   const path = `${studentId}/${input.applicationId}/${Date.now()}-${safeName}`;
