@@ -2825,6 +2825,10 @@ export type Database = {
         Args: { _team: string; _user: string }
         Returns: boolean
       }
+      passport_shares: {
+        Args: { _key: string; _student: string }
+        Returns: boolean
+      }
       role_demand_overview: {
         Args: never
         Returns: {
