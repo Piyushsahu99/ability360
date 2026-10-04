@@ -49,6 +49,7 @@ import {
   statusHint,
   statusLabels,
   uploadDocument,
+  studentSettableStatuses,
   type ApplicationDocument,
   type ApplicationDocumentKind,
   type ApplicationStatus,
@@ -375,11 +376,17 @@ function ApplicationDetail({ application }: { application: ApplicationWithOpport
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {applicationStatuses.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {statusLabels[status]}
-                    </SelectItem>
-                  ))}
+                  {applicationStatuses
+                    .filter(
+                      (status) =>
+                        status === application.status ||
+                        (studentSettableStatuses as readonly string[]).includes(status),
+                    )
+                    .map((status) => (
+                      <SelectItem key={status} value={status}>
+                        {statusLabels[status]}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
@@ -554,6 +561,7 @@ function ApplicationDetail({ application }: { application: ApplicationWithOpport
                 id="doc-file"
                 ref={fileInput}
                 type="file"
+                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp,.txt"
                 className="mt-1.5"
                 onChange={(event) => {
                   const file = event.target.files?.[0];
