@@ -79,6 +79,22 @@ function ResourceDetailPage() {
 
           {data && (
             <article>
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Article",
+                    headline: data.title,
+                    description: data.summary,
+                    author: { "@type": "Organization", name: data.organisation || "ABILITY360" },
+                    publisher: { "@type": "Organization", name: "ABILITY360" },
+                    mainEntityOfPage: `https://ability360.lovable.app/resources/${slug}`,
+                    ...(data.updated_at ? { dateModified: data.updated_at } : {}),
+                    ...(data.created_at ? { datePublished: data.created_at } : {}),
+                  }),
+                }}
+              />
               <img
                 src={resourceImage(data)}
                 alt=""

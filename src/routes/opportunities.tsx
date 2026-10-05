@@ -104,6 +104,38 @@ function OpportunitiesPage() {
 
       <main className="flex-1 bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+          {results.slice(0, 20).map((item) => (
+            <script
+              key={`ld-${item.id}`}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "JobPosting",
+                  title: item.title,
+                  description: item.description.slice(0, 2000),
+                  datePosted: item.created_at,
+                  ...(item.deadline ? { validThrough: `${item.deadline}T23:59:59+05:30` } : {}),
+                  hiringOrganization: { "@type": "Organization", name: item.organisation },
+                  jobLocation: {
+                    "@type": "Place",
+                    address: { "@type": "PostalAddress", addressLocality: item.location, addressCountry: "IN" },
+                  },
+                  ...(item.mode === "remote" ? { jobLocationType: "TELECOMMUTE" } : {}),
+                  employmentType: item.type === "internship" ? "INTERN" : item.type === "job" ? "FULL_TIME" : "OTHER",
+                  ...(item.stipend
+                    ? {
+                        baseSalary: {
+                          "@type": "MonetaryAmount",
+                          currency: "INR",
+                          value: { "@type": "QuantitativeValue", value: item.stipend },
+                        },
+                      }
+                    : {}),
+                }),
+              }}
+            />
+          ))}
           <h1 className="text-2xl font-bold sm:text-4xl">Opportunities</h1>
           <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
             Internships, jobs, training programmes and research projects — matched to where you are in
