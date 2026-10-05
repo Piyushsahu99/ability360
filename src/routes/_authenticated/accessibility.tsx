@@ -25,6 +25,7 @@ import {
   interviewTips,
   prefFields,
   saveAccessibilityPrefs,
+  learningResources,
   supportResources,
   type AccessibilityPrefs,
 } from "@/lib/accessibility";
