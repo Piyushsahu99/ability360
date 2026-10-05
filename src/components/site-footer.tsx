@@ -16,6 +16,9 @@ export function SiteFooter() {
           <Link to="/opportunities" className="text-muted-foreground hover:text-foreground">
             Opportunities
           </Link>
+          <Link to="/government-jobs" className="text-muted-foreground hover:text-foreground">
+            Government jobs guide
+          </Link>
           <Link to="/register" className="text-muted-foreground hover:text-foreground">
             Create account
           </Link>

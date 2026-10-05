@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
 const SITE = "https://ability360.lovable.app";
-const STATIC = ["/", "/opportunities", "/roles", "/resources", "/competitions", "/community", "/experience", "/highest-paying-engineering-jobs"];
+const STATIC = ["/", "/opportunities", "/roles", "/resources", "/competitions", "/community", "/experience", "/highest-paying-engineering-jobs", "/government-jobs"];
 
 export const Route = createFileRoute("/sitemap.xml")({
   staticData: { sitemap: false },
