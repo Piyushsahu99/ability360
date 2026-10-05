@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ExperienceRouteImport } from './routes/experience'
+import { Route as GovernmentJobsRouteImport } from './routes/government-jobs'
 import { Route as HighestPayingEngineeringJobsRouteImport } from './routes/highest-paying-engineering-jobs'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as McpRouteImport } from './routes/mcp'
@@ -85,6 +86,11 @@ const CommunityRoute = CommunityRouteImport.update({
 const ExperienceRoute = ExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernmentJobsRoute = GovernmentJobsRouteImport.update({
+  id: '/government-jobs',
+  path: '/government-jobs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HighestPayingEngineeringJobsRoute =
@@ -389,6 +395,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/government-jobs': typeof GovernmentJobsRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -448,6 +455,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/government-jobs': typeof GovernmentJobsRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -508,6 +516,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/community': typeof CommunityRoute
   '/experience': typeof ExperienceRoute
+  '/government-jobs': typeof GovernmentJobsRoute
   '/highest-paying-engineering-jobs': typeof HighestPayingEngineeringJobsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -569,6 +578,7 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/experience'
+    | '/government-jobs'
     | '/highest-paying-engineering-jobs'
     | '/login'
     | '/mcp'
@@ -628,6 +638,7 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/experience'
+    | '/government-jobs'
     | '/highest-paying-engineering-jobs'
     | '/login'
     | '/mcp'
@@ -687,6 +698,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/community'
     | '/experience'
+    | '/government-jobs'
     | '/highest-paying-engineering-jobs'
     | '/login'
     | '/mcp'
@@ -748,6 +760,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   CommunityRoute: typeof CommunityRoute
   ExperienceRoute: typeof ExperienceRoute
+  GovernmentJobsRoute: typeof GovernmentJobsRoute
   HighestPayingEngineeringJobsRoute: typeof HighestPayingEngineeringJobsRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
@@ -794,6 +807,13 @@ declare module '@tanstack/react-router' {
       path: '/experience'
       fullPath: '/experience'
       preLoaderRoute: typeof ExperienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/government-jobs': {
+      id: '/government-jobs'
+      path: '/government-jobs'
+      fullPath: '/government-jobs'
+      preLoaderRoute: typeof GovernmentJobsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/highest-paying-engineering-jobs': {
@@ -1281,6 +1301,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   CommunityRoute: CommunityRoute,
   ExperienceRoute: ExperienceRoute,
+  GovernmentJobsRoute: GovernmentJobsRoute,
   HighestPayingEngineeringJobsRoute: HighestPayingEngineeringJobsRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
