@@ -79,6 +79,11 @@ function ResourcesPage() {
             Skilling programmes, scholarships, Divyangjan rights and schemes, national exams and
             practical career guidance — written for Indian college students.
           </p>
+          <p className="mt-2 text-sm">
+            <Link to="/government-jobs" className="font-medium text-primary hover:underline">
+              Read our guide to technical government jobs for engineering students →
+            </Link>
+          </p>
 
           <div className="mt-6 grid gap-3 rounded-3xl border border-border bg-card p-3 sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
             <div>
