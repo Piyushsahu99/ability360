@@ -244,6 +244,46 @@ export const supportResources = [
   },
 ] as const;
 
+/** Curated, always-available places to learn sign language and accessibility skills. */
+export const learningResources = [
+  {
+    title: "Learn Indian Sign Language (ISLRTC)",
+    body: "Free Indian Sign Language courses and an official ISL video dictionary from the Indian Sign Language Research and Training Centre.",
+    action: "Start learning on islrtc.nic.in",
+    href: "https://islrtc.nic.in/",
+  },
+  {
+    title: "ISLRTC YouTube channel",
+    body: "Free video lessons in Indian Sign Language — alphabets, everyday words and full conversations with captions.",
+    action: "Watch on YouTube",
+    href: "https://www.youtube.com/@ISLRTC",
+  },
+  {
+    title: "NISH online ISL courses",
+    body: "Structured online Indian Sign Language courses from the National Institute of Speech and Hearing, Kerala.",
+    action: "See NISH courses",
+    href: "https://nish.ac.in/",
+  },
+  {
+    title: "Enable India",
+    body: "Free employability and computer training for persons with disabilities, plus a large accessible-jobs network.",
+    action: "Visit Enable India",
+    href: "https://www.enableindia.org/",
+  },
+  {
+    title: "NVDA — free screen reader",
+    body: "A free, open-source screen reader for Windows so blind and low-vision students can study and work independently.",
+    action: "Download NVDA",
+    href: "https://www.nvaccess.org/",
+  },
+  {
+    title: "Digital accessibility skills (BarrierBreak)",
+    body: "Courses on accessibility testing and inclusive design — a growing, well-paid career path open to everyone.",
+    action: "Explore BarrierBreak Academy",
+    href: "https://www.barrierbreak.com/",
+  },
+] as const;
+
 export const interviewTips = [
   "Request accommodations in writing after the interview invite — scribe, interpreter, extra time or a remote round.",
   "Prepare a one-line description of how you work best, not a medical history. Disclosure is always your choice.",

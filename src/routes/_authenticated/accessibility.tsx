@@ -25,6 +25,7 @@ import {
   interviewTips,
   prefFields,
   saveAccessibilityPrefs,
+  learningResources,
   supportResources,
   type AccessibilityPrefs,
 } from "@/lib/accessibility";
@@ -230,6 +231,30 @@ function AccessibilityHub() {
                   ) : (
                     <p className="mt-1 text-xs font-medium text-primary">{resource.action}</p>
                   )}
+                </li>
+              ))}
+            </ul>
+          </PanelCard>
+
+          <PanelCard
+            title="Learn sign language & accessibility skills"
+            description="Free YouTube channels, websites and tools — always available."
+          >
+            <ul className="space-y-4">
+              {learningResources.map((resource) => (
+                <li key={resource.title}>
+                  <p className="text-sm font-medium">{resource.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{resource.body}</p>
+                  <a
+                    className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-primary underline underline-offset-4"
+                    href={resource.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {resource.action}
+                    <ExternalLink className="size-3" aria-hidden="true" />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
                 </li>
               ))}
             </ul>
