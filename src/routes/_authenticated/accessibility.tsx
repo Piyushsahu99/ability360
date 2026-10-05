@@ -235,6 +235,30 @@ function AccessibilityHub() {
             </ul>
           </PanelCard>
 
+          <PanelCard
+            title="Learn sign language & accessibility skills"
+            description="Free YouTube channels, websites and tools — always available."
+          >
+            <ul className="space-y-4">
+              {learningResources.map((resource) => (
+                <li key={resource.title}>
+                  <p className="text-sm font-medium">{resource.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{resource.body}</p>
+                  <a
+                    className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-primary underline underline-offset-4"
+                    href={resource.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {resource.action}
+                    <ExternalLink className="size-3" aria-hidden="true" />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </PanelCard>
+
           <PanelCard title="Interview & accommodation tips" description="Practical, disclosure-free guidance.">
             <ul className="space-y-3">
               {interviewTips.map((tip) => (
