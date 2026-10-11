@@ -122,7 +122,7 @@ function LandingPage() {
         <section className="home-hero relative isolate overflow-hidden border-b border-border">
           <img src={campusImage} alt="Indian college students collaborating on campus, including a student using a wheelchair" width={1536} height={1024} fetchPriority="high" className="home-hero-photo absolute inset-0 -z-20 h-full w-full object-cover" />
           <div className="home-hero-shade absolute inset-0 -z-10" aria-hidden="true" />
-          <div className="mx-auto w-full max-w-6xl px-5 pb-80 pt-10 sm:px-8 sm:pt-14 lg:pb-20 lg:pt-20">
+          <div className="mx-auto w-full max-w-6xl px-5 pb-56 pt-10 sm:px-8 sm:pt-14 lg:pb-20 lg:pt-20">
             <div className="max-w-xl lg:max-w-[31rem]">
               <p className="mb-5 flex items-center gap-2 text-sm font-semibold text-primary"><span className="h-0.5 w-7 bg-primary" aria-hidden="true" /> YOUR NEXT CHAPTER STARTS HERE</p>
               <h1 className="text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">ABILITY360<span className="mt-3 block text-3xl font-medium leading-tight sm:text-4xl lg:text-5xl">From first semester<br />to <span className="text-primary">first career.</span></span></h1>
