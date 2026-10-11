@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Accessibility,
+  BookOpen,
+  MessageCircle,
+  MoveUpRight,
   ArrowRight,
   Briefcase,
   Building2,
@@ -17,7 +20,7 @@ import {
 } from "lucide-react";
 
 import divyangjanImage from "@/assets/divyangjan-inclusion.jpg";
-import journeyHero from "@/assets/journey-hero.jpg";
+import campusImage from "@/assets/home-campus.jpg";
 import programsImage from "@/assets/res-programs.jpg";
 import scholarshipsImage from "@/assets/res-scholarships.jpg";
 import divyangjanResImage from "@/assets/res-divyangjan.jpg";
@@ -113,246 +116,70 @@ function LandingPage() {
   const dashboardPath = me ? dashboardPathByRole[me.role] : "/login";
 
   return (
-
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
-
       <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-24">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-32 left-1/2 size-[22rem] sm:size-[32rem] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]"
-          />
-          <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center text-center">
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              <span className="size-2 rounded-full bg-teal" aria-hidden="true" />
-              From first semester to first career
-            </span>
-
-            <h1 className="text-[2rem] leading-[1.12] text-foreground sm:text-6xl">
-              Your career journey,{" "}
-              <span className="bg-gradient-to-r from-primary via-teal to-primary bg-clip-text text-transparent">
-                one clear path.
-              </span>
-            </h1>
-
-            <p className="mt-4 max-w-lg text-base leading-relaxed sm:mt-6 sm:text-lg text-muted-foreground">
-              ABILITY360 is the career operating system for Indian college students — skills,
-              roles, roadmap, mentors and real opportunities in one inclusive place.
-            </p>
-
-            <div className="mt-7 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
-                <Link to={signedIn ? dashboardPath : "/register"}>
-                  {signedIn ? "Go to dashboard" : "Start for free"}
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="min-h-14 rounded-2xl px-8 text-base font-bold"
-              >
-                <Link to="/opportunities">View opportunities</Link>
-              </Button>
+        <section className="home-hero relative isolate overflow-hidden border-b border-border">
+          <img src={campusImage} alt="Indian college students collaborating on campus, including a student using a wheelchair" width={1536} height={1024} fetchPriority="high" className="home-hero-photo absolute inset-0 -z-20 h-full w-full object-cover" />
+          <div className="home-hero-shade absolute inset-0 -z-10" aria-hidden="true" />
+          <div className="mx-auto w-full max-w-6xl px-5 pb-56 pt-10 sm:px-8 sm:pt-14 lg:pb-20 lg:pt-20">
+            <div className="max-w-xl lg:max-w-[31rem]">
+              <p className="mb-5 flex items-center gap-2 text-sm font-semibold text-primary"><span className="h-0.5 w-7 bg-primary" aria-hidden="true" /> YOUR NEXT CHAPTER STARTS HERE</p>
+              <h1 className="text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">ABILITY360<span className="mt-3 block text-3xl font-medium leading-tight sm:text-4xl lg:text-5xl">From first semester<br />to <span className="text-primary">first career.</span></span></h1>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">Find your direction. Build your skills. Step into opportunities — with a career journey that’s truly yours.</p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="min-h-12 px-6"><Link to={signedIn ? dashboardPath : "/register"}>{signedIn ? "Open my workspace" : "Start my journey"}<ArrowRight aria-hidden="true" /></Link></Button>
+                <Button asChild size="lg" variant="outline" className="min-h-12 border-foreground/20 bg-background/90 px-6"><Link to="/opportunities">Explore opportunities</Link></Button>
+              </div>
+              <p className="mt-5 flex items-center gap-2 text-sm text-muted-foreground"><ShieldCheck className="size-4 shrink-0 text-primary" aria-hidden="true" />Built for every student. Inclusive by design.</p>
             </div>
-
-            <p className="mt-6 text-sm text-muted-foreground">
-              Already a member?{" "}
-              <Link to="/login" className="font-semibold text-teal underline-offset-4 hover:underline">
-                Sign in
-              </Link>
-            </p>
-
-            <img
-              src={journeyHero}
-              alt="Illustration of Indian college students, including students with disabilities, walking a rising path from campus to work"
-              width={1280}
-              height={800}
-              className="mt-8 w-full rounded-3xl border sm:mt-12 border-border object-cover shadow-sm"
-            />
           </div>
         </section>
 
-        {/* Journey — single column steps */}
-        <section aria-labelledby="journey-heading" className="px-5 py-10 sm:px-8 sm:py-12">
-          <div className="mx-auto w-full max-w-2xl">
-            <h2 id="journey-heading" className="text-center text-xl sm:text-3xl">
-              Six steps, start to placed
-            </h2>
-            <p className="mx-auto mt-3 max-w-md text-center text-muted-foreground">
-              Each step unlocks the next. You always know what to do this week.
-            </p>
+        <section aria-label="Explore your next step" className="border-b border-border bg-card">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 px-5 py-3 sm:grid-cols-3 sm:px-8 sm:py-6">
+            {[
+              { icon: Compass, title: "Find your direction", note: "Career roles & roadmaps", to: "/roles" },
+              { icon: Briefcase, title: "Find your opportunity", note: "Internships, jobs & projects", to: "/opportunities" },
+              { icon: BookOpen, title: "Find your support", note: "Scholarships & learning", to: "/resources" },
+            ].map((item) => <Button key={item.title} asChild variant="ghost" className="h-auto min-h-20 justify-start rounded-none px-3 py-4 sm:px-5"><Link to={item.to}><item.icon className="mr-2 size-6 shrink-0 text-primary" aria-hidden="true" /><span className="flex-1 whitespace-normal text-left"><span className="block text-base font-semibold">{item.title}</span><span className="mt-1 block text-sm font-normal text-muted-foreground">{item.note}</span></span><MoveUpRight className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" /></Link></Button>)}
+          </div>
+        </section>
 
-            <ol className="mt-10 space-y-4">
-              {journey.map((step, index) => (
-                <li
-                  key={step.title}
-                  className="group flex items-start gap-4 rounded-3xl border border-border bg-card p-5 text-left sm:gap-5 sm:p-6 transition-colors hover:bg-accent"
-                >
-                  <span
-                    className={
-                      step.tone === "primary"
-                        ? "flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/15 sm:size-12 text-primary transition-transform group-hover:scale-110"
-                        : "flex size-11 shrink-0 items-center justify-center rounded-full bg-teal/15 sm:size-12 text-teal transition-transform group-hover:scale-110"
-                    }
-                  >
-                    <step.icon className="size-6" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                      Step {index + 1}
-                    </p>
-                    <h3 className="mt-1 text-lg text-foreground">{step.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
-                  </div>
-                </li>
-              ))}
+        <section aria-labelledby="journey-heading" className="px-5 py-14 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div><p className="text-sm font-semibold text-primary">A LITTLE CLARITY. A LOT OF POSSIBILITY.</p><h2 id="journey-heading" className="mt-3 text-3xl sm:text-4xl">Your ambition, a clear path.</h2><p className="mt-3 max-w-lg text-muted-foreground">You don’t need to figure it all out today. Just take the next step.</p></div>
+              <Button asChild variant="outline" className="min-h-11 self-start sm:self-auto"><Link to={signedIn ? dashboardPath : "/register"}>Build my path<ArrowRight aria-hidden="true" /></Link></Button>
+            </div>
+            <ol className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+              {journey.map((step, index) => <li key={step.title} className="border-t border-border pt-5"><div className="flex items-center justify-between"><span className="font-display text-3xl font-medium text-primary/60">0{index + 1}</span><step.icon className="size-6 text-primary" aria-hidden="true" /></div><h3 className="mt-4 text-xl">{step.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p></li>)}
             </ol>
           </div>
         </section>
 
-        {/* Ecosystem */}
-        <section
-          aria-labelledby="pillars-heading"
-          className="border-y border-border bg-surface px-5 py-12 sm:px-8 sm:py-16"
-        >
-          <div className="mx-auto w-full max-w-2xl">
-            <h2 id="pillars-heading" className="text-center text-xl sm:text-3xl">
-              Five sides, one ecosystem
-            </h2>
-            <div className="mt-8 space-y-3">
-              {pillars.map((pillar) => (
-                <div
-                  key={pillar.title}
-                  className="flex items-center gap-4 rounded-2xl border border-border bg-background p-4 sm:p-5"
-                >
-                  <pillar.icon className="size-5 shrink-0 text-primary" aria-hidden="true" />
-                  <div>
-                    <h3 className="text-base text-foreground">{pillar.title}</h3>
-                    <p className="text-sm text-muted-foreground">{pillar.note}</p>
-                  </div>
-                </div>
-              ))}
+        <section aria-labelledby="inclusion-heading" className="border-y border-border bg-primary-soft px-5 py-14 sm:px-8 sm:py-16">
+          <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <img src={divyangjanImage} alt="Inclusive workplace with accessible desks, sign language and a braille display" loading="lazy" width={1280} height={800} className="aspect-[8/5] w-full rounded-lg object-cover" />
+            <div><p className="flex items-center gap-2 text-sm font-semibold text-primary"><Accessibility className="size-5" aria-hidden="true" /> ABILITY360 ACCESS</p><h2 id="inclusion-heading" className="mt-4 text-3xl leading-tight sm:text-4xl">Different needs.<br />Equal possibilities.</h2><p className="mt-4 leading-relaxed text-muted-foreground">A career belongs to everyone. Explore inclusive employers, personalised accessibility preferences, sign language learning and Divyangjan support.</p><p className="mt-4 text-sm font-medium">Your choices. Your privacy. Your pace.</p><div className="mt-6 flex flex-wrap gap-3"><Button asChild className="min-h-12"><Link to="/accessibility">Explore ACCESS<ArrowRight aria-hidden="true" /></Link></Button><Button asChild variant="outline" className="min-h-12 bg-background"><Link to="/resources">Schemes & resources</Link></Button></div></div>
+          </div>
+        </section>
+
+        <section aria-labelledby="resources-heading" className="px-5 py-14 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-sm font-semibold text-primary">MORE WAYS TO MOVE FORWARD</p><h2 id="resources-heading" className="mt-3 text-3xl sm:text-4xl">Good resources. Real possibilities.</h2><p className="mt-3 text-muted-foreground">Indian programmes, scholarships and guidance, all in one place.</p></div><Button asChild variant="ghost" className="min-h-11 self-start px-0 text-primary"><Link to="/resources">All resources<ArrowRight aria-hidden="true" /></Link></Button></div>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {resourceHighlights.map((item) => <Link key={item.title} to="/resources" className="group overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary"><div className="overflow-hidden"><img src={item.image} alt="" loading="lazy" width={1024} height={640} className="aspect-[8/5] w-full object-cover transition-transform duration-300 group-hover:scale-105" /></div><div className="p-5"><div className="flex items-start justify-between gap-2"><h3 className="text-lg">{item.title}</h3><MoveUpRight className="mt-1 size-4 shrink-0 text-primary" aria-hidden="true" /></div><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.note}</p></div></Link>)}
             </div>
           </div>
         </section>
 
-        {/* Inclusion */}
-        <section aria-labelledby="inclusion-heading" className="px-5 py-12 sm:px-8 sm:py-16">
-          <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-3xl border border-teal/30 bg-card text-center">
-            <img
-              src={divyangjanImage}
-              alt="Illustration of professionals with disabilities working with accessible desks, sign language and a braille display"
-              loading="lazy"
-              width={1280}
-              height={800}
-              className="h-52 w-full object-cover"
-            />
-            <div className="p-8">
-            <Accessibility className="mx-auto size-8 text-teal" aria-hidden="true" />
-            <h2 id="inclusion-heading" className="mt-4 text-2xl">
-              Built for every student, including Divyangjan
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-              Adjust contrast, motion, text size and reading comfort anywhere on the platform. Find
-              inclusive employers, accommodations and Indian support schemes. Sharing a disability
-              is always optional and never counts against you.
-            </p>
-            <div className="mt-6">
-              <Button asChild variant="outline" className="min-h-12 rounded-2xl px-6 font-bold">
-                <Link to="/opportunities">Browse inclusive opportunities</Link>
-              </Button>
-            </div>
-            <div className="mt-3">
-              <Button asChild variant="ghost" className="min-h-12 rounded-2xl px-6 font-bold">
-                <Link to="/resources">Divyangjan schemes and rights</Link>
-              </Button>
-            </div>
-            </div>
-          </div>
+        <section aria-labelledby="pillars-heading" className="border-y border-border bg-surface px-5 py-14 sm:px-8 sm:py-16">
+          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-sm font-semibold text-primary">CONNECTED FOR YOUR FUTURE</p><h2 id="pillars-heading" className="mt-3 text-3xl sm:text-4xl">One ecosystem. Shared progress.</h2></div><div className="mt-10 grid grid-cols-2 gap-7 sm:grid-cols-3 lg:grid-cols-5">{pillars.map((pillar) => <div key={pillar.title} className="text-center"><pillar.icon className="mx-auto size-7 text-primary" aria-hidden="true" /><h3 className="mt-4 text-lg">{pillar.title}</h3><p className="mt-2 text-sm text-muted-foreground">{pillar.note}</p></div>)}</div></div>
         </section>
 
-        {/* Resource library */}
-        <section aria-labelledby="resources-heading" className="border-t border-border bg-surface px-5 py-12 sm:px-8 sm:py-16">
-          <div className="mx-auto w-full max-w-2xl text-center">
-            <h2 id="resources-heading" className="text-xl sm:text-3xl">
-              Programmes, scholarships and guidance
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-              A growing library of Indian skilling programmes, scholarships, Divyangjan schemes,
-              national exams and practical career articles — searchable by state and category.
-            </p>
-            <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
-              {resourceHighlights.map((item) => (
-                <Link
-                  key={item.title}
-                  to="/resources"
-                  className="overflow-hidden rounded-3xl border border-border bg-background text-left transition-colors hover:border-primary/50"
-                >
-                  <img
-                    src={item.image}
-                    alt=""
-                    loading="lazy"
-                    width={1024}
-                    height={640}
-                    className="h-28 w-full object-cover sm:h-32"
-                  />
-                  <div className="p-5">
-                    <h3 className="text-base text-foreground">{item.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.note}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="mt-8">
-              <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
-                <Link to="/resources">
-                  Open the resource library
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Closing CTA */}
-        <section className="px-5 pb-16 text-center sm:px-8 sm:pb-24" aria-labelledby="cta-heading">
-          <div className="mx-auto w-full max-w-2xl">
-            <h2 id="cta-heading" className="text-2xl sm:text-4xl">
-              One account, the right workspace
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Sign in and ABILITY360 opens your space — student, employer, college or mentor.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" className="min-h-14 rounded-2xl px-8 text-base font-bold">
-                <Link to={signedIn ? dashboardPath : "/register"}>
-                  {signedIn ? "Go to your workspace" : "Create your account"}
-                  <ArrowRight aria-hidden="true" />
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="min-h-14 rounded-2xl px-8 text-base font-bold"
-              >
-                <Link to="/roles">Explore career roles</Link>
-              </Button>
-            </div>
-            <p className="mt-8 flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-muted-foreground">
-              <ShieldCheck className="size-4" aria-hidden="true" />
-              Accessibility-first · Inclusive of Divyangjan · WCAG 2.1 AA
-            </p>
-          </div>
-        </section>
+        <section aria-labelledby="cta-heading" className="px-5 py-14 sm:px-8 sm:py-20"><div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-7 lg:flex-row lg:items-center"><div><p className="flex items-center gap-2 text-sm font-semibold text-primary"><MessageCircle className="size-5" aria-hidden="true" /> YOU DON’T HAVE TO DO THIS ALONE</p><h2 id="cta-heading" className="mt-3 text-3xl sm:text-4xl">Your next chapter is waiting.</h2><p className="mt-3 max-w-xl text-muted-foreground">Find opportunities, set your goals, or ask Sathi for a little guidance.</p></div><div className="flex flex-wrap gap-3"><Button asChild size="lg" className="min-h-12"><Link to={signedIn ? dashboardPath : "/register"}>{signedIn ? "Go to my workspace" : "Get started"}<ArrowRight aria-hidden="true" /></Link></Button><Button asChild size="lg" variant="outline" className="min-h-12"><Link to="/sathi">Ask Sathi<MessageCircle aria-hidden="true" /></Link></Button></div></div></section>
       </main>
-
       <SiteFooter />
     </div>
   );
