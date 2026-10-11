@@ -9,3 +9,4 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 - Sathi assistant: chat streams through `/api/sathi/chat` and voice calls through `/api/live`; both verify the user's access token server-side and run all data tools as that user (RLS), and chat history is loaded from the database, never trusted from the browser — keeps the assistant read-only and private per user.
+- Home page presentation stays in the index route, uses bundled imagery and global semantic tokens, and links to existing workflows without changing their data or authentication.

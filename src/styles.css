@@ -108,6 +108,16 @@
   --sidebar-accent-foreground: oklch(0.97 0.008 90);
   --sidebar-border: oklch(0.4 0.025 195);
   --sidebar-ring: oklch(0.66 0.13 157);
+  --home-hero-shade: linear-gradient(90deg, var(--background) 0%, color-mix(in oklch, var(--background) 96%, transparent) 24%, color-mix(in oklch, var(--background) 75%, transparent) 40%, transparent 65%);
+  --home-hero-mobile-shade: linear-gradient(180deg, var(--background) 0%, color-mix(in oklch, var(--background) 97%, transparent) 35%, color-mix(in oklch, var(--background) 85%, transparent) 51%, transparent 74%);
+}
+
+.home-hero-shade { background: var(--home-hero-mobile-shade); }
+.home-hero-photo { object-position: 72% bottom; }
+@media (min-width: 1024px) {
+  .home-hero { min-height: 620px; }
+  .home-hero-shade { background: var(--home-hero-shade); }
+  .home-hero-photo { object-position: center 58%; }
 }
 
 @layer base {
