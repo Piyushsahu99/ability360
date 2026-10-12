@@ -136,8 +136,17 @@ function RegisterPage() {
         }}
       />
 
-      <main className="flex flex-1 items-center justify-center bg-surface px-4 py-14">
-        <Card className="w-full max-w-lg">
+      <main className="flex flex-1 items-center justify-center bg-surface px-4 py-14 sm:px-6">
+        <div className="grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[minmax(0,1fr)_32rem] lg:items-center">
+          <section className="max-w-xl">
+            <p className="text-sm font-semibold text-primary">A CAREER JOURNEY THAT ADAPTS TO YOU</p>
+            <h1 className="mt-4 text-4xl leading-tight sm:text-5xl">Start with where you are. Build towards where you want to go.</h1>
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">Bring your direction, skills, goals, applications, accessibility choices and verified evidence into one connected workspace.</p>
+            <ul className="mt-7 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-1">
+              {["Private accessibility choices", "Personal roadmap and goals", "Verified opportunities", "Ability Passport you control"].map((item) => <li key={item} className="flex items-center gap-2"><span className="size-2 rounded-full bg-primary" aria-hidden="true" />{item}</li>)}
+            </ul>
+          </section>
+          <Card className="w-full">
           <CardHeader>
             <CardTitle className="text-2xl">Create your account</CardTitle>
             <CardDescription>From first semester to first career — start here.</CardDescription>
@@ -288,7 +297,8 @@ function RegisterPage() {
               </Link>
             </p>
           </CardContent>
-        </Card>
+          </Card>
+        </div>
       </main>
       <SiteFooter />
     </div>

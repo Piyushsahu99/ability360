@@ -136,13 +136,15 @@ function OpportunitiesPage() {
               }}
             />
           ))}
-          <h1 className="text-2xl font-bold sm:text-4xl">Opportunities</h1>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Internships, jobs, training programmes and research projects — matched to where you are in
-            your course.
-          </p>
+          <div className="border-l-4 border-primary pl-4 sm:pl-5">
+            <p className="text-sm font-semibold text-primary">REAL OPENINGS. CLEAR DETAILS.</p>
+            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Opportunities</h1>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
+              Internships, jobs, training programmes and research projects — matched to where you are in your course.
+            </p>
+          </div>
 
-          <div className="mt-6 grid gap-3 rounded-2xl border border-border bg-card p-3 sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
+          <div className="mt-6 grid gap-3 rounded-lg border border-border bg-card p-3 shadow-sm sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
             <div>
               <Label htmlFor="opportunity-search" className="sr-only">
                 Search opportunities
@@ -201,7 +203,7 @@ function OpportunitiesPage() {
             </div>
           </div>
 
-          <div className="mt-3 grid gap-3 rounded-2xl border border-border bg-card p-3 sm:p-4 sm:grid-cols-2">
+          <div className="mt-3 grid gap-3 rounded-lg border border-border bg-card p-3 shadow-sm sm:p-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="filter-state">State or union territory</Label>
               <Select
@@ -242,7 +244,7 @@ function OpportunitiesPage() {
             </div>
           </div>
 
-          <div className="mt-3 flex items-start justify-between gap-3 rounded-xl border border-border bg-card p-4">
+          <div className="mt-3 flex items-start justify-between gap-3 rounded-lg border border-border bg-card p-4 shadow-sm">
             <div>
               <Label htmlFor="filter-inclusive" className="flex items-center gap-2 text-sm">
                 <Accessibility className="size-4 text-primary" aria-hidden="true" />

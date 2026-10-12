@@ -74,7 +74,7 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
 
   return (
     <div className="min-h-screen bg-surface">
-      <header className="sticky top-0 z-40 border-b border-border bg-background">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
         <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-6">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <Sheet open={open} onOpenChange={setOpen}>
@@ -124,8 +124,10 @@ export function DashboardShell({ role, title, subtitle, nav, children }: Props) 
         </aside>
 
         <main className="mx-auto min-w-0 max-w-5xl flex-1">
-          <h1 className="text-xl sm:text-3xl">{title}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+          <div className="border-l-4 border-primary pl-4 sm:pl-5">
+            <h1 className="text-2xl sm:text-3xl">{title}</h1>
+            <p className="mt-1 max-w-3xl text-sm text-muted-foreground sm:text-base">{subtitle}</p>
+          </div>
 
 
           {wrongRole && (

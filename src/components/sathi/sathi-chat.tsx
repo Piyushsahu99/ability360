@@ -51,15 +51,31 @@ function textOf(message: UIMessage) {
     .join("\n");
 }
 
-export function SathiChat({ threadId, initialMessages }: { threadId: string; initialMessages: UIMessage[] }) {
+export function SathiChat({
+  threadId,
+  initialMessages,
+  variant = "full",
+}: {
+  threadId: string;
+  initialMessages: UIMessage[];
+  variant?: "full" | "compact";
+}) {
   return (
     <PromptInputProvider>
-      <SathiChatInner threadId={threadId} initialMessages={initialMessages} />
+      <SathiChatInner threadId={threadId} initialMessages={initialMessages} variant={variant} />
     </PromptInputProvider>
   );
 }
 
-function SathiChatInner({ threadId, initialMessages }: { threadId: string; initialMessages: UIMessage[] }) {
+function SathiChatInner({
+  threadId,
+  initialMessages,
+  variant,
+}: {
+  threadId: string;
+  initialMessages: UIMessage[];
+  variant: "full" | "compact";
+}) {
   const queryClient = useQueryClient();
   const input = usePromptInputController();
   const [autoRead, setAutoRead] = useState(false);
@@ -137,7 +153,7 @@ function SathiChatInner({ threadId, initialMessages }: { threadId: string; initi
   }
 
   return (
-    <div className="flex h-[calc(100dvh-14rem)] min-h-[480px] flex-col">
+    <div className={variant === "compact" ? "flex h-[min(660px,72dvh)] min-h-[520px] flex-col" : "flex h-[calc(100dvh-14rem)] min-h-[480px] flex-col"}>
       <Conversation className="min-w-0 flex-1">
         <ConversationContent className="gap-6">
           {messages.length === 0 ? (
@@ -150,7 +166,7 @@ function SathiChatInner({ threadId, initialMessages }: { threadId: string; initi
                   applications. Type, or tap the microphone to speak.
                 </p>
                 <div className="mt-2 grid w-full max-w-xl gap-2 sm:grid-cols-2">
-                  {SUGGESTIONS.map(({ icon: Icon, text }) => (
+                  {SUGGESTIONS.slice(0, variant === "compact" ? 2 : SUGGESTIONS.length).map(({ icon: Icon, text }) => (
                     <Button
                       key={text}
                       variant="outline"

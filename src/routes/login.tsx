@@ -78,22 +78,22 @@ function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-foreground text-background">
+    <div className="min-h-screen bg-sidebar text-sidebar-foreground">
       <header className="mx-auto flex h-20 w-full max-w-6xl items-center px-4 sm:px-6">
-        <Link to="/" aria-label="ABILITY360 home"><Logo className="[&_span]:text-background" /></Link>
+        <Link to="/" aria-label="ABILITY360 home"><Logo className="[&_span]:text-sidebar-foreground" /></Link>
       </header>
       <main className="mx-auto grid min-h-[calc(100vh-5rem)] w-full max-w-6xl items-center gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_27rem] lg:py-12">
         <section className="max-w-xl">
-          <p className="font-semibold text-amber">From First Semester to First Career.</p>
-          <h1 className="mt-4 text-4xl leading-tight sm:text-5xl">Continue the journey you are building.</h1>
-          <p className="mt-5 max-w-lg text-lg text-background/75">Your goals, roadmap, applications and Ability Passport stay connected in one accessible workspace.</p>
-          <ol className="mt-8 space-y-5 border-l border-background/25 pl-6">
+          <p className="font-semibold text-amber">FROM FIRST SEMESTER TO FIRST CAREER</p>
+          <h1 className="mt-4 text-4xl leading-tight sm:text-5xl">Your direction, support and progress are waiting.</h1>
+          <p className="mt-5 max-w-lg text-lg text-sidebar-foreground/75">Return to your goals, roadmap, opportunities, accessibility choices and Ability Passport.</p>
+          <ol className="mt-8 space-y-5 border-l border-sidebar-foreground/25 pl-6">
             {["Know your next step", "Build evidence that matters", "Move towards the right opportunity"].map((item) => (
-              <li key={item} className="relative flex items-center gap-3 text-base"><CheckCircle2 className="absolute -left-[35px] size-5 rounded-full bg-foreground text-amber" aria-hidden="true" />{item}</li>
+               <li key={item} className="relative flex items-center gap-3 text-base"><CheckCircle2 className="absolute -left-[35px] size-5 rounded-full bg-sidebar text-amber" aria-hidden="true" />{item}</li>
             ))}
           </ol>
         </section>
-        <Card className="w-full border-background/20 bg-background/95 text-foreground shadow-2xl backdrop-blur">
+        <Card className="w-full border-sidebar-border bg-background text-foreground shadow-2xl">
           <div className="h-1.5 bg-primary" aria-hidden="true" />
           <CardHeader className="px-5 pb-4 pt-6 sm:px-7">
             <CardTitle className="text-3xl">Welcome back</CardTitle>
@@ -149,7 +149,7 @@ function LoginPage() {
             </p>
           </CardContent>
         </Card>
-        <p className="pb-6 text-center text-sm text-background/65 lg:col-span-2">Use the accessibility button to adjust text size, contrast, motion, focus and reading support.</p>
+        <p className="pb-6 text-center text-sm text-sidebar-foreground/65 lg:col-span-2">Use the accessibility button to adjust text size, contrast, motion, focus and reading support.</p>
       </main>
     </div>
   );

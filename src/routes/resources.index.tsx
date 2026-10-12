@@ -74,18 +74,20 @@ function ResourcesPage() {
 
       <main className="flex-1 bg-surface">
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-          <h1 className="text-2xl font-bold sm:text-4xl">Resources</h1>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
-            Skilling programmes, scholarships, Divyangjan rights and schemes, national exams and
-            practical career guidance — written for Indian college students.
-          </p>
-          <p className="mt-2 text-sm">
-            <Link to="/government-jobs" className="font-medium text-primary hover:underline">
-              Read our guide to technical government jobs for engineering students →
-            </Link>
-          </p>
+          <div className="border-l-4 border-primary pl-4 sm:pl-5">
+            <p className="text-sm font-semibold text-primary">OFFICIAL SUPPORT. PRACTICAL GUIDANCE.</p>
+            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Resources</h1>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base">
+              Skilling programmes, scholarships, Divyangjan rights and schemes, national exams and practical career guidance for Indian college students.
+            </p>
+            <p className="mt-2 text-sm">
+              <Link to="/government-jobs" className="font-medium text-primary hover:underline">
+                Read our guide to technical government jobs for engineering students →
+              </Link>
+            </p>
+          </div>
 
-          <div className="mt-6 grid gap-3 rounded-3xl border border-border bg-card p-3 sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
+          <div className="mt-6 grid gap-3 rounded-lg border border-border bg-card p-3 shadow-sm sm:mt-8 sm:p-4 sm:grid-cols-[1fr_auto_auto]">
             <div>
               <Label htmlFor="resource-search" className="sr-only">
                 Search resources
@@ -173,8 +175,8 @@ function ResourcesPage() {
           <div className="mt-4 grid gap-3 sm:gap-4 md:grid-cols-2">
             {isPending &&
               Array.from({ length: 4 }).map((_, index) => (
-                <Card key={index} className="rounded-3xl">
-                  <Skeleton className="h-36 w-full rounded-t-3xl sm:h-40" />
+                <Card key={index}>
+                  <Skeleton className="h-36 w-full rounded-t-lg sm:h-40" />
                   <CardHeader className="gap-3">
                     <Skeleton className="h-5 w-2/3" />
                     <Skeleton className="h-12 w-full" />
@@ -184,7 +186,7 @@ function ResourcesPage() {
 
             {!isPending &&
               results.map((item) => (
-                <Card key={item.id} className="flex flex-col overflow-hidden rounded-3xl transition-colors hover:border-primary/50">
+                <Card key={item.id} className="flex flex-col overflow-hidden transition-colors hover:border-primary/50">
                   <img
                     src={resourceImage(item)}
                     alt=""
@@ -258,7 +260,7 @@ function ResourcesPage() {
           </div>
 
           {!isPending && !isError && results.length === 0 && (
-            <div className="mt-6 rounded-3xl border border-dashed border-border bg-card p-10 text-center">
+            <div className="mt-6 rounded-lg border border-dashed border-border bg-card p-10 text-center">
               <p className="font-medium">No resources match those filters</p>
               <p className="mt-1 text-sm text-muted-foreground">Try another keyword, category or state.</p>
             </div>
