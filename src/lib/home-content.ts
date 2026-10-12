@@ -78,11 +78,18 @@ export const governmentPlatforms: GovernmentPlatform[] = [
     category: "Education & scholarships",
   },
   {
-    name: "National Handicapped Finance and Development Corporation",
-    shortName: "NHFDC",
+    name: "National Divyangjan Finance and Development Corporation",
+    shortName: "NDFDC",
     description: "Education loans, skill training and self-employment support.",
-    href: "https://www.nhfdc.nic.in/",
+    href: "https://www.ndfdc.nic.in/",
     category: "Education & scholarships",
+  },
+  {
+    name: "ADIP ARJUN Portal",
+    shortName: "ADIP",
+    description: "Apply for eligible aids and assistive appliances under the ADIP scheme.",
+    href: "https://adip.depwd.gov.in/",
+    category: "Assistive support",
   },
   {
     name: "National Career Service",
@@ -110,6 +117,13 @@ export const governmentPlatforms: GovernmentPlatform[] = [
     shortName: "ISLRTC",
     description: "Indian Sign Language learning, dictionaries and training.",
     href: "https://islrtc.nic.in/",
+    category: "Sign language & learning",
+  },
+  {
+    name: "National Institute for Empowerment of Persons with Visual Disabilities",
+    shortName: "NIEPVD",
+    description: "Education, rehabilitation, training and resources for visual disabilities.",
+    href: "https://niepvd.nic.in/",
     category: "Sign language & learning",
   },
 ];
