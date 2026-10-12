@@ -94,7 +94,7 @@ function HomePage() {
             className="home-hero-photo absolute inset-0 -z-20 h-full w-full object-cover"
           />
           <div className="home-hero-shade absolute inset-0 -z-10" aria-hidden="true" />
-          <div className="mx-auto w-full max-w-6xl px-5 pb-60 pt-10 sm:px-8 sm:pt-16 lg:pb-20 lg:pt-24">
+          <div className="mx-auto w-full max-w-6xl px-5 pb-48 pt-10 sm:px-8 sm:pb-56 sm:pt-16 lg:pb-20 lg:pt-24">
             <div className="max-w-2xl lg:max-w-[36rem]">
               <p className="flex items-center gap-2 text-sm font-semibold text-primary">
                 <span className="h-0.5 w-7 bg-primary" aria-hidden="true" />
