@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 
 import { selectPwdHighlights } from "@/lib/home-content";
 import type { Opportunity } from "@/lib/opportunities";
@@ -25,7 +26,7 @@ describe("selectPwdHighlights", () => {
       [{ ...baseResource, id: "active", expires_at: "2026-06-01T00:00:00Z" }],
       new Date("2026-04-01T00:00:00Z"),
     );
-    expect(results.map(({ item }) => item.id)).toEqual(["active"]);
+    assert.deepEqual(results.map(({ item }) => item.id), ["active"]);
   });
 
   test("orders dated listings by nearest deadline before rolling listings", () => {
@@ -37,6 +38,6 @@ describe("selectPwdHighlights", () => {
       [{ ...baseResource, id: "soon", expires_at: "2026-04-10T00:00:00Z" }],
       new Date("2026-04-01T00:00:00Z"),
     );
-    expect(results.map(({ item }) => item.id)).toEqual(["soon", "later", "rolling"]);
+    assert.deepEqual(results.map(({ item }) => item.id), ["soon", "later", "rolling"]);
   });
 });

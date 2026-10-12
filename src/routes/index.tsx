@@ -26,7 +26,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { dashboardPathByRole, useMe } from "@/lib/auth";
-import { closesSoon, governmentPlatforms, selectPwdHighlights } from "@/lib/home-content";
+import { closesSoon, governmentPlatforms, selectPwdHighlights, type HomeHighlight } from "@/lib/home-content";
 import { formatDateIN } from "@/lib/india";
 import { opportunitiesQueryOptions, opportunityTypeLabels, workModeLabels } from "@/lib/opportunities";
 import { formatClosingDate, resourceCategoryLabels, resourcesQueryOptions, type ResourceCategory } from "@/lib/resources";
@@ -189,35 +189,7 @@ function HomePage() {
               </div>
             ) : null}
             <div className="mt-8 grid gap-px overflow-hidden rounded-lg bg-background/20 md:grid-cols-2">
-              {highlights.map((highlight) => {
-                const item = highlight.item;
-                const deadline = highlight.kind === "opportunity" ? formatDateIN(item.deadline) : formatClosingDate(item.expires_at) ?? item.deadline_label || "Rolling";
-                const href = highlight.kind === "opportunity" ? "/opportunities" : "/resources/$slug";
-                return (
-                  <article key={`${highlight.kind}-${item.id}`} className="bg-foreground p-5 sm:p-6">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge className="bg-amber text-amber-foreground hover:bg-amber">
-                        {highlight.kind === "opportunity" ? opportunityTypeLabels[item.type] : resourceCategoryLabels[item.category as ResourceCategory] ?? item.category}
-                      </Badge>
-                      {closesSoon(highlight.date) ? <Badge variant="outline" className="border-amber/60 text-amber">Closing soon</Badge> : null}
-                    </div>
-                    <h3 className="mt-5 text-xl">{item.title}</h3>
-                    <p className="mt-1 text-sm font-medium text-background/85">{item.organisation}</p>
-                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-background/65">{highlight.kind === "opportunity" ? item.description : item.summary}</p>
-                    <dl className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-background/70">
-                      <div className="flex items-center gap-2"><CalendarClock className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Closing</dt><dd>{deadline}</dd></div>
-                      {highlight.kind === "opportunity" ? <div className="flex items-center gap-2"><MapPin className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Work mode</dt><dd>{workModeLabels[item.mode]} · {item.location}</dd></div> : null}
-                    </dl>
-                    <Button asChild variant="link" className="mt-4 h-auto px-0 text-amber">
-                      {highlight.kind === "opportunity" ? (
-                        <Link to={href}>Review listing <ArrowRight aria-hidden="true" /></Link>
-                      ) : (
-                        <Link to={href} params={{ slug: item.slug }}>Review details <ArrowRight aria-hidden="true" /></Link>
-                      )}
-                    </Button>
-                  </article>
-                );
-              })}
+              {highlights.map((highlight) => <HighlightCard key={`${highlight.kind}-${highlight.item.id}`} highlight={highlight} />)}
             </div>
             <p className="mt-5 text-xs text-background/55">Accessibility is shown only when an organisation has published supporting information.</p>
           </div>
@@ -301,6 +273,49 @@ function HomePage() {
         </section>
       </main>
       <SiteFooter />
+    </div>
+  );
+}
+
+function HighlightCard({ highlight }: { highlight: HomeHighlight }) {
+  if (highlight.kind === "opportunity") {
+    const item = highlight.item;
+    return (
+      <article className="bg-foreground p-5 sm:p-6">
+        <HighlightBadges label={opportunityTypeLabels[item.type]} date={highlight.date} />
+        <h3 className="mt-5 text-xl">{item.title}</h3>
+        <p className="mt-1 text-sm font-medium text-background/85">{item.organisation}</p>
+        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-background/65">{item.description}</p>
+        <dl className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-background/70">
+          <div className="flex items-center gap-2"><CalendarClock className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Closing</dt><dd>{formatDateIN(item.deadline)}</dd></div>
+          <div className="flex items-center gap-2"><MapPin className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Work mode</dt><dd>{workModeLabels[item.mode]} · {item.location}</dd></div>
+        </dl>
+        <Button asChild variant="link" className="mt-4 h-auto px-0 text-amber"><Link to="/opportunities">Review listing <ArrowRight aria-hidden="true" /></Link></Button>
+      </article>
+    );
+  }
+
+  const item = highlight.item;
+  const deadline = formatClosingDate(item.expires_at) ?? item.deadline_label || "Rolling";
+  return (
+    <article className="bg-foreground p-5 sm:p-6">
+      <HighlightBadges label={resourceCategoryLabels[item.category as ResourceCategory] ?? item.category} date={highlight.date} />
+      <h3 className="mt-5 text-xl">{item.title}</h3>
+      <p className="mt-1 text-sm font-medium text-background/85">{item.organisation}</p>
+      <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-background/65">{item.summary}</p>
+      <dl className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-background/70">
+        <div className="flex items-center gap-2"><CalendarClock className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Closing</dt><dd>{deadline}</dd></div>
+      </dl>
+      <Button asChild variant="link" className="mt-4 h-auto px-0 text-amber"><Link to="/resources/$slug" params={{ slug: item.slug }}>Review details <ArrowRight aria-hidden="true" /></Link></Button>
+    </article>
+  );
+}
+
+function HighlightBadges({ label, date }: { label: string; date: string | null }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge className="bg-amber text-amber-foreground hover:bg-amber">{label}</Badge>
+      {closesSoon(date) ? <Badge variant="outline" className="border-amber/60 text-amber">Closing soon</Badge> : null}
     </div>
   );
 }
