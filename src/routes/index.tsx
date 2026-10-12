@@ -296,7 +296,7 @@ function HighlightCard({ highlight }: { highlight: HomeHighlight }) {
   }
 
   const item = highlight.item;
-  const deadline = formatClosingDate(item.expires_at) ?? item.deadline_label || "Rolling";
+  const deadline = formatClosingDate(item.expires_at) ?? (item.deadline_label || "Rolling");
   return (
     <article className="bg-foreground p-5 sm:p-6">
       <HighlightBadges label={resourceCategoryLabels[item.category as ResourceCategory] ?? item.category} date={highlight.date} />
