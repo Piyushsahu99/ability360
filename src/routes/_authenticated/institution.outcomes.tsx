@@ -34,7 +34,7 @@ export const Route = createFileRoute("/_authenticated/institution/outcomes")({
 function OutcomesPage() {
   const { data } = useQuery(institutionDirectoryQueryOptions);
   const [filters, setFilters] = useState(emptyFilters);
-  const rows = data ?? [];
+  const rows = useMemo(() => data ?? [], [data]);
   const filtered = useMemo(() => filterDirectory(rows, filters), [rows, filters]);
   const summary = summarise(filtered);
   const departments = departmentBreakdown(filtered);

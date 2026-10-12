@@ -63,7 +63,7 @@ function ApplicantsPage() {
   const [opportunityId, setOpportunityId] = useState<string>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const rows = applicants ?? [];
+  const rows = useMemo(() => applicants ?? [], [applicants]);
 
   const opportunities = useMemo(() => {
     const map = new Map<string, string>();

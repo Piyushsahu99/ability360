@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run lint",
+    "test": "bun test src/lib",
+    "check": "bun run typecheck && bun run lint && bun run test",
     "format": "prettier --write ."
   },
   "overrides": {
