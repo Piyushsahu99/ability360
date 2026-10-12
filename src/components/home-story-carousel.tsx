@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, type LinkProps } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Pause, Play, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
@@ -8,7 +8,7 @@ export type StorySlide = {
   icon: LucideIcon;
   title: string;
   body: string;
-  to: LinkProps["to"];
+  to: string;
   action?: string;
   image: string;
   alt: string;
