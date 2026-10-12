@@ -18,3 +18,5 @@
 - Home page presentation stays in the index route, uses bundled imagery and global semantic tokens, and links to existing workflows without changing their data or authentication.
 - Public PWD highlights use published live opportunities/resources and curated official-government links; this prevents fabricated deadlines or accessibility claims.
 - Home opportunity slides reuse the shared carousel, pause for focus, pointer interaction and reduced motion, and link to anchored listing cards; this keeps motion controllable and destinations specific.
+
+- Home process, feature and setup sections reuse one image-backed slideshow component with fixed desktop height, swipe navigation and reduced-motion-safe controls; this prevents long sequential lists and duplicate interaction logic.

@@ -21,6 +21,9 @@ import {
 
 import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
+import journeyImage from "@/assets/journey-hero.jpg";
+import progressImage from "@/assets/journey-track.jpg";
+import { HomeStoryCarousel, type StorySlide } from "@/components/home-story-carousel";
 import { HomeSathi } from "@/components/home-sathi";
 import { HomeOpportunityCarousel } from "@/components/home-opportunity-carousel";
 import { SiteFooter } from "@/components/site-footer";
@@ -56,7 +59,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const pathSteps = [
+const pathSteps: Omit<StorySlide, "image" | "alt">[] = [
   { icon: Fingerprint, number: "01", title: "Discover yourself", body: "Your strengths, interests and learning preferences.", to: "/dna" },
   { icon: Compass, number: "02", title: "Choose a direction", body: "Find career roles that fit your ambition.", to: "/roles" },
   { icon: GraduationCap, number: "03", title: "Build your skills", body: "A personal roadmap, lessons and achievable goals.", to: "/roadmap" },
@@ -64,7 +67,7 @@ const pathSteps = [
   { icon: RouteIcon, number: "05", title: "Grow with every step", body: "Track your journey. Refine your next direction.", to: "/journey" },
 ];
 
-const homeFeatures = [
+const homeFeatures: (Omit<StorySlide, "image" | "alt"> & { label: string })[] = [
   { icon: Fingerprint, title: "Student DNA", body: "Bring your skills, projects and achievements into one Ability Passport.", to: "/dna", label: "Build your profile" },
   { icon: RouteIcon, title: "A roadmap that is yours", body: "Set personal goals and turn career skill gaps into your next steps.", to: "/roadmap", label: "Explore your roadmap" },
   { icon: Accessibility, title: "Support without barriers", body: "Choose accessibility preferences and request the support you need.", to: "/accessibility", label: "Explore accessibility" },
@@ -158,29 +161,14 @@ function HomePage() {
           </div>
         </nav>
 
-        <section aria-labelledby="path-heading" className="px-5 py-16 sm:px-8 sm:py-24">
+        <section aria-labelledby="path-heading" className="px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold text-primary">ONE CONNECTED JOURNEY</p>
               <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl">Your career is a journey.<br />Not a one-time decision.</h2>
               <p className="mt-4 text-muted-foreground">Discover, learn, apply and grow. Each step brings you back with a clearer direction.</p>
             </div>
-            <div className="home-cycle mt-10">
-            <div className="home-cycle-center" aria-hidden="true"><span className="font-display text-3xl font-bold">YOU</span><span className="mt-2 text-sm text-muted-foreground">At the centre of it all</span><RouteIcon className="mt-4 size-7 text-primary" /></div>
-            <ol className="home-cycle-steps">
-              {pathSteps.map((step) => (
-                <li key={step.title} className="home-cycle-step">
-                  <div className="flex items-center gap-3">
-                    <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary"><step.icon className="size-6" aria-hidden="true" /></span>
-                    <span className="text-sm font-semibold text-primary">{step.number}</span><ArrowRight className="ml-auto size-5 text-muted-foreground" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-3 text-lg">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
-                  <Button asChild variant="link" className="mt-2 h-auto px-0"><Link to={step.to}>Explore <ArrowUpRight aria-hidden="true" /></Link></Button>
-                </li>
-              ))}
-            </ol>
-            </div>
+            <HomeStoryCarousel label="Career journey" slides={pathSteps.map((step, index) => ({ ...step, image: index < 2 ? campusImage : index === 2 ? journeyImage : progressImage, alt: index < 2 ? "Students collaborating on campus" : "A visual career journey and student progress" }))} />
           </div>
         </section>
 
@@ -191,17 +179,23 @@ function HomePage() {
           </div>
         </section>
 
-        <section aria-labelledby="features-heading" className="px-5 py-16 sm:px-8 sm:py-24">
+        <section aria-labelledby="features-heading" className="px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-6xl"><p className="text-sm font-semibold text-primary">EVERY PART OF YOUR PROGRESS</p><h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl">One platform. Your possibilities.</h2>
-            <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">{homeFeatures.map((feature) => <article key={feature.title} className="home-feature border-t border-border py-6"><feature.icon className="size-7 text-primary" aria-hidden="true" /><h3 className="mt-5 text-xl">{feature.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{feature.body}</p><Button asChild variant="link" className="mt-4 h-auto px-0"><Link to={feature.to}>{feature.label}<ArrowUpRight aria-hidden="true" /></Link></Button></article>)}</div>
+            <HomeStoryCarousel label="Platform features" slides={homeFeatures.map((feature, index) => ({ ...feature, action: feature.label, image: index === 2 ? inclusionImage : index === 0 || index === 5 ? campusImage : index === 3 ? journeyImage : progressImage, alt: index === 2 ? "Inclusive workplace with accessible desks and sign language" : "Students and their connected career journey" }))} />
           </div>
         </section>
 
-        <section aria-labelledby="start-heading" className="border-y border-border bg-primary-soft px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-6xl"><p className="text-sm font-semibold text-primary">START SMALL. GO FURTHER.</p><h2 id="start-heading" className="mt-3 text-3xl sm:text-4xl">Your first three steps.</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{[
-          { title: "Create your account", body: "Sign up as a student with your email or Google account.", to: signedIn ? dashboardPath : "/register", action: signedIn ? "Open workspace" : "Create account" },
-          { title: "Make it personal", body: "Complete your profile and choose a career direction. Add support preferences if you wish.", to: "/onboarding", action: "Set up your profile" },
-          { title: "Take your next step", body: "Start a lesson, find an opportunity or ask Sathi about your goals.", to: "/opportunities", action: "Find an opportunity" },
-        ].map((step, index) => <li key={step.title} className="border-t border-primary/25 pt-5"><span className="font-display text-4xl text-primary/50">0{index + 1}</span><h3 className="mt-4 text-xl">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.body}</p><Button asChild variant="link" className="mt-4 h-auto px-0"><Link to={step.to}>{step.action}<ArrowRight aria-hidden="true" /></Link></Button></li>)}</ol></div></section>
+        <section aria-labelledby="start-heading" className="border-y border-border bg-primary-soft px-5 py-12 sm:px-8 sm:py-16">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-sm font-semibold text-primary">START SMALL. GO FURTHER.</p>
+            <h2 id="start-heading" className="mt-3 text-3xl sm:text-4xl">Your first three steps.</h2>
+            <HomeStoryCarousel label="Getting started" slides={[
+              { icon: GraduationCap, title: "Create your account", body: "Sign up as a student with your email or Google account.", to: signedIn ? dashboardPath : "/register", action: signedIn ? "Open workspace" : "Create account", image: campusImage, alt: "Indian college students on campus" },
+              { icon: Fingerprint, title: "Make it personal", body: "Complete your profile and choose a career direction. Add support preferences if you wish.", to: "/onboarding", action: "Set up your profile", image: journeyImage, alt: "A student's personal career journey" },
+              { icon: BriefcaseBusiness, title: "Take your next step", body: "Start a lesson, find an opportunity or ask Sathi about your goals.", to: "/opportunities", action: "Find an opportunity", image: progressImage, alt: "Tracking progress from learning to a career" },
+            ]} />
+          </div>
+        </section>
 
         <section aria-labelledby="pwd-opportunities-heading" className="border-y border-border bg-foreground px-5 py-16 text-background sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
