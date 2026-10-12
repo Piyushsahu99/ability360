@@ -5,6 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import { createSathiThread, sathiThreadsQueryOptions } from "@/lib/sathi";
 
 export const Route = createFileRoute("/_authenticated/sathi/")({
+  head: () => ({
+    meta: [
+      { title: "Ask Sathi — ABILITY360" },
+      { name: "description", content: "Open your private Sathi conversation for career guidance and ABILITY360 opportunities." },
+      { property: "og:title", content: "Ask Sathi — ABILITY360" },
+      { property: "og:description", content: "Private career guidance and opportunity searches with Sathi." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: SathiIndex,
 });
 

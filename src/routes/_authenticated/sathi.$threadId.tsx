@@ -9,6 +9,16 @@ import { Button } from "@/components/ui/button";
 import { sathiMessagesQueryOptions } from "@/lib/sathi";
 
 export const Route = createFileRoute("/_authenticated/sathi/$threadId")({
+  head: () => ({
+    meta: [
+      { title: "Sathi conversation — ABILITY360" },
+      { name: "description", content: "Continue your private Sathi chat or voice conversation about learning and career opportunities." },
+      { property: "og:title", content: "Sathi conversation — ABILITY360" },
+      { property: "og:description", content: "Your private career conversation with Sathi, by chat or voice." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: SathiThreadPage,
 });
 
