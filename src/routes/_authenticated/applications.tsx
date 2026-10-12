@@ -97,7 +97,7 @@ function ApplicationsPage() {
   const [filter, setFilter] = useState<"all" | ApplicationStatus>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const list = applications ?? [];
+  const list = useMemo(() => applications ?? [], [applications]);
   const visible = filter === "all" ? list : list.filter((item) => item.status === filter);
   const selected = list.find((item) => item.id === selectedId) ?? visible[0] ?? null;
 

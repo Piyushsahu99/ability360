@@ -35,7 +35,7 @@ export const Route = createFileRoute("/_authenticated/institution/cohorts")({
 function CohortsPage() {
   const { data } = useQuery(institutionDirectoryQueryOptions);
   const [filters, setFilters] = useState(emptyFilters);
-  const rows = data ?? [];
+  const rows = useMemo(() => data ?? [], [data]);
   const filtered = useMemo(() => filterDirectory(rows, filters), [rows, filters]);
   const cohorts = cohortBreakdown(filtered);
   const summary = summarise(filtered);
