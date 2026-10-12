@@ -281,7 +281,7 @@ function OpportunitiesPage() {
 
             {!isPending &&
               results.map((item) => (
-                <Card key={item.id} className="flex flex-col transition-colors hover:border-teal/50">
+                <Card key={item.id} id={`opportunity-${item.id}`} className="flex scroll-mt-24 flex-col transition-colors hover:border-teal/50">
                   <CardHeader>
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge className="bg-primary-soft text-primary hover:bg-primary-soft">

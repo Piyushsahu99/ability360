@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Accessibility,
   ArrowRight,
+  ArrowUpRight,
   BadgeCheck,
   BookOpen,
   BriefcaseBusiness,
@@ -21,6 +22,7 @@ import {
 import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
 import { HomeSathi } from "@/components/home-sathi";
+import { HomeOpportunityCarousel } from "@/components/home-opportunity-carousel";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Badge } from "@/components/ui/badge";
@@ -55,11 +57,20 @@ export const Route = createFileRoute("/")({
 });
 
 const pathSteps = [
-  { icon: Compass, number: "01", title: "Find your direction", body: "Explore roles that fit your course, strengths and ambition." },
-  { icon: GraduationCap, number: "02", title: "Build what matters", body: "Turn skill gaps into weekly goals, learning and evidence." },
-  { icon: BriefcaseBusiness, number: "03", title: "Find the right opening", body: "Compare real opportunities, deadlines and accessibility details." },
-  { icon: Accessibility, number: "04", title: "Ask for the right support", body: "Draft accommodation requests and share only what you approve." },
-  { icon: RouteIcon, number: "05", title: "See your progress", body: "Keep applications, goals, roadmap and Ability Passport connected." },
+  { icon: Fingerprint, number: "01", title: "Discover yourself", body: "Your strengths, interests and learning preferences.", to: "/dna" },
+  { icon: Compass, number: "02", title: "Choose a direction", body: "Find career roles that fit your ambition.", to: "/roles" },
+  { icon: GraduationCap, number: "03", title: "Build your skills", body: "A personal roadmap, lessons and achievable goals.", to: "/roadmap" },
+  { icon: BriefcaseBusiness, number: "04", title: "Find your opening", body: "Explore opportunities and prepare your application.", to: "/opportunities" },
+  { icon: RouteIcon, number: "05", title: "Grow with every step", body: "Track your journey. Refine your next direction.", to: "/journey" },
+];
+
+const homeFeatures = [
+  { icon: Fingerprint, title: "Student DNA", body: "Bring your skills, projects and achievements into one Ability Passport.", to: "/dna", label: "Build your profile" },
+  { icon: RouteIcon, title: "A roadmap that is yours", body: "Set personal goals and turn career skill gaps into your next steps.", to: "/roadmap", label: "Explore your roadmap" },
+  { icon: Accessibility, title: "Support without barriers", body: "Choose accessibility preferences and request the support you need.", to: "/accessibility", label: "Explore accessibility" },
+  { icon: BookOpen, title: "Learn. Practise. Progress.", body: "Accessible lessons, mock tests and learning progress in one place.", to: "/learn", label: "Start learning" },
+  { icon: BriefcaseBusiness, title: "From saved to selected", body: "Prepare documents and follow your applications at every stage.", to: "/applications", label: "Track applications" },
+  { icon: MessageCircle, title: "A little help from Sathi", body: "Talk through career questions with private guidance based on platform data.", to: "/sathi", label: "Ask Sathi" },
 ];
 
 const directoryGroups = [
@@ -79,6 +90,7 @@ function HomePage() {
   const highlights = selectPwdHighlights(opportunities ?? [], resources ?? []);
   const highlightsPending = opportunitiesPending || resourcesPending;
   const highlightsError = opportunitiesError || resourcesError;
+  const currentOpportunities = (opportunities ?? []).filter((item) => item.is_published && (!item.deadline || new Date(`${item.deadline}T23:59:59`).getTime() >= Date.now())).slice(0, 9);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -94,17 +106,18 @@ function HomePage() {
             className="home-hero-photo absolute inset-0 -z-20 h-full w-full object-cover"
           />
           <div className="home-hero-shade absolute inset-0 -z-10" aria-hidden="true" />
-          <div className="mx-auto w-full max-w-6xl px-5 pb-48 pt-10 sm:px-8 sm:pb-56 sm:pt-16 lg:pb-20 lg:pt-24">
+          <div className="mx-auto w-full max-w-6xl px-5 pb-20 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:pb-24 lg:pt-28">
             <div className="max-w-2xl lg:max-w-[36rem]">
-              <p className="flex items-center gap-2 text-sm font-semibold text-primary">
-                <span className="h-0.5 w-7 bg-primary" aria-hidden="true" />
-                FROM FIRST SEMESTER TO FIRST CAREER
+              <p className="home-enter flex items-center gap-2 text-sm font-semibold text-sidebar-foreground">
+                <span className="h-0.5 w-7 bg-amber" aria-hidden="true" />
+                YOUR AMBITION. YOUR NEXT CHAPTER.
               </p>
-              <h1 className="mt-5 text-4xl leading-[1.06] sm:text-5xl lg:text-6xl">
-                Your ambition deserves <span className="text-primary">a clear, accessible path.</span>
+              <h1 className="home-enter mt-5 text-5xl leading-[1.06] text-sidebar-foreground sm:text-6xl lg:text-7xl">
+                ABILITY<span className="text-amber">360</span>
               </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                ABILITY360 connects career direction, skills, verified opportunities, accessibility support and progress in one journey built around you.
+              <p className="home-enter mt-4 max-w-lg font-display text-3xl leading-tight text-sidebar-foreground sm:text-4xl">From first semester<br />to first career.</p>
+              <p className="home-enter mt-5 max-w-lg text-base leading-relaxed text-sidebar-foreground/85 sm:text-lg">
+                Know your strengths. Build your skills. Find your opportunity. An accessible career journey, built around you.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg" className="min-h-12 px-6">
@@ -116,9 +129,9 @@ function HomePage() {
                   <Link to="/opportunities">Explore opportunities</Link>
                 </Button>
               </div>
-              <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-foreground">
-                <li className="flex items-center gap-2"><ShieldCheck className="size-4 text-primary" aria-hidden="true" />Your accessibility choices stay private</li>
-                <li className="flex items-center gap-2"><BadgeCheck className="size-4 text-primary" aria-hidden="true" />Real data, not invented listings</li>
+              <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-sidebar-foreground">
+                <li className="flex items-center gap-2"><ShieldCheck className="size-4 text-amber" aria-hidden="true" />Private by default</li>
+                <li className="flex items-center gap-2"><BadgeCheck className="size-4 text-amber" aria-hidden="true" />Inclusive by design</li>
               </ul>
             </div>
           </div>
@@ -149,23 +162,46 @@ function HomePage() {
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold text-primary">ONE CONNECTED JOURNEY</p>
-              <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl">Less guessing. A useful next step.</h2>
-              <p className="mt-4 text-muted-foreground">Start where you are. ABILITY360 keeps the pieces connected as your direction changes.</p>
+              <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl">Your career is a journey.<br />Not a one-time decision.</h2>
+              <p className="mt-4 text-muted-foreground">Discover, learn, apply and grow. Each step brings you back with a clearer direction.</p>
             </div>
-            <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+            <div className="home-cycle mt-10">
+            <div className="home-cycle-center" aria-hidden="true"><span className="font-display text-3xl font-bold">YOU</span><span className="mt-2 text-sm text-muted-foreground">At the centre of it all</span><RouteIcon className="mt-4 size-7 text-primary" /></div>
+            <ol className="home-cycle-steps">
               {pathSteps.map((step) => (
-                <li key={step.title} className="bg-card p-5 sm:p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-primary">{step.number}</span>
-                    <step.icon className="size-5 text-primary" aria-hidden="true" />
+                <li key={step.title} className="home-cycle-step">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary"><step.icon className="size-6" aria-hidden="true" /></span>
+                    <span className="text-sm font-semibold text-primary">{step.number}</span><ArrowRight className="ml-auto size-5 text-muted-foreground" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-8 text-lg">{step.title}</h3>
+                  <h3 className="mt-3 text-lg">{step.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.body}</p>
+                  <Button asChild variant="link" className="mt-2 h-auto px-0"><Link to={step.to}>Explore <ArrowUpRight aria-hidden="true" /></Link></Button>
                 </li>
               ))}
             </ol>
+            </div>
           </div>
         </section>
+
+        <section aria-labelledby="openings-heading" className="border-y border-border bg-surface px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="text-sm font-semibold text-primary">MAKE YOUR NEXT MOVE</p><h2 id="openings-heading" className="mt-3 text-3xl sm:text-4xl">An opening for your ambition.</h2></div><Button asChild variant="outline"><Link to="/opportunities">All opportunities <ArrowUpRight aria-hidden="true" /></Link></Button></div>
+            {opportunitiesPending ? <p className="mt-8 text-muted-foreground">Loading current opportunities…</p> : opportunitiesError ? <p role="alert" className="mt-8 text-destructive">Opportunities could not be loaded. Please try the full opportunities page.</p> : currentOpportunities.length ? <HomeOpportunityCarousel items={currentOpportunities} /> : <p className="mt-8 text-muted-foreground">No active openings right now. Explore learning and career roles while new opportunities arrive.</p>}
+          </div>
+        </section>
+
+        <section aria-labelledby="features-heading" className="px-5 py-16 sm:px-8 sm:py-24">
+          <div className="mx-auto max-w-6xl"><p className="text-sm font-semibold text-primary">EVERY PART OF YOUR PROGRESS</p><h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl">One platform. Your possibilities.</h2>
+            <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">{homeFeatures.map((feature) => <article key={feature.title} className="home-feature border-t border-border py-6"><feature.icon className="size-7 text-primary" aria-hidden="true" /><h3 className="mt-5 text-xl">{feature.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{feature.body}</p><Button asChild variant="link" className="mt-4 h-auto px-0"><Link to={feature.to}>{feature.label}<ArrowUpRight aria-hidden="true" /></Link></Button></article>)}</div>
+          </div>
+        </section>
+
+        <section aria-labelledby="start-heading" className="border-y border-border bg-primary-soft px-5 py-16 sm:px-8 sm:py-20"><div className="mx-auto max-w-6xl"><p className="text-sm font-semibold text-primary">START SMALL. GO FURTHER.</p><h2 id="start-heading" className="mt-3 text-3xl sm:text-4xl">Your first three steps.</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{[
+          { title: "Create your account", body: "Sign up as a student with your email or Google account.", to: signedIn ? dashboardPath : "/register", action: signedIn ? "Open workspace" : "Create account" },
+          { title: "Make it personal", body: "Complete your profile and choose a career direction. Add support preferences if you wish.", to: "/onboarding", action: "Set up your profile" },
+          { title: "Take your next step", body: "Start a lesson, find an opportunity or ask Sathi about your goals.", to: "/opportunities", action: "Find an opportunity" },
+        ].map((step, index) => <li key={step.title} className="border-t border-primary/25 pt-5"><span className="font-display text-4xl text-primary/50">0{index + 1}</span><h3 className="mt-4 text-xl">{step.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{step.body}</p><Button asChild variant="link" className="mt-4 h-auto px-0"><Link to={step.to}>{step.action}<ArrowRight aria-hidden="true" /></Link></Button></li>)}</ol></div></section>
 
         <section aria-labelledby="pwd-opportunities-heading" className="border-y border-border bg-foreground px-5 py-16 text-background sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
@@ -234,7 +270,7 @@ function HomePage() {
                   <ul className="divide-y divide-border">
                     {governmentPlatforms.filter((item) => item.category === group).map((item) => (
                       <li key={item.shortName}>
-                        <a href={item.href} target="_blank" rel="noreferrer noopener" className="group flex min-h-24 items-start gap-4 py-4 focus-visible:outline-none">
+                         <a href={item.href} target="_blank" rel="noreferrer noopener" className="group flex min-h-24 items-start gap-4 py-4">
                           <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-primary-soft text-xs font-bold text-primary">{item.shortName}</span>
                           <span className="min-w-0 flex-1">
                             <span className="flex items-start justify-between gap-3 font-semibold group-hover:text-primary">{item.name}<ExternalLink className="mt-1 size-4 shrink-0" aria-hidden="true" /></span>
@@ -290,7 +326,7 @@ function HighlightCard({ highlight }: { highlight: HomeHighlight }) {
           <div className="flex items-center gap-2"><CalendarClock className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Closing</dt><dd>{formatDateIN(item.deadline)}</dd></div>
           <div className="flex items-center gap-2"><MapPin className="size-4 text-amber" aria-hidden="true" /><dt className="sr-only">Work mode</dt><dd>{workModeLabels[item.mode]} · {item.location}</dd></div>
         </dl>
-        <Button asChild variant="link" className="mt-4 h-auto px-0 text-amber"><Link to="/opportunities">Review listing <ArrowRight aria-hidden="true" /></Link></Button>
+        <Button asChild variant="link" className="mt-4 h-auto px-0 text-amber"><Link to="/opportunities" hash={`opportunity-${item.id}`}>Review listing <ArrowRight aria-hidden="true" /></Link></Button>
       </article>
     );
   }
