@@ -54,7 +54,7 @@ export function HomeOpportunityCarousel({ items }: { items: Opportunity[] }) {
       <Carousel setApi={setApi} opts={{ align: "start", slidesToScroll: 1, loop: true }} aria-label="Current career opportunities" className="mt-8">
         <CarouselContent>
           {items.map((item, index) => (
-            <CarouselItem key={item.id} className="basis-[88%] sm:basis-1/2 lg:basis-1/3" aria-label={`${index + 1} of ${items.length}`}>
+            <CarouselItem key={item.id} className={items.length < 3 ? "basis-[88%] sm:basis-[60%]" : "basis-[88%] sm:basis-1/2 lg:basis-1/3"} aria-label={`${index + 1} of ${items.length}`}>
               <article className="home-listing flex h-full min-h-80 flex-col rounded-lg border border-border bg-card p-6">
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex size-12 shrink-0 items-center justify-center rounded-md bg-primary-soft font-display text-xl font-semibold text-primary" aria-hidden="true">{item.organisation.slice(0, 2).toUpperCase()}</span>
