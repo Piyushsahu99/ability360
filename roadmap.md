@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Redesign home photo, career cycle, automatic opportunity row, features and getting-started steps; verify links and animation controls.
 - [x] Refresh README, remove promotional branding, fix unstable query memo dependencies, and add GitHub business-rule tests.
 - [ ] Remove all remaining platform references (blocked by required runtime integrations and automatically restored repository instructions; requires the planned migration).
 - [x] Refresh home page presentation and verify navigation and layout.

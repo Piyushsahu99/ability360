@@ -17,3 +17,4 @@
 - Sathi assistant: chat streams through `/api/sathi/chat` and voice calls through `/api/live`; both verify the user's access token server-side and run all data tools as that user (RLS), and chat history is loaded from the database, never trusted from the browser — keeps the assistant read-only and private per user.
 - Home page presentation stays in the index route, uses bundled imagery and global semantic tokens, and links to existing workflows without changing their data or authentication.
 - Public PWD highlights use published live opportunities/resources and curated official-government links; this prevents fabricated deadlines or accessibility claims.
+- Home opportunity slides reuse the shared carousel, pause for focus, pointer interaction and reduced motion, and link to anchored listing cards; this keeps motion controllable and destinations specific.
