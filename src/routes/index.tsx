@@ -60,11 +60,11 @@ export const Route = createFileRoute("/")({
 });
 
 const pathSteps: Omit<StorySlide, "image" | "alt">[] = [
-  { icon: Fingerprint, number: "01", title: "Discover yourself", body: "Your strengths, interests and learning preferences.", to: "/dna" },
-  { icon: Compass, number: "02", title: "Choose a direction", body: "Find career roles that fit your ambition.", to: "/roles" },
-  { icon: GraduationCap, number: "03", title: "Build your skills", body: "A personal roadmap, lessons and achievable goals.", to: "/roadmap" },
-  { icon: BriefcaseBusiness, number: "04", title: "Find your opening", body: "Explore opportunities and prepare your application.", to: "/opportunities" },
-  { icon: RouteIcon, number: "05", title: "Grow with every step", body: "Track your journey. Refine your next direction.", to: "/journey" },
+  { icon: Fingerprint, title: "Discover yourself", body: "Your strengths, interests and learning preferences.", to: "/dna" },
+  { icon: Compass, title: "Choose a direction", body: "Find career roles that fit your ambition.", to: "/roles" },
+  { icon: GraduationCap, title: "Build your skills", body: "A personal roadmap, lessons and achievable goals.", to: "/roadmap" },
+  { icon: BriefcaseBusiness, title: "Find your opening", body: "Explore opportunities and prepare your application.", to: "/opportunities" },
+  { icon: RouteIcon, title: "Grow with every step", body: "Track your journey. Refine your next direction.", to: "/journey" },
 ];
 
 const homeFeatures: (Omit<StorySlide, "image" | "alt"> & { label: string })[] = [
