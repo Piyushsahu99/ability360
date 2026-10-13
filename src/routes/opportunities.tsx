@@ -1,3 +1,4 @@
+import { OpportunityShareActions } from "@/components/opportunity-share";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Accessibility, BadgeCheck, Bookmark, BookmarkCheck, CalendarDays, MapPin, Search, Wallet } from "lucide-react";
@@ -362,6 +363,7 @@ function OpportunitiesPage() {
                         match={computeAccessMatch(dna, item, item.posted_by ? employers?.[item.posted_by] : null)}
                       />
                     )}
+                    <OpportunityShareActions opportunity={item} />
                     <SaveAction opportunity={item} />
                     <ContactAction opportunity={item} />
                   </CardContent>

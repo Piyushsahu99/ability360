@@ -38,6 +38,7 @@ import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedSathiRouteImport } from './routes/_authenticated/sathi'
 import { Route as CompetitionsIndexRouteImport } from './routes/competitions.index'
 import { Route as CompetitionsCompetitionIdRouteImport } from './routes/competitions.$competitionId'
+import { Route as OIdRouteImport } from './routes/o.$id'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -218,6 +219,11 @@ const CompetitionsCompetitionIdRoute =
     path: '/competitions/$competitionId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const OIdRoute = OIdRouteImport.update({
+  id: '/o/$id',
+  path: '/o/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
   id: '/resources/',
   path: '/resources/',
@@ -419,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/sathi': typeof AuthenticatedSathiRouteWithChildren
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/o/$id': typeof OIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/resources/': typeof ResourcesIndexRoute
@@ -478,6 +485,7 @@ export interface FileRoutesByTo {
   '/practice': typeof AuthenticatedPracticeRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/o/$id': typeof OIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions': typeof CompetitionsIndexRoute
   '/resources': typeof ResourcesIndexRoute
@@ -540,6 +548,7 @@ export interface FileRoutesById {
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/_authenticated/sathi': typeof AuthenticatedSathiRouteWithChildren
   '/competitions/$competitionId': typeof CompetitionsCompetitionIdRoute
+  '/o/$id': typeof OIdRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/competitions/': typeof CompetitionsIndexRoute
   '/resources/': typeof ResourcesIndexRoute
@@ -602,6 +611,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/sathi'
     | '/competitions/$competitionId'
+    | '/o/$id'
     | '/resources/$slug'
     | '/competitions/'
     | '/resources/'
@@ -661,6 +671,7 @@ export interface FileRouteTypes {
     | '/practice'
     | '/roadmap'
     | '/competitions/$competitionId'
+    | '/o/$id'
     | '/resources/$slug'
     | '/competitions'
     | '/resources'
@@ -722,6 +733,7 @@ export interface FileRouteTypes {
     | '/_authenticated/roadmap'
     | '/_authenticated/sathi'
     | '/competitions/$competitionId'
+    | '/o/$id'
     | '/resources/$slug'
     | '/competitions/'
     | '/resources/'
@@ -770,6 +782,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   CompetitionsCompetitionIdRoute: typeof CompetitionsCompetitionIdRoute
+  OIdRoute: typeof OIdRoute
   ResourcesSlugRoute: typeof ResourcesSlugRoute
   CompetitionsIndexRoute: typeof CompetitionsIndexRoute
   ResourcesIndexRoute: typeof ResourcesIndexRoute
@@ -982,6 +995,13 @@ declare module '@tanstack/react-router' {
       path: '/competitions/$competitionId'
       fullPath: '/competitions/$competitionId'
       preLoaderRoute: typeof CompetitionsCompetitionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o/$id': {
+      id: '/o/$id'
+      path: '/o/$id'
+      fullPath: '/o/$id'
+      preLoaderRoute: typeof OIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources/': {
@@ -1312,6 +1332,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   CompetitionsCompetitionIdRoute: CompetitionsCompetitionIdRoute,
+  OIdRoute: OIdRoute,
   ResourcesSlugRoute: ResourcesSlugRoute,
   CompetitionsIndexRoute: CompetitionsIndexRoute,
   ResourcesIndexRoute: ResourcesIndexRoute,
