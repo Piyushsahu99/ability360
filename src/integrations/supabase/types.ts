@@ -1863,6 +1863,7 @@ export type Database = {
         Row: {
           accessibility_features: string[]
           accessibility_note: string | null
+          apply_url: string | null
           created_at: string
           deadline: string | null
           description: string
@@ -1882,6 +1883,7 @@ export type Database = {
         Insert: {
           accessibility_features?: string[]
           accessibility_note?: string | null
+          apply_url?: string | null
           created_at?: string
           deadline?: string | null
           description?: string
@@ -1901,6 +1903,7 @@ export type Database = {
         Update: {
           accessibility_features?: string[]
           accessibility_note?: string | null
+          apply_url?: string | null
           created_at?: string
           deadline?: string | null
           description?: string
