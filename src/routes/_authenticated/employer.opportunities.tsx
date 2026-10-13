@@ -407,6 +407,19 @@ function OpportunityDialog({
             />
           </div>
 
+          <div className="sm:col-span-2">
+            <Label htmlFor="apply_url">Official listing link</Label>
+            <Input
+              id="apply_url"
+              type="url"
+              placeholder="https://careers.yourcompany.com/role"
+              value={values.apply_url}
+              onChange={(event) => set("apply_url", event.target.value)}
+              className="mt-1.5"
+            />
+            <p className="mt-1 text-xs text-muted-foreground">Students open this after signing in to apply on your website.</p>
+          </div>
+
           <div className="flex items-start gap-3 rounded-lg border border-border p-3 sm:col-span-2">
             <Switch
               id="opp-inclusive"

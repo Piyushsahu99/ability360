@@ -38,6 +38,10 @@ import { institutionsQueryOptions } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/register")({
   staticData: { sitemap: false },
+  validateSearch: (search: Record<string, unknown>): { next?: string } => {
+    const next = typeof search["next"] === "string" ? search["next"] : undefined;
+    return next && next.startsWith("/") && !next.startsWith("//") ? { next } : {};
+  },
   head: () => ({
     links: [{ rel: "canonical", href: "https://ability360.lovable.app/register" }],
     meta: [
@@ -65,6 +69,7 @@ const roleOptions = [
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const queryClient = useQueryClient();
   const [submitting, setSubmitting] = useState(false);
   const [checkEmail, setCheckEmail] = useState(false);
@@ -88,7 +93,7 @@ function RegisterPage() {
       email,
       password: values.password,
       options: {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: `${window.location.origin}${next ?? ""}`,
         data: {
           full_name: values.fullName,
           role: values.role,
@@ -119,6 +124,10 @@ function RegisterPage() {
     const me = await queryClient.fetchQuery(meQueryOptions);
     setSubmitting(false);
     toast.success("Account created");
+    if (next) {
+      window.location.assign(next);
+      return;
+    }
     const role = me?.role ?? values.role;
     navigate({ to: role === "student" ? "/onboarding" : dashboardPathByRole[role] });
   }
