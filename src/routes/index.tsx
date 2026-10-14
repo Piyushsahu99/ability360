@@ -21,8 +21,6 @@ import {
 
 import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
-import journeyImage from "@/assets/journey-hero.jpg";
-import progressImage from "@/assets/journey-track.jpg";
 import adhyayotsavPressImage from "@/assets/achievement-adhyayotsav-press.jpg";
 import yuvaFutureTeamImage from "@/assets/achievement-yuva-future-team.jpg";
 import stepDiscoverImage from "@/assets/step-discover.jpg";
