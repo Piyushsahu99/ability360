@@ -40,7 +40,7 @@ export function SiteHeader() {
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.to}
@@ -54,7 +54,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {isPending ? null : me ? (
             <>
               <Button asChild variant="ghost" className="min-h-11">
@@ -82,7 +82,7 @@ export function SiteHeader() {
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="min-h-11 min-w-11 md:hidden" aria-label="Open menu">
+            <Button variant="outline" size="icon" className="min-h-11 min-w-11 lg:hidden" aria-label="Open menu">
               <Menu aria-hidden="true" />
             </Button>
           </SheetTrigger>
