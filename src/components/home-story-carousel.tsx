@@ -50,7 +50,7 @@ export function HomeStoryCarousel({ slides, label }: { slides: StorySlide[]; lab
   }, [api, paused, reduced]);
 
   return (
-    <div ref={region} className="mt-7" onPointerEnter={() => { interacting.current = true; }} onPointerLeave={() => { interacting.current = false; }} onFocusCapture={() => { interacting.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interacting.current = false; }}>
+    <div ref={region} className="mt-7 overflow-x-clip" onPointerEnter={() => { interacting.current = true; }} onPointerLeave={() => { interacting.current = false; }} onFocusCapture={() => { interacting.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interacting.current = false; }}>
       <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} aria-label={label}>
         <CarouselContent>
           {slides.map((slide, index) => (
