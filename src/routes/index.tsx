@@ -87,6 +87,23 @@ const directoryGroups = [
   "Sign language & learning",
 ] as const;
 
+const homeAchievements = [
+  {
+    image: achievementIdeotsav.url,
+    alt: "Newspaper clipping about ABILITY360 winning first prize at Ideautsav 3.0",
+    badge: "1st Prize",
+    title: "Winners at Ideautsav 3.0",
+    body: "ABILITY360 won first prize at Ideautsav 3.0, the innovation fest at Dr. Ambedkar Institute of Technology for Divyangjan — and made the local press.",
+  },
+  {
+    image: achievementYuvaFuture.url,
+    alt: "The ABILITY360 team at the Yuva Future 6.0 national round in Jaipur",
+    badge: "Runner-up · Accessibility track",
+    title: "On stage at Yuva Future 6.0",
+    body: "We presented ABILITY360 at the Yuva Future 6.0 National Round in Jaipur and finished runner-up in the Accessibility track.",
+  },
+];
+
 function HomePage() {
   const { data: me } = useMe();
   const { data: opportunities, isPending: opportunitiesPending, isError: opportunitiesError } = useQuery(opportunitiesQueryOptions);
