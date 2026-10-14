@@ -303,13 +303,13 @@ function HomePage() {
             <div className="mt-10 grid gap-6 md:grid-cols-2">
               <figure className="group overflow-hidden border-y border-border bg-card">
                 <div className="overflow-hidden">
-                  <img src={adhyayotsavPressImage} alt="Newspaper clipping about ABILITY360 winning first place at the E-Cell competition Adhyayotsav 3.0, with the winning team holding certificates" loading="lazy" width={1217} height={1293} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
+                  <img src={adhyayotsavPressImage} alt="Newspaper clipping about ABILITY360 winning first place at the E-Cell competition Ideautsav 3.0, with the winning team holding certificates" loading="lazy" width={1217} height={1293} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
                 </div>
                 <figcaption className="flex items-start gap-3 p-5 sm:p-6">
                   <BadgeCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
                   <span>
-                    <span className="block font-semibold">First place, Adhyayotsav 3.0</span>
-                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">The ABILITY360 team won first place in the E-Cell competition at IIT Kanpur, and the win was covered in the regional press.</span>
+                    <span className="block font-semibold">First place, Ideautsav 3.0</span>
+                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">The ABILITY360 team won first place in the E-Cell competition at Dr. AITD, Kanpur, and the win was covered in the regional press.</span>
                   </span>
                 </figcaption>
               </figure>
