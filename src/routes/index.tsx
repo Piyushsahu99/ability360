@@ -181,6 +181,27 @@ function HomePage() {
           </div>
         </nav>
 
+        <section aria-labelledby="achievements-heading" className="border-b border-border px-5 py-12 sm:px-8 sm:py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold text-primary">BUILT BY STUDENTS. RECOGNISED ON STAGE.</p>
+              <h2 id="achievements-heading" className="mt-3 text-3xl sm:text-4xl">Awards for what we are building.</h2>
+            </div>
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              {homeAchievements.map((item) => (
+                <article key={item.title} className="group overflow-hidden rounded-lg border border-border bg-card">
+                  <img src={item.image} alt={item.alt} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full object-cover object-top" />
+                  <div className="p-5 sm:p-6">
+                    <Badge className="gap-1.5 bg-amber text-amber-foreground hover:bg-amber"><Trophy className="size-3.5" aria-hidden="true" />{item.badge}</Badge>
+                    <h3 className="mt-4 text-xl">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section aria-labelledby="path-heading" className="px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
