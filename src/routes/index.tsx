@@ -23,6 +23,8 @@ import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
 import journeyImage from "@/assets/journey-hero.jpg";
 import progressImage from "@/assets/journey-track.jpg";
+import adhyayotsavPressImage from "@/assets/achievement-adhyayotsav-press.jpg";
+import yuvaFutureTeamImage from "@/assets/achievement-yuva-future-team.jpg";
 import { HomeStoryCarousel, type StorySlide } from "@/components/home-story-carousel";
 import { HomeSathi } from "@/components/home-sathi";
 import { HomeOpportunityCarousel } from "@/components/home-opportunity-carousel";
