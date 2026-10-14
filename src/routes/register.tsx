@@ -107,10 +107,19 @@ function RegisterPage() {
 
     if (error) {
       setSubmitting(false);
+      const msg = error.message.toLowerCase();
+      if (msg.includes("weak") || msg.includes("password")) {
+        form.setError("password", {
+          message: "This password is too common or has appeared in a data leak. Please choose a different one.",
+        });
+        form.setFocus("password");
+      }
       toast.error(
-        error.message.toLowerCase().includes("already")
+        msg.includes("already")
           ? "This email is already registered. Please sign in instead."
-          : "We couldn't create your account. Please try again.",
+          : msg.includes("weak") || msg.includes("password")
+            ? "Please choose a stronger password."
+            : "We couldn't create your account. Please try again.",
       );
       return;
     }
