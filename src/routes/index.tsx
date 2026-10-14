@@ -183,7 +183,20 @@ function HomePage() {
 
         <section aria-labelledby="features-heading" className="px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-6xl"><p className="text-sm font-semibold text-primary">EVERY PART OF YOUR PROGRESS</p><h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl">One platform. Your possibilities.</h2>
-            <HomeStoryCarousel label="Platform features" slides={homeFeatures.map((feature, index) => ({ ...feature, action: feature.label, image: index === 2 ? inclusionImage : index === 0 || index === 5 ? campusImage : index === 3 ? journeyImage : progressImage, alt: index === 2 ? "Inclusive workplace with accessible desks and sign language" : "Students and their connected career journey" }))} />
+            <ul className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {homeFeatures.map((feature) => (
+                <li key={feature.title} className="group flex flex-col border border-border bg-card p-6 transition-colors hover:border-primary/40">
+                  <span className="flex size-12 items-center justify-center rounded-full bg-primary-soft">
+                    <feature.icon className="size-6 text-primary" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-lg">{feature.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{feature.body}</p>
+                  <Button asChild variant="link" className="mt-4 h-auto w-fit whitespace-normal px-0 text-left">
+                    <Link to={feature.to}>{feature.label}<ArrowRight className="shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" /></Link>
+                  </Button>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
