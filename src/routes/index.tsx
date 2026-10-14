@@ -184,7 +184,7 @@ function HomePage() {
               <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl">Your career is a journey.<br />Not a one-time decision.</h2>
               <p className="mt-4 text-muted-foreground">Discover, learn, apply and grow. Each step brings you back with a clearer direction.</p>
             </div>
-            <HomeStoryCarousel label="Career journey" slides={pathSteps.map((step, index) => ({ ...step, ...journeyVisuals[index] }))} />
+            <HomeStoryCarousel label="Career journey" slides={pathSteps.map((step, index) => ({ ...step, ...journeyVisuals[index % journeyVisuals.length]! }))} />
           </div>
         </section>
 
