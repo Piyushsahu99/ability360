@@ -25,6 +25,22 @@ import journeyImage from "@/assets/journey-hero.jpg";
 import progressImage from "@/assets/journey-track.jpg";
 import adhyayotsavPressImage from "@/assets/achievement-adhyayotsav-press.jpg";
 import yuvaFutureTeamImage from "@/assets/achievement-yuva-future-team.jpg";
+import stepDiscoverImage from "@/assets/step-discover.jpg";
+import stepDirectionImage from "@/assets/step-direction.jpg";
+import stepSkillsImage from "@/assets/step-skills.jpg";
+import stepOpeningImage from "@/assets/step-opening.jpg";
+import stepGrowImage from "@/assets/step-grow.jpg";
+import startSignupImage from "@/assets/start-signup.jpg";
+import startProfileImage from "@/assets/start-profile.jpg";
+import startNextImage from "@/assets/start-next.jpg";
+
+const journeyVisuals = [
+  { image: stepDiscoverImage, alt: "A student noting her strengths and interests" },
+  { image: stepDirectionImage, alt: "A student at a campus signpost choosing a career direction" },
+  { image: stepSkillsImage, alt: "Students, including a wheelchair user, learning on laptops in a library" },
+  { image: stepOpeningImage, alt: "A graduate shaking hands at a job interview" },
+  { image: stepGrowImage, alt: "A young professional growing in an inclusive office" },
+];
 import { HomeStoryCarousel, type StorySlide } from "@/components/home-story-carousel";
 import { HomeSathi } from "@/components/home-sathi";
 import { HomeOpportunityCarousel } from "@/components/home-opportunity-carousel";
@@ -170,7 +186,7 @@ function HomePage() {
               <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl">Your career is a journey.<br />Not a one-time decision.</h2>
               <p className="mt-4 text-muted-foreground">Discover, learn, apply and grow. Each step brings you back with a clearer direction.</p>
             </div>
-            <HomeStoryCarousel label="Career journey" slides={pathSteps.map((step, index) => ({ ...step, image: index < 2 ? campusImage : index === 2 ? journeyImage : progressImage, alt: index < 2 ? "Students collaborating on campus" : "A visual career journey and student progress" }))} />
+            <HomeStoryCarousel label="Career journey" slides={pathSteps.map((step, index) => ({ ...step, ...journeyVisuals[index] }))} />
           </div>
         </section>
 
@@ -205,9 +221,9 @@ function HomePage() {
             <p className="text-sm font-semibold text-primary">START SMALL. GO FURTHER.</p>
             <h2 id="start-heading" className="mt-3 text-3xl sm:text-4xl">Your first three steps.</h2>
             <HomeStoryCarousel label="Getting started" slides={[
-              { icon: GraduationCap, title: "Create your account", body: "Sign up as a student with your email or Google account.", to: signedIn ? dashboardPath : "/register", action: signedIn ? "Open workspace" : "Create account", image: campusImage, alt: "Indian college students on campus" },
-              { icon: Fingerprint, title: "Make it personal", body: "Complete your profile and choose a career direction. Add support preferences if you wish.", to: "/onboarding", action: "Set up your profile", image: journeyImage, alt: "A student's personal career journey" },
-              { icon: BriefcaseBusiness, title: "Take your next step", body: "Start a lesson, find an opportunity or ask Sathi about your goals.", to: "/opportunities", action: "Find an opportunity", image: progressImage, alt: "Tracking progress from learning to a career" },
+              { icon: GraduationCap, title: "Create your account", body: "Sign up as a student with your email or Google account.", to: signedIn ? dashboardPath : "/register", action: signedIn ? "Open workspace" : "Create account", image: startSignupImage, alt: "A student creating an account on a phone" },
+              { icon: Fingerprint, title: "Make it personal", body: "Complete your profile and choose a career direction. Add support preferences if you wish.", to: "/onboarding", action: "Set up your profile", image: startProfileImage, alt: "A student completing her profile on a laptop" },
+              { icon: BriefcaseBusiness, title: "Take your next step", body: "Start a lesson, find an opportunity or ask Sathi about your goals.", to: "/opportunities", action: "Find an opportunity", image: startNextImage, alt: "A student walking forward on campus" },
             ]} />
           </div>
         </section>
