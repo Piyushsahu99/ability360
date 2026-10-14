@@ -17,8 +17,11 @@ import {
   MessageCircle,
   Route as RouteIcon,
   ShieldCheck,
+  Trophy,
 } from "lucide-react";
 
+import achievementIdeotsav from "@/assets/achievement-ideotsav.png.asset.json";
+import achievementYuvaFuture from "@/assets/achievement-yuva-future.jpg.asset.json";
 import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
 import journeyImage from "@/assets/journey-hero.jpg";
