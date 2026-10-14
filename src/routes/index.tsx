@@ -23,6 +23,8 @@ import campusImage from "@/assets/home-campus.jpg";
 import inclusionImage from "@/assets/divyangjan-inclusion.jpg";
 import journeyImage from "@/assets/journey-hero.jpg";
 import progressImage from "@/assets/journey-track.jpg";
+import adhyayotsavPressImage from "@/assets/achievement-adhyayotsav-press.jpg";
+import yuvaFutureTeamImage from "@/assets/achievement-yuva-future-team.jpg";
 import { HomeStoryCarousel, type StorySlide } from "@/components/home-story-carousel";
 import { HomeSathi } from "@/components/home-sathi";
 import { HomeOpportunityCarousel } from "@/components/home-opportunity-carousel";
@@ -288,6 +290,42 @@ function HomePage() {
               <p className="mt-4 text-muted-foreground">Ask about real openings, scholarships, career roles, goals and applications. Your saved chat is visible only to your account.</p>
             </div>
             <HomeSathi signedIn={signedIn} />
+          </div>
+        </section>
+
+        <section aria-labelledby="achievements-heading" className="px-5 py-14 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold text-primary">MOMENTS THAT KEEP US GOING</p>
+              <h2 id="achievements-heading" className="mt-3 text-3xl sm:text-4xl">Early recognition on the journey.</h2>
+              <p className="mt-4 text-muted-foreground">ABILITY360 started as a student team. These are milestones from that journey, shared here so every student on the platform knows where it began.</p>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              <figure className="group overflow-hidden border-y border-border bg-card">
+                <div className="overflow-hidden">
+                  <img src={adhyayotsavPressImage} alt="Newspaper clipping about ABILITY360 winning first place at the E-Cell competition Adhyayotsav 3.0, with the winning team holding certificates" loading="lazy" width={1217} height={1293} className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
+                </div>
+                <figcaption className="flex items-start gap-3 p-5 sm:p-6">
+                  <BadgeCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                  <span>
+                    <span className="block font-semibold">First place, Adhyayotsav 3.0</span>
+                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">The ABILITY360 team won first place in the E-Cell competition at IIT Kanpur, and the win was covered in the regional press.</span>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="group overflow-hidden border-y border-border bg-card">
+                <div className="overflow-hidden">
+                  <img src={yuvaFutureTeamImage} alt="The ABILITY360 team with event lanyards at the Accessibility Track of the Yuva Future 6.0 competition, in front of the jury display board" loading="lazy" width={1600} height={900} className="h-full min-h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
+                </div>
+                <figcaption className="flex items-start gap-3 p-5 sm:p-6">
+                  <BadgeCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                  <span>
+                    <span className="block font-semibold">Accessibility Track, Yuva Future 6.0</span>
+                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">The team presented ABILITY360 in front of the jury on the Accessibility Track, taking the work to students and mentors beyond campus.</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </section>
 
