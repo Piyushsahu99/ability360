@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { PassportSharingPanel } from "@/components/passport-sharing";
+import { PwdVerifiedBadge, VerificationPanel } from "@/components/verification-panel";
+import { verificationStatusQueryOptions } from "@/lib/verification";
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -85,6 +87,7 @@ const nav = studentNav("/dna");
 
 function StudentDnaPage() {
   const { data: dna, isPending, isError, refetch } = useQuery(dnaQueryOptions);
+  const { data: verification } = useQuery(verificationStatusQueryOptions);
   const queryClient = useQueryClient();
 
   function invalidate() {
@@ -133,7 +136,7 @@ function StudentDnaPage() {
         <>
           <section className="border-l-4 border-primary bg-card p-5 shadow-sm sm:p-6" aria-labelledby="passport-overview-title">
             <p className="text-sm font-semibold text-primary">Ability Passport</p>
-            <h2 id="passport-overview-title" className="mt-1 text-2xl">{dna.profile?.full_name || "Your career profile"}</h2>
+            <h2 id="passport-overview-title" className="mt-1 flex flex-wrap items-center gap-2 text-2xl">{dna.profile?.full_name || "Your career profile"}{verification?.pwd?.status === "verified" && <PwdVerifiedBadge />}</h2>
             <p className="mt-2 max-w-2xl text-base text-muted-foreground">{dna.student?.career_goal || "Add your career direction, evidence and verified skills to tell a clearer story."}</p>
             <div className="mt-4 flex flex-wrap gap-2"><Badge variant="secondary">{profileCompleteness(dna)}% complete</Badge><Badge variant="outline">{dna.skills.length} skills</Badge><Badge variant="outline">{dna.projects.length + dna.experiences.length + dna.achievements.length} evidence items</Badge></div>
           </section>
@@ -166,6 +169,7 @@ function StudentDnaPage() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
+            <VerificationPanel />
             <PassportSharingPanel />
             <PanelCard title="Academic profile" description="From your onboarding answers.">
               <dl className="space-y-3 text-sm">

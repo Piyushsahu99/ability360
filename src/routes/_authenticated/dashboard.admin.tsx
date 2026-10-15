@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 import { DashboardShell, EmptyState, PanelCard, StatCard } from "@/components/dashboard-shell";
+import { PwdReviewQueue } from "@/components/pwd-review-queue";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { adminOverviewQueryOptions, decideCompanyVerification } from "@/lib/admin";
@@ -149,6 +150,7 @@ function AdminDashboard() {
         </div>
 
         <div className="space-y-6">
+          {role === "admin" && <PwdReviewQueue />}
           {role === "admin" && (
             <PanelCard title="Community moderation" description="Review student and community needs before publication.">
               {communityQueue && communityQueue.length > 0 ? (
