@@ -89,6 +89,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "ABILITY360 connects students, colleges, faculty and industry in one personalised career operating system.",
       },
       { name: "author", content: "ABILITY360" },
+      {
+        name: "google-site-verification",
+        content: "yOy_CEhmP6iF2A5HQS3kWu-wIoaqAEUCqe6Lvx1Co10",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
