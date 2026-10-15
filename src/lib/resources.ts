@@ -8,6 +8,17 @@ import scholarshipsImage from "@/assets/res-scholarships.jpg";
 import divyangjanImage from "@/assets/res-divyangjan.jpg";
 import blogsImage from "@/assets/res-blogs.jpg";
 import examsImage from "@/assets/res-exams.jpg";
+import blogInternshipPpo from "@/assets/blog-posters/internship-to-ppo.jpg";
+import blogPwdAdmission from "@/assets/blog-posters/pwd-admission-reservation-guide.jpg";
+import blogPwdBusPass from "@/assets/blog-posters/pwd-bus-travel-pass-guide.jpg";
+import blogPwdRailway from "@/assets/blog-posters/pwd-railway-concession-guide.jpg";
+import blogPwdTourism from "@/assets/blog-posters/pwd-tourism-monument-benefits.jpg";
+import blogPwdUdid from "@/assets/blog-posters/pwd-udid-and-other-benefits.jpg";
+import blogResumeIndia from "@/assets/blog-posters/resume-india.jpg";
+import blogNspFirstYear from "@/assets/blog-posters/scholarship-nsp-first-year-guide.jpg";
+import blogStateNgo from "@/assets/blog-posters/scholarship-state-and-ngo-options.jpg";
+import blogFirstSemester from "@/assets/blog-posters/skill-first-semester.jpg";
+import blogStipendGuide from "@/assets/blog-posters/stipend-guide.jpg";
 
 export type ResourceRow = Database["public"]["Tables"]["resources"]["Row"];
 
@@ -36,6 +47,17 @@ const categoryImages: Record<string, string> = {
   divyangjan: divyangjanImage,
   blogs: blogsImage,
   exams: examsImage,
+  "blog-internship-to-ppo": blogInternshipPpo,
+  "blog-pwd-admission-reservation-guide": blogPwdAdmission,
+  "blog-pwd-bus-travel-pass-guide": blogPwdBusPass,
+  "blog-pwd-railway-concession-guide": blogPwdRailway,
+  "blog-pwd-tourism-monument-benefits": blogPwdTourism,
+  "blog-pwd-udid-and-other-benefits": blogPwdUdid,
+  "blog-resume-india": blogResumeIndia,
+  "blog-scholarship-nsp-first-year-guide": blogNspFirstYear,
+  "blog-scholarship-state-and-ngo-options": blogStateNgo,
+  "blog-skill-first-semester": blogFirstSemester,
+  "blog-stipend-guide": blogStipendGuide,
 };
 
 const fallbackImageByCategory: Record<ResourceCategory, string> = {
