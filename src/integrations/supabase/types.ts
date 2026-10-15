@@ -2097,6 +2097,50 @@ export type Database = {
           },
         ]
       }
+      pwd_verifications: {
+        Row: {
+          created_at: string
+          review_note: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          storage_path: string
+          student_id: string
+          udid_number: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          storage_path: string
+          student_id: string
+          udid_number: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          review_note?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          storage_path?: string
+          student_id?: string
+          udid_number?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pwd_verifications_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       resources: {
         Row: {
           audience: string[]
@@ -2816,6 +2860,7 @@ export type Database = {
         Args: { _faculty: string; _student: string }
         Returns: boolean
       }
+      is_pwd_verified: { Args: { _student: string }; Returns: boolean }
       is_session_participant: {
         Args: { _session: string; _user: string }
         Returns: boolean

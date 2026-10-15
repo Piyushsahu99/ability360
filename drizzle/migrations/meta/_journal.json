@@ -29,6 +29,13 @@
       "when": 1792024918363,
       "tag": "0003_seed_pwd_benefit_guides",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792031553202,
+      "tag": "0004_pwd_verifications",
+      "breakpoints": true
     }
   ]
 }
