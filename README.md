@@ -43,7 +43,7 @@ ABILITY360 uses Google Gemini models in selected AI features through the existin
 | Google Cloud Scheduler | Scheduled trusted-source imports | Planned; the existing scheduled crawler remains in use |
 | Google Cloud Run | Hosting the application after migration | Planned deployment target; this repository does not yet establish a working Cloud Run deployment |
 
-The current published site is **https://ability360.lovable.app/**. Its sitemap is **https://ability360.lovable.app/sitemap.xml**. These addresses identify the current deployment, not a Google Cloud Run deployment.
+The current published site uses the existing hosting platform, not Google Cloud Run. Its sitemap is available at `/sitemap.xml` on the published site's domain.
 
 ### Google Cloud migration readiness
 
