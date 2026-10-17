@@ -1,5 +1,6 @@
 # Roadmap
-- [ ] Update README with verified Google service usage and migration status; explain GitHub sync limitations.
+- [x] Update README with verified Google service usage and migration status; explain GitHub sync limitations.
+- [ ] Confirm all updates reached GitHub (blocked: repository connection and sync status must be checked in project Git settings).
 - [x] Replace long home process, feature and setup lists with compact visual slides; verify navigation and layout.
 - [x] Redesign home photo, career cycle, automatic opportunity row, features and getting-started steps; verify links and animation controls.
 - [x] Refresh README, remove promotional branding, fix unstable query memo dependencies, and add GitHub business-rule tests.
